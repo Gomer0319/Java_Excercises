@@ -10,6 +10,7 @@ public class SecretNumber {
         int attemptsRemaining = 10; // Set the initial number of attempts
         Scanner scanner = new Scanner(System.in); // Create a Scanner object
 
+        // Welcome message and instructions
         System.out.println("Welcome to the Secret Number game!");
         System.out.println("You have 10 attempts to guess the secret number between 1 and 100.");
 
@@ -17,7 +18,7 @@ public class SecretNumber {
         while (attemptsRemaining > 0) { // Check if there are attempts remaining using while loop
             System.out.print("Enter your guess: ");
             int playerGuess = scanner.nextInt(); // store the player's guess
-            attemptsRemaining--; // decrement the attempts remaining
+            --attemptsRemaining; // decrement the attempts remaining
 
             // Check if the player's guess is correct
             if (playerGuess == secretNumber) {
