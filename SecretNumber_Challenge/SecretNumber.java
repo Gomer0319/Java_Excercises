@@ -21,7 +21,8 @@ public class SecretNumber {
 
             // Check if the player's guess is correct
             if (playerGuess == secretNumber) {
-                System.out.println("Congratulations! You guessed the secret number!");
+                System.out.println("Congratulations! You guessed the secret number! The number was " + secretNumber
+                        + " using " + (10 - attemptsRemaining) + " attempts.");
                 break;
             } else if (playerGuess < secretNumber) {
                 System.out.println("Too low! Try again.");
@@ -44,7 +45,7 @@ public class SecretNumber {
         if ("yes".equalsIgnoreCase(replayChoice)) {
             main(args);
         } else {
-            System.out.println("Thanks for playing!");
+            System.out.println("Goodbye, See you next time!");
             scanner.close();
         }
     }
