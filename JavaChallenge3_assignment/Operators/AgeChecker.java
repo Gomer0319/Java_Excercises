@@ -14,7 +14,9 @@ public class AgeChecker {
 
         if (isEligible) {
             System.out.println("Eligible for subscription: " + isEligible);
-        } else {
+        }
+
+        else {
             System.out.println("Eligible for subscription: " + isEligible);
         }
     }
