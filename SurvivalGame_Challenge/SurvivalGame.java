@@ -82,5 +82,8 @@ public class SurvivalGame {
 
         // Display final inventory.
         System.out.println("Your final inventory: " + Arrays.toString(inventory));
+
+        // Close the scanner.
+        input.close();
     }
 }
