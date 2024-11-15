@@ -8,8 +8,8 @@ public class PrimeNumber {
 
         // Check if the number is prime
         boolean isPrime = true;
-        for (int i = 2; i < num; i++) {
-            if (num % i == 0) {
+        for (int i = 2; i < num; i++) { // Start from 2 to exclude 1
+            if (num % i == 0) { // Check for divisors
                 isPrime = false;
                 break; // Exit the loop if a divisor is found
             }
