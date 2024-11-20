@@ -113,3 +113,11 @@ public class RunInterestCalculator {
     }
 }
 
+/*Self-check 1.1-2
+1.b
+2.c
+3.d
+4.a
+5.a
+6.b
+*/
