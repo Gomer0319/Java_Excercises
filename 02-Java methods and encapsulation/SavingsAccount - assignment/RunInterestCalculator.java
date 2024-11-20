@@ -8,9 +8,9 @@ class InterestCalculator {
 
     // Default constructor
     public InterestCalculator() {
-        this.interest = 0.0;
+        this.interest = 5.0;
         this.principal = 0.0;
-        this.years = 0;
+        this.years = 1;
     }
 
     // Overloaded constructors
@@ -82,65 +82,34 @@ public class RunInterestCalculator {
         
         if (option == 1) {
             String principalINput =  input.nextLine().trim();
-
-            if (principalINput.isEmpty()) {
-                System.out.println("You have not entered any value, using default values.");
-                calculator = new InterestCalculator(defCalculator.principal);
-                calculator.computeInterest(defCalculator.principal);
-            } 
-            else {
-                calculator = new InterestCalculator(Double.parseDouble(principalINput));
-                calculator.computeInterest(Double.parseDouble(principalINput));
-            }      
-        }
-
+            double principal = principalINput.isEmpty() ? defCalculator.principal : Double.parseDouble(principalINput);
+            
+            calculator = new InterestCalculator(principal);
+            calculator.computeInterest(principal);
+                  
+        } 
         else if (option == 2) {
-            String principalInput = input.nextLine().trim();
-            String yearsInput = input.nextLine().trim();
+            String[] values = input.nextLine().trim().split(" "); // Split the input into an array
+            double principal = values.length > 0 && !values[0].isEmpty() ? Double.parseDouble(values[0]) : defCalculator.principal; // Check if the input is empty for principal
+            int years = values.length > 1 && !values[1].isEmpty() ? Integer.parseInt(values[1]) : defCalculator.years; // Check if the input is empty for years
 
-            if (principalInput.isEmpty() || yearsInput.isEmpty()) {
-                System.out.println("You have not entered any value, using default values.");
-                calculator = new InterestCalculator(defCalculator.principal, defCalculator.years);
-                calculator.computeInterest(defCalculator.principal, defCalculator.years);
-            } else if (yearsInput.isEmpty()) { // if years input is empty but principal input is not
-                calculator = new InterestCalculator(Double.parseDouble(principalInput), defCalculator.years);
-                calculator.computeInterest(Double.parseDouble(principalInput), defCalculator.years);
-            } else if (principalInput.isEmpty()) { // if principal input is empty but years input is not
-                calculator = new InterestCalculator(defCalculator.principal, Integer.parseInt(yearsInput));
-                calculator.computeInterest(defCalculator.principal, Integer.parseInt(yearsInput));
-            } else {
-                calculator = new InterestCalculator(Double.parseDouble(principalInput), Integer.parseInt(yearsInput));
-                calculator.computeInterest(Double.parseDouble(principalInput), Integer.parseInt(yearsInput));
-            }   
-        }
-
+            calculator = new InterestCalculator(principal, years);
+            calculator.computeInterest(principal, years);
+        }  
         else if (option == 3) {
-            String principalInput = input.nextLine().trim();
-            String yearsInput = input.nextLine().trim();
-            String interestInput = input.nextLine().trim();
+            String[] values = input.nextLine().trim().split(" "); // Split the input into an array
+            double principal = values.length > 0 && !values[0].isEmpty() ? Double.parseDouble(values[0]) : defCalculator.principal; // Check if the input is empty for principal
+            int years = values.length > 1 && !values[1].isEmpty() ? Integer.parseInt(values[1]) : defCalculator.years; // Check if the input is empty for years
+            double interest = values.length > 2 && !values[2].isEmpty() ? Double.parseDouble(values[2]) : defCalculator.interest; // Check if the input is empty for interest
 
-            if (principalInput.isEmpty() || yearsInput.isEmpty() || interestInput.isEmpty()) {
-                System.out.println("You have not entered any value, using default values.");
-                calculator = new InterestCalculator(defCalculator.principal, defCalculator.years, defCalculator.interest);
-                calculator.computeInterest(defCalculator.principal, defCalculator.years, defCalculator.interest);
-            }
-            else if (yearsInput.isEmpty()) { // if years input is empty but principal and interest input is not
-                calculator = new InterestCalculator(Double.parseDouble(principalInput), defCalculator.years, Double.parseDouble(interestInput));
-                calculator.computeInterest(Double.parseDouble(principalInput), defCalculator.years, Double.parseDouble(interestInput));
-            }
-            else if (principalInput.isEmpty()) { // if principal input is empty but years and interest input is not
-                calculator = new InterestCalculator(defCalculator.principal, Integer.parseInt(yearsInput), Double.parseDouble(interestInput));
-                calculator.computeInterest(defCalculator.principal, Integer.parseInt(yearsInput), Double.parseDouble(interestInput));
-            }
-            else if (interestInput.isEmpty()) { // if interest input is empty but principal and years input is not
-                calculator = new InterestCalculator(Double.parseDouble(principalInput), Integer.parseInt(yearsInput), defCalculator.interest);
-                calculator.computeInterest(Double.parseDouble(principalInput), Integer.parseInt(yearsInput), defCalculator.interest);
-            }
-            else {
-                calculator = new InterestCalculator(Double.parseDouble(principalInput), Integer.parseInt(yearsInput), Double.parseDouble(interestInput));
-                calculator.computeInterest(Double.parseDouble(principalInput), Integer.parseInt(yearsInput), Double.parseDouble(interestInput));
-            }
+            calculator = new InterestCalculator(principal, years, interest);
+            calculator.computeInterest(principal, years, interest);
+        } 
+        else {
+            System.out.println("Invalid option. Using default values.");
         }
+
+        input.close();
     }
 }
 
