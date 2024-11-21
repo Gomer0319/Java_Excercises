@@ -15,7 +15,7 @@
 
 ### Understanding Classes
 
-**Classes** serve as blueprints for creating objects. They define the **attributes** (properties) and **methods** (behaviors) that objects will possess. For example, a House class might define attributes such as color and size, while specialized classes such as mansions or Villasilla extend this blueprint with additional features.
+**Classes** serve as blueprints for creating objects. They define the **attributes** (properties) and **methods** (behaviors) that objects will possess. For example, a House class might define attributes such as color and size, while specialized classes such as Mansions or Villas extend this blueprint with additional features.
 
 *Examples of Object-Oriented Concepts*
 
