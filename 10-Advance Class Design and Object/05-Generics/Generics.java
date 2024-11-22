@@ -65,6 +65,12 @@ public class Generics {
     }
 }
 
+/* Use-cases of Generics
+ * - Avoid code duplication by using generics to create generic classes and methods.
+ * - Improve code readability and maintainability by using generics to create generic classes and methods. 
+ * - Type safety by using generics to create generic classes and methods. 
+ */
+
 
 
 
