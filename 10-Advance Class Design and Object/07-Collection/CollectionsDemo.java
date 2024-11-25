@@ -80,4 +80,10 @@ public class CollectionsDemo {
         System.out.println("Student: " + student);
     }
 }
-        
+
+/* Situations where Collections are used:
+* - Collections are used in storing and managing groups of objects. 
+* - Collections are used for data organization and manipulation.
+* - Ensuring uniqueness of elements.
+* - Effiecient lookup and retrieval.
+*/
