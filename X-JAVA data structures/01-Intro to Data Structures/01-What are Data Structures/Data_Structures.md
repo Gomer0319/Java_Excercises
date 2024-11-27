@@ -18,38 +18,61 @@ The **abstract data types** are the building blocks of data structures. These ty
 
     Definition: is an ADT that stores elements in a contiguous block of memory. Operations include adding, removing, and accessing elements by index.
 
-        Example: ArrayList<Integer> list = new ArrayList<>();
+    Example: 
 
-2. **Stack**
+    ```java
+    ArrayList<Integer> list = new ArrayList<>();
+    ```
+
+1. **Stack**
 
     Definition: is an ADT that stores elements in a last-in-first-out (LIFO) order. Operations include push, pop, and peek.
 
-        Example: Stack<Integer> stack = new Stack<>();
+    Example:
 
-3. **Queue**
+    ```java 
+    Stack<Integer> stack = new Stack<>();
+    ```
+
+2. **Queue**
 
     Definition: is an ADT that stores elements in a first-in-first-out (FIFO) order. Operations include enqueue, dequeue, and peek.
 
-        Example: Queue<Integer> queue = new LinkedList<>();
+    Example: 
+    
+    ```java
+    Queue<Integer> queue = new LinkedList<>();
+    ```
 
-4. **Tree**
+3. **Tree**
 
     Definition: is an ADT that stores elements in a hierarchical structure. Operations include adding, removing, and accessing elements by path.
 
-        Example: TreeNode root = new TreeNode();
+    Example: 
+    
+    ```java
+    TreeNode root = new TreeNode();
+    ```
 
-5. **Graph**
+4. **Graph**
 
     Definition: is an ADT that stores elements in a network-like structure. Operations include adding, removing, and accessing elements by path.
 
-        Example: Graph graph = new Graph();
+    Example: 
+    
+    ```java
+    Graph graph = new Graph();
+    ```
 
-6. **Hash Table**
+5. **Hash Table**
 
     Definition: is an ADT that stores elements in a key-value pair format. Operations include adding, removing, and accessing elements by key.
 
-        Example: HashMap<String, Integer> map = new HashMap<>();
-
+    Example: 
+    
+    ```java
+    HashMap<String, Integer> map = new HashMap<>();
+    ```
 
 
 
