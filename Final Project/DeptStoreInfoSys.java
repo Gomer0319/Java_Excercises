@@ -43,12 +43,12 @@ public class DeptStoreInfoSys {
                     break;
                 case 2:
                     // Exit
-                    System.out.println("Thanks for using the Department Store Info System.");
+                    System.out.println("\nThanks for using the Department Store Info System.\n");
                     System.exit(0);
                     break;
                 default:
                     // Invalid option
-                    System.out.println("Invalid option. Please try again.");
+                    System.out.println("\nInvalid option. Please try again.\n");
             }
         }
     }
