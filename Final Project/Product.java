@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.ArrayList;
+
 interface Product {
     // Create Product interface that includes ID, name, price, quantity, and category, that gets and sets the values.
     int getProductID();
@@ -17,8 +20,8 @@ class Electronics implements Product {
     private int quantity;
     private String category = "Electronics";
 
-    // Set an array to store the Electronics products to be added (Open quantity)
-    Electronics[] electronics = new Electronics[100];
+    // Set a dynamic list to store electronics products
+    static List<Electronics> electronics = new ArrayList<>();
 
     // Constructor
     public Electronics(int ID, String name, double price, int quantity) {
@@ -26,6 +29,31 @@ class Electronics implements Product {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    // Method to addProducts from addProduct class
+    public static void addProduct(int ID, String name, double price, int quantity) {
+        //add product on the list
+        electronics.add(new Electronics(ID, name, price, quantity));
+        System.out.println("Product " + name + " with ID " + ID + " has been added successfully.");
+    }
+
+
+
+    // Method to view or display products from viewProducts class for electronics category
+    public static void viewProducts() {
+        // Check if there are any products in the electronics category
+        if (electronics.size() == 0) {
+            System.out.println("No products found in Electronics category.");
+        }
+        else {
+            System.out.println("Products in Electronics category:");
+            // Loop through the electronics list and display the products, one by one, one product per line in the console
+            for (int i = 0; i < electronics.size(); i++) {
+                Electronics product = electronics.get(i);
+                System.out.println("ID: " + product.getProductID() + "|| Name: " + product.getProductName() + "|| Price: " + product.getProductPrice() + "|| Quantity: " + product.getProductQty());
+            }
+        }
     }
 
     // Implement interface methods
