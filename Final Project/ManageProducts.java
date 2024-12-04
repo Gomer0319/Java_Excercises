@@ -90,7 +90,10 @@ class AddProduct {
             // Add product to toys array
             Toys.addProduct(productID, productName, productPrice, productQty);
         }
-        /* Add else if statements for other product categories( Furnitures) here */
+        else if (productCategory == 4) {
+            // Add product to furnitures array
+            Furnitures.addProduct(productID, productName, productPrice, productQty);
+        }
         else {
             System.out.println("Invalid product category input.");
         }
@@ -133,7 +136,14 @@ class UpdateProduct {
             // Pass the productID to editProduct
             Toys.editProduct(productID);
         }
-        /* Add else if statements for other product categories( Furnitures) here */
+        else if (productCategory == 4) {
+            // Ask for the product ID input
+            System.out.print("\nEnter the Product Number of the item to be updated: ");
+            int productID = updateProductInput.nextInt();
+
+            // Pass the productID to editProduct
+            Furnitures.editProduct(productID);
+        }
         else {
             System.out.println("Invalid product category input.");
         }
@@ -176,7 +186,14 @@ class DeleteProduct {
             // Pass the productID to deleteProduct
             Toys.deleteProduct(productID);
         }
-        /* Add else if statements for other product categories( Furnitures) here */
+        else if (productCategory == 4) {
+            // Ask for the product ID input
+            System.out.print("\nEnter the Product Number of the item to be deleted: ");
+            int productID = deleteProductInput.nextInt();
+
+            // Pass the productID to deleteProduct
+            Furnitures.deleteProduct(productID);
+        }
         else {
             System.out.println("Invalid product category input.");
         }
@@ -205,7 +222,9 @@ class DisplayProducts {
             case 3:
                 Toys.viewProducts();
                 break;
-            /* Add case for other product categories( Furnitures) here */
+            case 4:
+                Furnitures.viewProducts();
+                break;
             default:
                 System.out.println("Invalid product category.");
         }

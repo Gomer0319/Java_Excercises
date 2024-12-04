@@ -36,9 +36,14 @@ class AdminMenu {
                     System.out.println("View Reports");
                     break;
                 case 4:
-                    // Logout
+                    // Logout and return to Login menu
                     System.out.println("You are logged out.\n");
+
+                    // Set login status to false
                     keepAdminMenu = false;
+
+                    // Return to Login menu
+                    DeptStoreInfoSys.main(null);
                     break;
                 default:
             }
