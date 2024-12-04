@@ -207,7 +207,24 @@ class Clothings implements Product {
 
     // Method to addProducts from addProduct class
     public static void addProduct(int ID, String name, double price, int quantity) {
-        //add product on the list
+        // Check if there is a product with the same ID
+        for (int i = 0; i < clothings.size(); i++) {
+            Clothings product = clothings.get(i);
+            if (product.getProductID() == ID) {
+                System.out.println("Product with ID " + ID + " already exists in Clothings category.");
+                return;
+            }
+            // Check if there is a product with the same name through else if statement
+            else if (product.getProductName().equals(name)) {
+                System.out.println("Product with name " + name + " already exists in Clothings category.");
+                return;
+            }
+            // if the ID and name are unique, continue to add the product
+            else {
+                continue;
+            }
+        }
+        // Add the product to the clothings list
         clothings.add(new Clothings(ID, name, price, quantity));
         System.out.println("Product " + name + " with ID " + ID + " has been added successfully.");
     }
@@ -363,7 +380,24 @@ class Toys implements Product {
 
     // Method to addProducts from addProduct class
     public static void addProduct(int ID, String name, double price, int quantity) {
-        //add product on the list
+        // Check if there is a product with the same ID
+        for (int i = 0; i < toys.size(); i++) {
+            Toys product = toys.get(i);
+            if (product.getProductID() == ID) {
+                System.out.println("Product with ID " + ID + " already exists in Toys category.");
+                return;
+            }
+            // Check if there is a product with the same name through else if statement
+            else if (product.getProductName().equals(name)) {
+                System.out.println("Product with name " + name + " already exists in Toys category.");
+                return;
+            }
+            // if the ID and name are unique, continue to add the product
+            else {
+                continue;
+            }
+        }
+        // Add the product to the toys list
         toys.add(new Toys(ID, name, price, quantity));
         System.out.println("Product " + name + " with ID " + ID + " has been added successfully.");
     }
@@ -519,7 +553,24 @@ class Furnitures implements Product {
 
     // Method to addProducts from addProduct class
     public static void addProduct(int ID, String name, double price, int quantity) {
-        //add product on the list
+        // Check if there is a product with the same ID
+        for (int i = 0; i < furnitures.size(); i++) {
+            Furnitures product = furnitures.get(i);
+            if (product.getProductID() == ID) {
+                System.out.println("Product with ID " + ID + " already exists in Furnitures category.");
+                return;
+            }
+            // Check if there is a product with the same name through else if statement
+            else if (product.getProductName().equals(name)) {
+                System.out.println("Product with name " + name + " already exists in Furnitures category.");
+                return;
+            }
+            // if the ID and name are unique, continue to add the product
+            else {
+                continue;
+            }
+        }
+        // Add the product to the Furnitures list
         furnitures.add(new Furnitures(ID, name, price, quantity));
         System.out.println("Product " + name + " with ID " + ID + " has been added successfully.");
     }

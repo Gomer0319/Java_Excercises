@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.InputMismatchException;
 
 // Create manage products class where we add, edit(update), view and delete products. (Products will include ID, name, price, quantity, and category)
 class ManageProducts {
@@ -11,45 +12,52 @@ class ManageProducts {
         boolean keepManaging = true;
 
         while (keepManaging) {
-            System.out.println("\nManage Products");
-            System.out.println("1. Add Product");
-            System.out.println("2. Edit Product");
-            System.out.println("3. View Products");
-            System.out.println("4. Delete Product");
-            System.out.println("5. Return to Admin Menu");
-            System.out.print("Enter your choice: ");
+            // try-catch block to handle InputMismatchException
+            try {
+                System.out.println("\nManage Products");
+                System.out.println("1. Add Product");
+                System.out.println("2. Edit Product");
+                System.out.println("3. View Products");
+                System.out.println("4. Delete Product");
+                System.out.println("5. Return to Admin Menu");
+                System.out.print("Enter your choice: ");
 
-            int productOption = productInput.nextInt();
+                int productOption = productInput.nextInt();
 
-            // Check if the admin wants to add, edit, view, delete, or return to admin menu
-            switch (productOption) {
-                case 1:
-                    // Go to Add product menu
-                    AddProduct addProduct = new AddProduct();
-                    addProduct.addProduct();
-                    break;
-                case 2:
-                    // Go to Update product menu
-                    UpdateProduct updateProduct = new UpdateProduct();
-                    updateProduct.updateProduct();
-                    break;
-                case 3:
-                    // Go to View Products menu
-                    DisplayProducts displayProducts = new DisplayProducts();
-                    displayProducts.displayProduct();
-                    break;
-                case 4:
-                    // Go to Delete product menu
-                    DeleteProduct deleteProduct = new DeleteProduct();
-                    deleteProduct.deleteProduct();
-                    break;
-                case 5:
-                    // Return to admin menu
-                    System.out.println("Returning to Admin Menu. \n");
-                    keepManaging = false;
-                    break;
-                default:
-                    System.out.println("Invalid choice.");
+                // Check if the admin wants to add, edit, view, delete, or return to admin menu
+                switch (productOption) {
+                    case 1:
+                        // Go to Add product menu
+                        AddProduct addProduct = new AddProduct();
+                        addProduct.addProduct();
+                        break;
+                    case 2:
+                        // Go to Update product menu
+                        UpdateProduct updateProduct = new UpdateProduct();
+                        updateProduct.updateProduct();
+                        break;
+                    case 3:
+                        // Go to View Products menu
+                        DisplayProducts displayProducts = new DisplayProducts();
+                        displayProducts.displayProduct();
+                        break;
+                    case 4:
+                        // Go to Delete product menu
+                        DeleteProduct deleteProduct = new DeleteProduct();
+                        deleteProduct.deleteProduct();
+                        break;
+                    case 5:
+                        // Return to admin menu
+                        System.out.println("\nReturning to Admin Menu. \n");
+                        keepManaging = false;
+                        break;
+                    default:
+                        System.out.println("\nInvalid choice. Please try again.\n");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("\nInvalid input. Please enter a number.\n");
+                productInput.next(); // Consume the invalid input
             }
         }
     }
@@ -62,40 +70,47 @@ class AddProduct {
 
     // Create add product menu
     public void addProduct() {
-        System.out.println("\nAdd Product");
-        System.out.println("Select product category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures");
-        System.out.print(">>> ");
-        int productCategory = addProductInput.nextInt();
-        addProductInput.nextLine(); // Consume the newline character
-        System.out.print("\nEnter product ID: ");
-        int productID = addProductInput.nextInt();
-        addProductInput.nextLine();
-        System.out.print("Enter product name: ");
-        String productName = addProductInput.nextLine();
-        System.out.print("Enter product price: ");
-        double productPrice = addProductInput.nextDouble();
-        System.out.print("Enter product quantity: ");
-        int productQty = addProductInput.nextInt();
+        // try-catch block to handle InputMismatchException
+        try {
+            System.out.println("\nAdd Product");
+            System.out.println("Select product category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures");
+            System.out.print(">>> ");
+            int productCategory = addProductInput.nextInt();
+            addProductInput.nextLine(); // Consume the newline character
+            System.out.print("Enter product ID: ");
+            int productID = addProductInput.nextInt();
+            addProductInput.nextLine();
+            System.out.print("Enter product name: ");
+            String productName = addProductInput.nextLine();
+            System.out.print("Enter product price: ");
+            double productPrice = addProductInput.nextDouble();
+            System.out.print("Enter product quantity: ");
+            int productQty = addProductInput.nextInt();
 
-        // Check if the product category is valid
-        if (productCategory == 1) {
-            // Add product to electronics array
-            Electronics.addProduct(productID, productName, productPrice, productQty);
+            // Check if the product category is valid
+            if (productCategory == 1) {
+                // Add product to electronics array
+                Electronics.addProduct(productID, productName, productPrice, productQty);
+            }
+            else if (productCategory == 2) {
+                // Add product to clothings array
+                Clothings.addProduct(productID, productName, productPrice, productQty);
+            }
+            else if (productCategory == 3) {
+                // Add product to toys array
+                Toys.addProduct(productID, productName, productPrice, productQty);
+            }
+            else if (productCategory == 4) {
+                // Add product to furnitures array
+                Furnitures.addProduct(productID, productName, productPrice, productQty);
+            }
+            else {
+                System.out.println("Invalid product category input.");
+            }
         }
-        else if (productCategory == 2) {
-            // Add product to clothings array
-            Clothings.addProduct(productID, productName, productPrice, productQty);
-        }
-        else if (productCategory == 3) {
-            // Add product to toys array
-            Toys.addProduct(productID, productName, productPrice, productQty);
-        }
-        else if (productCategory == 4) {
-            // Add product to furnitures array
-            Furnitures.addProduct(productID, productName, productPrice, productQty);
-        }
-        else {
-            System.out.println("Invalid product category input.");
+        catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a valid input.");
+            addProductInput.next();
         }
     }
 }
@@ -107,45 +122,51 @@ class UpdateProduct {
 
     // Ask user for product category
     public void updateProduct() {
-        System.out.println("\nSelect product category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures");
-        System.out.print(">>> ");
-        int productCategory = updateProductInput.nextInt();
+        try {
+            System.out.println("\nSelect product category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures");
+            System.out.print(">>> ");
+            int productCategory = updateProductInput.nextInt();
 
-        // Check if the product category is valid
-        if (productCategory == 1) {
-            // Ask for the product ID input
-            System.out.print("\nEnter the Product Number of the item to be updated: ");
-            int productID = updateProductInput.nextInt();
+            // Check if the product category is valid
+            if (productCategory == 1) {
+                // Ask for the product ID input
+                System.out.print("\nEnter the Product Number of the item to be updated: ");
+                int productID = updateProductInput.nextInt();
 
-            // Pass the productID to editProduct
-            Electronics.editProduct(productID);
+                // Pass the productID to editProduct
+                Electronics.editProduct(productID);
+            }
+            else if (productCategory == 2) {
+                // Ask for the product ID input
+                System.out.print("\nEnter the Product Number of the item to be updated: ");
+                int productID = updateProductInput.nextInt();
+
+                // Pass the productID to editProduct
+                Clothings.editProduct(productID);
+            }
+            else if (productCategory == 3) {
+                // Ask for the product ID input
+                System.out.print("\nEnter the Product Number of the item to be updated: ");
+                int productID = updateProductInput.nextInt();
+
+                // Pass the productID to editProduct
+                Toys.editProduct(productID);
+            }
+            else if (productCategory == 4) {
+                // Ask for the product ID input
+                System.out.print("\nEnter the Product Number of the item to be updated: ");
+                int productID = updateProductInput.nextInt();
+
+                // Pass the productID to editProduct
+                Furnitures.editProduct(productID);
+            }
+            else {
+                System.out.println("Invalid product category input.");
+            }
         }
-        else if (productCategory == 2) {
-            // Ask for the product ID input
-            System.out.print("\nEnter the Product Number of the item to be updated: ");
-            int productID = updateProductInput.nextInt();
-
-            // Pass the productID to editProduct
-            Clothings.editProduct(productID);
-        }
-        else if (productCategory == 3) {
-            // Ask for the product ID input
-            System.out.print("\nEnter the Product Number of the item to be updated: ");
-            int productID = updateProductInput.nextInt();
-
-            // Pass the productID to editProduct
-            Toys.editProduct(productID);
-        }
-        else if (productCategory == 4) {
-            // Ask for the product ID input
-            System.out.print("\nEnter the Product Number of the item to be updated: ");
-            int productID = updateProductInput.nextInt();
-
-            // Pass the productID to editProduct
-            Furnitures.editProduct(productID);
-        }
-        else {
-            System.out.println("Invalid product category input.");
+        catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a valid number from the list.");
+            updateProductInput.next();
         }
     }
 }
@@ -157,45 +178,52 @@ class DeleteProduct {
 
     // Ask user for product category
     public void deleteProduct() {
-        System.out.println("\nSelect product category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures");
-        System.out.print(">>> ");
-        int productCategory = deleteProductInput.nextInt();
+        // try-catch block to handle InputMismatchException
+        try {
+            System.out.println("\nSelect product category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures");
+            System.out.print(">>> ");
+            int productCategory = deleteProductInput.nextInt();
 
-        // Check if the product category is valid
-        if (productCategory == 1) {
-            // Ask for the product ID input
-            System.out.print("\nEnter the Product Number of the item to be deleted: ");
-            int productID = deleteProductInput.nextInt();
+            // Check if the product category is valid
+            if (productCategory == 1) {
+                // Ask for the product ID input
+                System.out.print("\nEnter the Product Number of the item to be deleted: ");
+                int productID = deleteProductInput.nextInt();
 
-            // Pass the productID to deleteProduct
-            Electronics.deleteProduct(productID);
+                // Pass the productID to deleteProduct
+                Electronics.deleteProduct(productID);
+            }
+            else if (productCategory == 2) {
+                // Ask for the product ID input
+                System.out.print("\nEnter the Product Number of the item to be deleted: ");
+                int productID = deleteProductInput.nextInt();
+
+                // Pass the productID to deleteProduct
+                Clothings.deleteProduct(productID);
+            }
+            else if (productCategory == 3) {
+                // Ask for the product ID input
+                System.out.print("\nEnter the Product Number of the item to be deleted: ");
+                int productID = deleteProductInput.nextInt();
+
+                // Pass the productID to deleteProduct
+                Toys.deleteProduct(productID);
+            }
+            else if (productCategory == 4) {
+                // Ask for the product ID input
+                System.out.print("\nEnter the Product Number of the item to be deleted: ");
+                int productID = deleteProductInput.nextInt();
+
+                // Pass the productID to deleteProduct
+                Furnitures.deleteProduct(productID);
+            }
+            else {
+                System.out.println("Invalid product category input.");
+            }
         }
-        else if (productCategory == 2) {
-            // Ask for the product ID input
-            System.out.print("\nEnter the Product Number of the item to be deleted: ");
-            int productID = deleteProductInput.nextInt();
-
-            // Pass the productID to deleteProduct
-            Clothings.deleteProduct(productID);
-        }
-        else if (productCategory == 3) {
-            // Ask for the product ID input
-            System.out.print("\nEnter the Product Number of the item to be deleted: ");
-            int productID = deleteProductInput.nextInt();
-
-            // Pass the productID to deleteProduct
-            Toys.deleteProduct(productID);
-        }
-        else if (productCategory == 4) {
-            // Ask for the product ID input
-            System.out.print("\nEnter the Product Number of the item to be deleted: ");
-            int productID = deleteProductInput.nextInt();
-
-            // Pass the productID to deleteProduct
-            Furnitures.deleteProduct(productID);
-        }
-        else {
-            System.out.println("Invalid product category input.");
+        catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a valid number from the list.");
+            deleteProductInput.next();
         }
     }
 }
@@ -207,26 +235,33 @@ class DisplayProducts {
 
     // Ask user for product category
     public void displayProduct() {
-        System.out.println("\nSelect product category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures: ");
-        System.out.print(">>> ");
-        int productCategory = displayProductInput.nextInt();
+        // try-catch block to handle InputMismatchException
+        try {
+            System.out.println("\nSelect product category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures: ");
+            System.out.print(">>> ");
+            int productCategory = displayProductInput.nextInt();
 
-        // Display products according to category requested
-        switch (productCategory) {
-            case 1:
-                Electronics.viewProducts();
-                break;
-            case 2:
-                Clothings.viewProducts();
-                break;
-            case 3:
-                Toys.viewProducts();
-                break;
-            case 4:
-                Furnitures.viewProducts();
-                break;
-            default:
-                System.out.println("Invalid product category.");
+            // Display products according to category requested
+            switch (productCategory) {
+                case 1:
+                    Electronics.viewProducts();
+                    break;
+                case 2:
+                    Clothings.viewProducts();
+                    break;
+                case 3:
+                    Toys.viewProducts();
+                    break;
+                case 4:
+                    Furnitures.viewProducts();
+                    break;
+                default:
+                    System.out.println("Invalid product category.");
+            }
+        }
+        catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a valid number from the list.");
+            displayProductInput.next();
         }
     }
 }

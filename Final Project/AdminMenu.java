@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.InputMismatchException;
 
 // Create Admin menu class
 class AdminMenu {
@@ -11,41 +12,49 @@ class AdminMenu {
         boolean keepAdminMenu = true;
 
         while (keepAdminMenu) {
-            System.out.println("Admin Menu");
-            System.out.println("1. Manage Products");
-            System.out.println("2. Process Sales");
-            System.out.println("3. View Reports");
-            System.out.println("4. Logout");
-            System.out.print("Enter your choice: ");
+            //try-catch block to handle InputMismatchException
+            try {
+                System.out.println("Admin Menu");
+                System.out.println("1. Manage Products");
+                System.out.println("2. Process Sales");
+                System.out.println("3. View Reports");
+                System.out.println("4. Logout");
+                System.out.print("Enter your choice: ");
 
-            int adminOption = adminInput.nextInt();
+                int adminOption = adminInput.nextInt();
 
-            // Check if the admin wants to manage products, process sales, view reports, or logout
-            switch (adminOption) {
-                case 1:
-                    // Go to manage products menu
-                    ManageProducts manageProducts = new ManageProducts();
-                    manageProducts.displayMenu();
-                    break;
-                case 2:
-                    // Process sales
-                    System.out.println("Process Sales");
-                    break;
-                case 3:
-                    // View reports
-                    System.out.println("View Reports");
-                    break;
-                case 4:
-                    // Logout and return to Login menu
-                    System.out.println("You are logged out.\n");
+                // Check if the admin wants to manage products, process sales, view reports, or logout
+                switch (adminOption) {
+                    case 1:
+                        // Go to manage products menu
+                        ManageProducts manageProducts = new ManageProducts();
+                        manageProducts.displayMenu();
+                        break;
+                    case 2:
+                        // Process sales
+                        System.out.println("Process Sales");
+                        break;
+                    case 3:
+                        // View reports
+                        System.out.println("View Reports");
+                        break;
+                    case 4:
+                        // Logout and return to Login menu
+                        System.out.println("You are logged out.\n");
 
-                    // Set login status to false
-                    keepAdminMenu = false;
+                        // Set login status to false
+                        keepAdminMenu = false;
 
-                    // Return to Login menu
-                    DeptStoreInfoSys.main(null);
-                    break;
-                default:
+                        // Return to Login menu
+                        DeptStoreInfoSys.main(null);
+                        break;
+                    default:
+                        System.out.println("\nInvalid option. Please try again.\n");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("\nInvalid input, please enter a number from the menu.\n");
+                adminInput.next();
             }
         }
     }
