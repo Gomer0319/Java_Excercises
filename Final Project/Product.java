@@ -11,6 +11,7 @@ interface Product {
     String getCategory();
 
     void setProduct(int ID, String name, double price, int quantity);
+    void setProductQty(int qty);
 }
 
 // Create Electronics class that implements the Product interface.
@@ -182,6 +183,11 @@ class Electronics implements Product {
         this.ID = ID;
         this.name = name;
         this.price = price;
+        this.quantity = quantity;
+    }
+
+    @Override
+    public void setProductQty(int quantity) {
         this.quantity = quantity;
     }
 }
@@ -357,6 +363,11 @@ class Clothings implements Product {
         this.price = price;
         this.quantity = quantity;
     }
+
+    @Override
+    public void setProductQty(int quantity) {
+        this.quantity = quantity;
+    }
 }
 
 // Create Toys class that implements the Product interface
@@ -530,6 +541,11 @@ class Toys implements Product {
         this.price = price;
         this.quantity = quantity;
     }
+
+    @Override
+    public void setProductQty(int quantity) {
+        this.quantity = quantity;
+    }
 }
 
 // Create Furnitures class that implements the Product interface
@@ -701,6 +717,11 @@ class Furnitures implements Product {
         this.ID = ID;
         this.name = name;
         this.price = price;
+        this.quantity = quantity;
+    }
+
+    @Override
+    public void setProductQty(int quantity) {
         this.quantity = quantity;
     }
 }

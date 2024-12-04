@@ -14,9 +14,9 @@ class AdminMenu {
         while (keepAdminMenu) {
             //try-catch block to handle InputMismatchException
             try {
-                System.out.println("Admin Menu");
+                System.out.println("\nAdmin Menu");
                 System.out.println("1. Manage Products");
-                System.out.println("2. Process Sales");
+                System.out.println("2. Sales");
                 System.out.println("3. View Reports");
                 System.out.println("4. Logout");
                 System.out.print("Enter your choice: ");
@@ -31,8 +31,9 @@ class AdminMenu {
                         manageProducts.displayMenu();
                         break;
                     case 2:
-                        // Process sales
-                        System.out.println("Process Sales");
+                        // Go to sales menu
+                        Sales sales = new Sales();
+                        sales.salesMenu();
                         break;
                     case 3:
                         // View reports
@@ -52,10 +53,12 @@ class AdminMenu {
                         System.out.println("\nInvalid option. Please try again.\n");
                         break;
                 }
-            } catch (InputMismatchException e) {
+            } 
+            catch (InputMismatchException e) {
                 System.out.println("\nInvalid input, please enter a number from the menu.\n");
                 adminInput.next();
             }
         }
     }
 }
+
