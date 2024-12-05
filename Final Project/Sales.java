@@ -14,17 +14,19 @@ class Sales {
         while (keepSalesMenu) {
             //try-catch block to handle InputMismatchException
             try {
-                System.out.println("\nSales Menu");
-                System.out.println("1. New Sale");
+                System.out.println("\n=============================================");
+                System.out.println("Sales Menu");
+                System.out.println("---------------------------------------------");
+                System.out.println("1. Sale Cart");
                 System.out.println("2. View Cart");
-                System.out.println("3. Edit Cart");
-                System.out.println("4. Finalize Sale");
-                System.out.println("5. Return to Admin Menu");
+                System.out.println("3. Finalize Sale");
+                System.out.println("4. Return to Admin Menu");
+                System.out.println("=============================================");
                 System.out.print("Enter your choice: ");
 
                 int salesOption = salesInput.nextInt();
 
-                // Check if the admin wants to make a new sale, view cart, edit cart, finalize sale, or return to admin menu
+                // Check if the admin wants to make a new sale, view cart finalize sale, or return to admin menu
                 switch (salesOption) {
                     case 1:
                         // Go to sales cart menu
@@ -37,14 +39,11 @@ class Sales {
                         viewCart.displayCart();   
                         break;
                     case 3:
-                        // testing code
-                        System.out.println("Edit Cart");
+                        // Go to finalize sale menu
+                        FinalizeSale finalizeSale = new FinalizeSale();
+                        finalizeSale.finalizeSale();
                         break;
                     case 4:
-                        // testing code
-                        System.out.println("Finalize Sale");
-                        break;
-                    case 5:
                         // Go to admin menu
                         AdminMenu adminMenu = new AdminMenu();
                         adminMenu.displayMenu();
@@ -75,7 +74,9 @@ class NewSale {
         while (keepNewSaleMenu) {
             //try-catch block to handle InputMismatchException
             try {
-                System.out.println("\nSales Cart");
+                System.out.println("\n=============================================");
+                System.out.println("Sales Cart");
+                System.out.println("---------------------------------------------");
                 System.out.println("Select a Category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures\n5. Return");
                 System.out.print(">>> ");
                 int categoryChoice = newSaleInput.nextInt();
@@ -137,12 +138,58 @@ class NewSale {
                         }
                         break;
                     case 3:
-                        // Testing code
-                        System.out.println("Toys");
+                        // Take input for product ID
+                        System.out.print("\nEnter the Product ID Number of the item to be sold: ");
+                        productID = newSaleInput.nextInt();
+
+                        // Check if the product ID is available in the electronics list
+                        for (int i = 0; i < Toys.toys.size(); i++) {
+                            //Check if product ID matches
+                            if (Toys.toys.get(i).getProductID() == productID) {
+                                // Take input for quantity sold
+                                System.out.print("\nEnter the quantity sold: ");
+                                int quantitySold = newSaleInput.nextInt();
+
+                                // Check if the quantity sold is less than or equal to the product quantity
+                                if (quantitySold <= Toys.toys.get(i).getProductQty()) {
+                                    // get the values of product ID, and quantity sold, and store it in the cart
+                                    ToysCart.addedToCart(productID, quantitySold);
+                                }
+                                else {
+                                    System.out.println("The quantity sold is greater than the product quantity.");
+                                }
+                            }
+                            else {
+                                System.out.println("Product ID not found.");
+                            }   
+                        }
                         break;
                     case 4:
-                        // Testing code
-                        System.out.println("Furnitures");
+                        // Take input for product ID
+                        System.out.print("\nEnter the Product ID Number of the item to be sold: ");
+                        productID = newSaleInput.nextInt();
+
+                        // Check if the product ID is available in the furnitures list
+                        for (int i = 0; i < Furnitures.furnitures.size(); i++) {
+                            //Check if product ID matches
+                            if (Clothings.clothings.get(i).getProductID() == productID) {
+                                // Take input for quantity sold
+                                System.out.print("\nEnter the quantity sold: ");
+                                int quantitySold = newSaleInput.nextInt();
+
+                                // Check if the quantity sold is less than or equal to the product quantity
+                                if (quantitySold <= Furnitures.furnitures.get(i).getProductQty()) {
+                                    // get the values of product ID, and quantity sold, and store it in the cart
+                                    FurnituresCart.addedToCart(productID, quantitySold);
+                                }
+                                else {
+                                    System.out.println("The quantity sold is greater than the product quantity.");
+                                }
+                            }
+                            else {
+                                System.out.println("Product ID not found.");
+                            }   
+                        }
                         break;
                     case 5:
                         // Go to sales menu
@@ -167,8 +214,53 @@ class NewSale {
 // Create ViewCart class to view contents of all cart (like a receipt)
 class ViewCart {
     public void displayCart() {
+        // Scanner object to read user input
+        Scanner confirmInput = new Scanner(System.in);
+
         // Display all items in all carts
+        System.out.println("\n=============================================");
         ElectronicsCart.viewCart();
         ClothingsCart.viewCart();
+        System.out.println("=============================================");
+
+        // Ask admin if they want to finalize the sale
+        System.out.println("Should we finalize the sale? (y/n)");
+        String confirm = confirmInput.nextLine();
+
+        // Check if the admin wants to finalize the sale
+        if (confirm.equals("y")) {
+            // Go to finalize sale menu
+            System.out.println("\nFinalizing Sale...");
+            FinalizeSale finalizeSale = new FinalizeSale();
+            finalizeSale.finalizeSale();
+        }
+        else {
+            // Go to New Sale menu
+            System.out.println("\nReturning to Cart.");
+            NewSale newSale = new NewSale();
+            newSale.addToCart();
+        }
+    }
+}
+
+// Create FinalizeSaleclass to finalize sale, compute total cost to be paid, print a receipt, and update Sales (emptying carts and storing sales in Sales List for Reports)
+class FinalizeSale {
+    public void finalizeSale() {
+        // Scanner object to read user input
+        Scanner finalizeSaleInput = new Scanner(System.in);
+
+        // Check if there are any items in the cart
+        if (ElectronicsCart.electronicsCart.size() == 0 && ClothingsCart.clothingsCart.size() == 0) {
+            // Go to sales menu
+            System.out.println("There are no items in the cart. Returning to Sales Menu.");
+            Sales sales = new Sales();
+            sales.salesMenu();
+        }
+        else {
+            double electronicsTotal = ElectronicsCart.calculateTotalCost();
+            double clothingsTotal = ClothingsCart.calculateTotalCost();
+
+            System.out.println("Grand Total to be paid: $" + (electronicsTotal + clothingsTotal));
+        }
     }
 }

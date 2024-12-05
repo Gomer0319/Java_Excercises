@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.InputMismatchException;
 
 // Create Admin menu class
 class AdminMenu {
@@ -14,13 +13,16 @@ class AdminMenu {
         while (keepAdminMenu) {
             //try-catch block to handle InputMismatchException
             try {
-                System.out.println("\nAdmin Menu");
+                System.out.println("\n=============================================");
+                System.out.println("Admin Menu");
+                System.out.println("---------------------------------------------");
                 System.out.println("1. Manage Products");
                 System.out.println("2. Sales");
                 System.out.println("3. View Reports");
                 System.out.println("4. Logout");
+                System.out.println("=============================================");
                 System.out.print("Enter your choice: ");
-
+                
                 int adminOption = adminInput.nextInt();
 
                 // Check if the admin wants to manage products, process sales, view reports, or logout

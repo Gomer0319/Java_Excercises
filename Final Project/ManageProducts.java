@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.InputMismatchException;
 
 // Create manage products class where we add, edit(update), view and delete products. (Products will include ID, name, price, quantity, and category)
 class ManageProducts {
@@ -14,12 +13,15 @@ class ManageProducts {
         while (keepManaging) {
             // try-catch block to handle InputMismatchException
             try {
-                System.out.println("\nManage Products");
+                System.out.println("\n=============================================");
+                System.out.println("Manage Products");
+                System.out.println("---------------------------------------------");
                 System.out.println("1. Add Product");
                 System.out.println("2. Edit Product");
                 System.out.println("3. View Products");
                 System.out.println("4. Delete Product");
                 System.out.println("5. Return to Admin Menu");
+                System.out.println("=============================================");
                 System.out.print("Enter your choice: ");
 
                 int productOption = productInput.nextInt();
@@ -72,7 +74,9 @@ class AddProduct {
     public void addProduct() {
         // try-catch block to handle InputMismatchException
         try {
-            System.out.println("\nAdd Product");
+            System.out.println("\n=============================================");
+            System.out.println("Add Product");
+            System.out.println("---------------------------------------------");
             System.out.println("Select product category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures");
             System.out.print(">>> ");
             int productCategory = addProductInput.nextInt();

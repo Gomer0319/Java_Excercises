@@ -13,9 +13,11 @@ public class DeptStoreInfoSys {
         while (!loginStatus) {
             // Try catch block to handle InputMismatchException
             try {
+                System.out.println("\n=============================================");
                 System.out.println("Welcome to the Department Store Info System");
                 System.out.println("1. Login");
                 System.out.println("2. Exit");
+                System.out.println("=============================================");
                 System.out.print("Enter your choice: ");
                 int userOption = userInput.nextInt();
 

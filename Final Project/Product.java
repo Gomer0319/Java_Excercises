@@ -35,26 +35,45 @@ class Electronics implements Product {
 
     // Method to addProducts from addProduct class
     public static void addProduct(int ID, String name, double price, int quantity) {
-        // Check if there is a product with the same ID
+        // Check if there is a product ID and name already exist, if there are, add the quantity of the existing product. If 
+        // the ID already exist but with a different name, display an error message that the ID is already in use. If the name 
+        // already exist but with a different ID, display an error message that the name is already in use. If it is a new product, 
+        // add it to the list.
+
+        // Check if the product already exists in the list
+        boolean productExists = false;
+
         for (int i = 0; i < electronics.size(); i++) {
             Electronics product = electronics.get(i);
-            if (product.getProductID() == ID) {
-                System.out.println("Product with ID " + ID + " already exists in Electronics category.");
+            // Check if the product ID + name already exists and the cost is the same
+            if (product.getProductID() == ID && product.getProductName().equals(name) && product.getProductPrice() == price) {
+                // If the product exists, add the quantity to the existing product
+                System.out.println("\n (" + quantity + ") Product " + name + " with ID " + ID + " has been added successfully.");
+                product.setProductQty(product.getProductQty() + quantity);
+                productExists = true;
+                break;
+            }
+            // Check if the product ID already exists but with a different name
+            else if (product.getProductID() != ID && product.getProductName().equals(name)) {
+                System.out.println("Product with name " + name + " already exists in Electronics category.");
                 return;
             }
-            // Check if there is a product with the same name through else if statement
-            else if (product.getProductName().equals(name)) {
-                System.out.println("Product with name " + name + " already exists in Electronics category.");
+            // Check if the product name already exists but with a different ID
+            else if (product.getProductID() == ID && !product.getProductName().equals(name)) {
+                System.out.println("Product with ID " + ID + " already exists in Electronics category.");
                 return;
             }
             // if the ID and name are unique, continue to add the product
             else {
                 continue;
             }
+
         }
-        // Add the product to the electronics list
-        electronics.add(new Electronics(ID, name, price, quantity));
-        System.out.println("Product " + name + " with ID " + ID + " has been added successfully.");
+        // If the product does not exist, add it to the list
+        if (!productExists) {
+            electronics.add(new Electronics(ID, name, price, quantity));
+            System.out.println("\n (" + quantity + ") Product " + name + " with ID " + ID + " has been added successfully.");
+        }
     }
 
     // Method to update Products
@@ -143,12 +162,15 @@ class Electronics implements Product {
             System.out.println("No products found in Electronics category.");
         }
         else {
+            System.out.println("\n=============================================");
             System.out.println("Products in Electronics category:");
+            System.out.println("---------------------------------------------");
             // Loop through the electronics list and display the products, one by one, one product per line in the console
             for (int i = 0; i < electronics.size(); i++) {
                 Electronics product = electronics.get(i);
                 System.out.println("|| ID: " + product.getProductID() + " || Name: " + product.getProductName() + " || Price: Php " + product.getProductPrice() + " || Quantity: " + product.getProductQty() + " ||");
             }
+            System.out.println("=============================================");
         }
     }
 
@@ -325,7 +347,9 @@ class Clothings implements Product {
             // Loop through the clothings list and display the products, one by one, one product per line in the console
             for (int i = 0; i < clothings.size(); i++) {
                 Clothings product = clothings.get(i);
+                System.out.println("=============================================");
                 System.out.println("|| ID: " + product.getProductID() + " || Name: " + product.getProductName() + " || Price: Php " + product.getProductPrice() + " || Quantity: " + product.getProductQty() + " ||");
+                System.out.println("=============================================");
             }
         }
     }
@@ -503,7 +527,9 @@ class Toys implements Product {
             // Loop through the toys list and display the products, one by one, one product per line in the console
             for (int i = 0; i < toys.size(); i++) {
                 Toys product = toys.get(i);
+                System.out.println("=============================================");
                 System.out.println("|| ID: " + product.getProductID() + " || Name: " + product.getProductName() + " || Price: Php " + product.getProductPrice() + " || Quantity: " + product.getProductQty() + " ||");
+                System.out.println("=============================================");
             }
         }
     }
@@ -681,7 +707,9 @@ class Furnitures implements Product {
             // Loop through the toys list and display the products, one by one, one product per line in the console
             for (int i = 0; i < furnitures.size(); i++) {
                 Furnitures product = furnitures.get(i);
+                System.out.println("=============================================");
                 System.out.println("|| ID: " + product.getProductID() + " || Name: " + product.getProductName() + " || Price: Php " + product.getProductPrice() + " || Quantity: " + product.getProductQty() + " ||");
+                System.out.println("=============================================");
             }
         }
     }
