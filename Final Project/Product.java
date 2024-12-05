@@ -343,14 +343,15 @@ class Clothings implements Product {
             System.out.println("No products found in Clothings category.");
         }
         else {
+            System.out.println("=============================================");
             System.out.println("Products in Clothings category:");
+            System.out.println("---------------------------------------------");
             // Loop through the clothings list and display the products, one by one, one product per line in the console
             for (int i = 0; i < clothings.size(); i++) {
                 Clothings product = clothings.get(i);
-                System.out.println("=============================================");
                 System.out.println("|| ID: " + product.getProductID() + " || Name: " + product.getProductName() + " || Price: Php " + product.getProductPrice() + " || Quantity: " + product.getProductQty() + " ||");
-                System.out.println("=============================================");
             }
+            System.out.println("=============================================");
         }
     }
 
@@ -523,14 +524,16 @@ class Toys implements Product {
             System.out.println("No products found in Toys category.");
         }
         else {
+            System.out.println("=============================================");
             System.out.println("Products in Toys category:");
+            System.out.println("---------------------------------------------");
             // Loop through the toys list and display the products, one by one, one product per line in the console
             for (int i = 0; i < toys.size(); i++) {
                 Toys product = toys.get(i);
-                System.out.println("=============================================");
                 System.out.println("|| ID: " + product.getProductID() + " || Name: " + product.getProductName() + " || Price: Php " + product.getProductPrice() + " || Quantity: " + product.getProductQty() + " ||");
-                System.out.println("=============================================");
+                
             }
+            System.out.println("=============================================");
         }
     }
 
@@ -703,14 +706,15 @@ class Furnitures implements Product {
             System.out.println("No products found in Furnitures category.");
         }
         else {
-            System.out.println("Products in Toys category:");
+            System.out.println("=============================================");
+            System.out.println("Products in Furnitures category:");
+            System.out.println("---------------------------------------------");
             // Loop through the toys list and display the products, one by one, one product per line in the console
             for (int i = 0; i < furnitures.size(); i++) {
                 Furnitures product = furnitures.get(i);
-                System.out.println("=============================================");
-                System.out.println("|| ID: " + product.getProductID() + " || Name: " + product.getProductName() + " || Price: Php " + product.getProductPrice() + " || Quantity: " + product.getProductQty() + " ||");
-                System.out.println("=============================================");
+                System.out.println("|| ID: " + product.getProductID() + " || Name: " + product.getProductName() + " || Price: Php " + product.getProductPrice() + " || Quantity: " + product.getProductQty() + " ||");      
             }
+            System.out.println("=============================================");
         }
     }
 

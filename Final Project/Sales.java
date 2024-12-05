@@ -81,17 +81,20 @@ class NewSale {
                 System.out.print(">>> ");
                 int categoryChoice = newSaleInput.nextInt();
 
-                
+                boolean productExists = false;
+
                 switch (categoryChoice) {
                     case 1:
                         // Take input for product ID
                         System.out.print("\nEnter the Product ID Number of the item to be sold: ");
                         int productID = newSaleInput.nextInt();
+                        productExists = false;
 
                         // Check if the product ID is available in the electronics list
                         for (int i = 0; i < Electronics.electronics.size(); i++) {
                             //Check if product ID matches
                             if (Electronics.electronics.get(i).getProductID() == productID) {
+                                productExists = true;
                                 // Take input for quantity sold
                                 System.out.print("\nEnter the quantity sold: ");
                                 int quantitySold = newSaleInput.nextInt();
@@ -104,21 +107,25 @@ class NewSale {
                                 else {
                                     System.out.println("The quantity sold is greater than the product quantity.");
                                 }
-                            }
-                            else {
-                                System.out.println("Product ID not found.");
+                                break;
                             }   
+                        }
+
+                        if (!productExists) {
+                            System.out.println("Product ID not found.");
                         }
                         break;
                     case 2:
                         // Take input for product ID
                         System.out.print("\nEnter the Product ID Number of the item to be sold: ");
                         productID = newSaleInput.nextInt();
+                        productExists = false;
 
                         // Check if the product ID is available in the electronics list
                         for (int i = 0; i < Clothings.clothings.size(); i++) {
                             //Check if product ID matches
                             if (Clothings.clothings.get(i).getProductID() == productID) {
+                                productExists = true;
                                 // Take input for quantity sold
                                 System.out.print("\nEnter the quantity sold: ");
                                 int quantitySold = newSaleInput.nextInt();
@@ -131,21 +138,25 @@ class NewSale {
                                 else {
                                     System.out.println("The quantity sold is greater than the product quantity.");
                                 }
-                            }
-                            else {
-                                System.out.println("Product ID not found.");
+                                break;
                             }   
+                        }
+
+                        if (!productExists) {
+                            System.out.println("Product ID not found.");
                         }
                         break;
                     case 3:
                         // Take input for product ID
                         System.out.print("\nEnter the Product ID Number of the item to be sold: ");
                         productID = newSaleInput.nextInt();
+                        productExists = false;
 
                         // Check if the product ID is available in the electronics list
                         for (int i = 0; i < Toys.toys.size(); i++) {
                             //Check if product ID matches
                             if (Toys.toys.get(i).getProductID() == productID) {
+                                productExists = true;
                                 // Take input for quantity sold
                                 System.out.print("\nEnter the quantity sold: ");
                                 int quantitySold = newSaleInput.nextInt();
@@ -158,21 +169,25 @@ class NewSale {
                                 else {
                                     System.out.println("The quantity sold is greater than the product quantity.");
                                 }
-                            }
-                            else {
-                                System.out.println("Product ID not found.");
+                                break;
                             }   
+                        }
+
+                        if (!productExists) {
+                            System.out.println("Product ID not found.");
                         }
                         break;
                     case 4:
                         // Take input for product ID
                         System.out.print("\nEnter the Product ID Number of the item to be sold: ");
                         productID = newSaleInput.nextInt();
+                        productExists = false;
 
                         // Check if the product ID is available in the furnitures list
                         for (int i = 0; i < Furnitures.furnitures.size(); i++) {
                             //Check if product ID matches
-                            if (Clothings.clothings.get(i).getProductID() == productID) {
+                            if (Furnitures.furnitures.get(i).getProductID() == productID) {
+                                productExists = true;
                                 // Take input for quantity sold
                                 System.out.print("\nEnter the quantity sold: ");
                                 int quantitySold = newSaleInput.nextInt();
@@ -185,10 +200,11 @@ class NewSale {
                                 else {
                                     System.out.println("The quantity sold is greater than the product quantity.");
                                 }
-                            }
-                            else {
-                                System.out.println("Product ID not found.");
+                                break; 
                             }   
+                        }
+                        if (!productExists) {
+                            System.out.println("Product ID not found.");
                         }
                         break;
                     case 5:
@@ -218,10 +234,13 @@ class ViewCart {
         Scanner confirmInput = new Scanner(System.in);
 
         // Display all items in all carts
-        System.out.println("\n=============================================");
+        System.out.println("\n=============================================================");
+        System.out.println("||          ID         ||     Product Name       ||  Qty ||     Total    ||");
         ElectronicsCart.viewCart();
         ClothingsCart.viewCart();
-        System.out.println("=============================================");
+        ToysCart.viewCart();
+        FurnituresCart.viewCart();
+        System.out.println("=============================================================");
 
         // Ask admin if they want to finalize the sale
         System.out.println("Should we finalize the sale? (y/n)");
@@ -259,8 +278,37 @@ class FinalizeSale {
         else {
             double electronicsTotal = ElectronicsCart.calculateTotalCost();
             double clothingsTotal = ClothingsCart.calculateTotalCost();
+            double toysTotal = ToysCart.calculateTotalCost();
+            double furnituresTotal = FurnituresCart.calculateTotalCost();
 
-            System.out.println("Grand Total to be paid: $" + (electronicsTotal + clothingsTotal));
+            System.out.println("\nGrand Total to be paid: Php" + (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal));
+
+            // Ask admin if they want to finalize the sale
+            System.out.println("Should we finalize the sale? (y/n)");
+            String confirm = finalizeSaleInput.nextLine();
+
+            // Check if the admin wants to finalize the sale and print a receipt
+            if (confirm.equals("y")) {
+                // Print receipt
+                System.out.println("\n=============================================================");
+                System.out.println("                            Receipt                    ");
+                System.out.println("-------------------------------------------------------------");
+                System.out.println("||        ID       ||   Product Name    ||  Qty ||   Total    ||");
+                ElectronicsCart.viewCart();
+                ClothingsCart.viewCart();
+                ToysCart.viewCart();
+                FurnituresCart.viewCart();
+                System.out.println("=============================================================");
+                System.out.println("Grand Total:                           >>> Php" + (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal));
+
+                System.out.println("\nThank you for shopping with us!\n");
+
+                // empty all carts
+                ElectronicsCart.emptyCart();
+                ClothingsCart.emptyCart();
+                ToysCart.emptyCart();
+                FurnituresCart.emptyCart();
+            }  
         }
     }
 }

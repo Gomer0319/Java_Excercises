@@ -38,31 +38,39 @@ class ElectronicsCart implements Cart {
 
     // Method that adds products to the electronics cart
     public static void addedToCart(int ID, int quantity) {
-        // Deduct quantity of the item based on the ID in the quantity available in Electronics.electronics
-        for (int i = 0; i < Electronics.electronics.size(); i++) {
-            if (Electronics.electronics.get(i).getProductID() == ID) {
-                Electronics.electronics.get(i).setProductQty(Electronics.electronics.get(i).getProductQty() - quantity);
+        boolean found = false;
+
+        // Check if the product is already in the electronics cart
+        for (ElectronicsCart cartItem : electronicsCart) {
+            if (cartItem.getProductID() == ID) {
+                // Deduct quantity of the item based on the ID in the quantity available
+                for (Product product : Electronics.electronics) {
+                    if (product.getProductID() == ID) {
+                        product.setProductQty(product.getProductQty() - quantity);
+                        break;
+                    }
+                }
+                // Update the quantity in the cart
+                cartItem.setProductQty(cartItem.getProductQty() + quantity);
+                System.out.println("\nProduct (" + quantity + ") " + cartItem.getProductName() + " added to Electronics Cart successfully.");
+                found = true;
+                break;
             }
-
-            // Check if the product is already in the cart
-            boolean productExistsInCart = false;
-
-            for (ElectronicsCart cartItem : electronicsCart) {
-                if (cartItem.getProductID() == ID) {
-                    // Update the quantity in the cart
-                    cartItem.quantity += quantity;
-                    System.out.println("\nProduct (" + quantity + ") " + Electronics.electronics.get(i).getProductName() + " added to Electronics Cart successfully.");
-                    productExistsInCart = true;
+        }
+        // If the product is not yet in the electronics cart, add it
+        if (!found) {
+            for (Product product : Electronics.electronics) {
+                if (product.getProductID() == ID) {
+                    // Deduct quantity of the item based on the ID in the quantity available
+                    product.setProductQty(product.getProductQty() - quantity);
+                    
+                    // Add the product to the electronics cart
+                    ElectronicsCart newCartItem = new ElectronicsCart(ID, product.getProductName(), product.getProductPrice(), quantity);
+                    electronicsCart.add(newCartItem);
+                    System.out.println("\nProduct (" + quantity + ") " + product.getProductName() + " added to Electronics Cart successfully.");
                     break;
                 }
             }
-            
-            if (!productExistsInCart) {
-                // Add the product to the electronics cart
-                electronicsCart.add(new ElectronicsCart(ID, Electronics.electronics.get(i).getProductName(), Electronics.electronics.get(i).getProductPrice(), quantity));
-                System.out.println("\nProduct (" + quantity + ") " + Electronics.electronics.get(i).getProductName() + " added to Electronics Cart successfully.");
-            }
-            return;
         }
     }
 
@@ -76,7 +84,7 @@ class ElectronicsCart implements Cart {
             // Display the products in the electronics cart
             for (int i = 0; i < electronicsCart.size(); i++) {
                 // Display the product details with category
-                System.out.println("|| Product ID: " + electronicsCart.get(i).getCategory() + electronicsCart.get(i).getProductID() + " || Product Name: " + electronicsCart.get(i).getProductName() + " || Product Unit Price: Php" + electronicsCart.get(i).getProductPrice() + " || Quantity: " + electronicsCart.get(i).getProductQty() + " ||");
+                System.out.println("||  " + electronicsCart.get(i).getCategory() + electronicsCart.get(i).getProductID() + "    ||      " + electronicsCart.get(i).getProductName() + "     ||  " + electronicsCart.get(i).getProductQty() + "  ||  " + electronicsCart.get(i).getProductPrice() * electronicsCart.get(i).getProductQty() + "   ||");
             } 
         }
     }
@@ -90,11 +98,14 @@ class ElectronicsCart implements Cart {
         for (int i = 0; i < electronicsCart.size(); i++) {
             totalCost += electronicsCart.get(i).getProductPrice() * electronicsCart.get(i).getProductQty();
         }
-
         return totalCost;
     }
 
-    
+    // Create a method to empty the electronics cart if the purchase is successful
+    public static void emptyCart() {
+        electronicsCart.clear();
+    }
+
     // implement interface methods
     @Override
     public int getProductID() {
@@ -162,31 +173,39 @@ class ClothingsCart implements Cart {
 
     // Method that adds products to the clothings cart
     public static void addedToCart(int ID, int quantity) {
-        // Deduct quantity of the item based on the ID in the quantity available
-        for (int i = 0; i < ClothingsCart.clothingsCart.size(); i++) {
-            if (ClothingsCart.clothingsCart.get(i).getProductID() == ID) {
-                ClothingsCart.clothingsCart.get(i).setProductQty(ClothingsCart.clothingsCart.get(i).getProductQty() - quantity);
+        boolean found = false;
+
+        // Check if the product is already in the clothings cart
+        for (ClothingsCart cartItem : clothingsCart) {
+            if (cartItem.getProductID() == ID) {
+                // Deduct quantity of the item based on the ID in the quantity available
+                for (Product product : Clothings.clothings) {
+                    if (product.getProductID() == ID) {
+                        product.setProductQty(product.getProductQty() - quantity);
+                        break;
+                    }
+                }
+                // Update the quantity in the cart
+                cartItem.setProductQty(cartItem.getProductQty() + quantity);
+                System.out.println("\nProduct (" + quantity + ") " + cartItem.getProductName() + " added to Clothings Cart successfully.");
+                found = true;
+                break;
             }
-
-            // Check if the product is already in the cart
-            boolean productExistsInCart = false;
-
-            for (ClothingsCart cartItem : clothingsCart) {
-                if (cartItem.getProductID() == ID) {
-                    // Update the quantity in the cart
-                    cartItem.quantity += quantity;
-                    System.out.println("\nProduct (" + quantity + ") " + ClothingsCart.clothingsCart.get(i).getProductName() + " added to Clothings Cart successfully.");
-                    productExistsInCart = true;
+        }
+        // If the product is not yet in the clothings cart, add it
+        if (!found) {
+            for (Product product : Clothings.clothings) {
+                if (product.getProductID() == ID) {
+                    // Deduct quantity of the item based on the ID in the quantity available
+                    product.setProductQty(product.getProductQty() - quantity);
+                    
+                    // Add the product to the electronics cart
+                    ClothingsCart newCartItem = new ClothingsCart(ID, product.getProductName(), product.getProductPrice(), quantity);
+                    clothingsCart.add(newCartItem);
+                    System.out.println("\nProduct (" + quantity + ") " + product.getProductName() + " added to Clothings Cart successfully.");
                     break;
                 }
             }
-            
-            if (!productExistsInCart) {
-                // Add the product to the clothings cart
-                clothingsCart.add(new ClothingsCart(ID, ClothingsCart.clothingsCart.get(i).getProductName(), ClothingsCart.clothingsCart.get(i).getProductPrice(), quantity));
-                System.out.println("\nProduct (" + quantity + ") " + ClothingsCart.clothingsCart.get(i).getProductName() + " added to Clothings Cart successfully.");
-            }
-            return;
         }
     }
 
@@ -200,7 +219,7 @@ class ClothingsCart implements Cart {
             // Display the products in the clothings cart
             for (int i = 0; i < clothingsCart.size(); i++) {
                 // Display the product details
-                System.out.println("|| Product ID: " + clothingsCart.get(i).getCategory() + clothingsCart.get(i).getProductID() + " || Product Name: " + clothingsCart.get(i).getProductName() + " || Product Unit Price: Php" + clothingsCart.get(i).getProductPrice() + " || Quantity: " + clothingsCart.get(i).getProductQty() + " ||");
+                System.out.println("||  " + clothingsCart.get(i).getCategory() + clothingsCart.get(i).getProductID() + "    ||      " + clothingsCart.get(i).getProductName() + "       ||  " + clothingsCart.get(i).getProductQty() + "    ||  " + clothingsCart.get(i).getProductPrice() * clothingsCart.get(i).getProductQty() + "   ||");
             } 
         }
     }
@@ -214,8 +233,12 @@ class ClothingsCart implements Cart {
         for (int i = 0; i < clothingsCart.size(); i++) {
             totalCost += clothingsCart.get(i).getProductPrice() * clothingsCart.get(i).getProductQty();
         }
-
         return totalCost;
+    }
+
+    // Create a method to empty the clothings cart if the purchase is successful
+    public static void emptyCart() {
+        clothingsCart.clear();
     }
     
     // implement interface methods
@@ -285,31 +308,39 @@ class ToysCart implements Cart {
 
     // Method that adds products to the toys cart
     public static void addedToCart(int ID, int quantity) {
-        // Deduct quantity of the item based on the ID in the quantity available
-        for (int i = 0; i < ToysCart.toysCart.size(); i++) {
-            if (ToysCart.toysCart.get(i).getProductID() == ID) {
-                ToysCart.toysCart.get(i).setProductQty(ToysCart.toysCart.get(i).getProductQty() - quantity);
+        boolean found = false;
+
+        // Check if the product is already in the toys cart
+        for (ToysCart cartItem : toysCart) {
+            if (cartItem.getProductID() == ID) {
+                // Deduct quantity of the item based on the ID in the quantity available
+                for (Product product : Toys.toys) {
+                    if (product.getProductID() == ID) {
+                        product.setProductQty(product.getProductQty() - quantity);
+                        break;
+                    }
+                }
+                // Update the quantity in the cart
+                cartItem.setProductQty(cartItem.getProductQty() + quantity);
+                System.out.println("\nProduct (" + quantity + ") " + cartItem.getProductName() + " added to Toys Cart successfully.");
+                found = true;
+                break;
             }
-
-            // Check if the product is already in the cart
-            boolean productExistsInCart = false;
-
-            for (ToysCart cartItem : toysCart) {
-                if (cartItem.getProductID() == ID) {
-                    // Update the quantity in the cart
-                    cartItem.quantity += quantity;
-                    System.out.println("\nProduct (" + quantity + ") " + ToysCart.toysCart.get(i).getProductName() + " added to Toys Cart successfully.");
-                    productExistsInCart = true;
+        }
+        // If the product is not yet in the toys cart, add it
+        if (!found) {
+            for (Product product : Toys.toys) {
+                if (product.getProductID() == ID) {
+                    // Deduct quantity of the item based on the ID in the quantity available
+                    product.setProductQty(product.getProductQty() - quantity);
+                    
+                    // Add the product to the electronics cart
+                    ToysCart newCartItem = new ToysCart(ID, product.getProductName(), product.getProductPrice(), quantity);
+                    toysCart.add(newCartItem);
+                    System.out.println("\nProduct (" + quantity + ") " + product.getProductName() + " added to Toys Cart successfully.");
                     break;
                 }
             }
-            
-            if (!productExistsInCart) {
-                // Add the product to the toys cart
-                toysCart.add(new ToysCart(ID, ToysCart.toysCart.get(i).getProductName(), ToysCart.toysCart.get(i).getProductPrice(), quantity));
-                System.out.println("\nProduct (" + quantity + ") " + ToysCart.toysCart.get(i).getProductName() + " added to Toys Cart successfully.");
-            }
-            return;
         }
     }
 
@@ -323,7 +354,7 @@ class ToysCart implements Cart {
             // Display the products in the toys cart
             for (int i = 0; i < toysCart.size(); i++) {
                 // Display the product details with category
-                System.out.println("|| Product ID: " + toysCart.get(i).getCategory() + toysCart.get(i).getProductID() + " || Product Name: " + toysCart.get(i).getProductName() + " || Product Unit Price: Php" + toysCart.get(i).getProductPrice() + " || Quantity: " + toysCart.get(i).getProductQty() + " ||");
+                System.out.println("||  " + toysCart.get(i).getCategory() + toysCart.get(i).getProductID() + "  ||      " + toysCart.get(i).getProductName() + "        ||  " + toysCart.get(i).getProductQty() + " ||  " + toysCart.get(i).getProductPrice() * toysCart.get(i).getProductQty() + " ||");
             } 
         }
     }
@@ -337,11 +368,14 @@ class ToysCart implements Cart {
         for (int i = 0; i < toysCart.size(); i++) {
             totalCost += toysCart.get(i).getProductPrice() * toysCart.get(i).getProductQty();
         }
-
         return totalCost;
     }
 
-    
+    // Create a method to empty the toys cart
+    public static void emptyCart() {
+        toysCart.clear();
+    }
+
     // implement interface methods
     @Override
     public int getProductID() {
@@ -409,31 +443,39 @@ class FurnituresCart implements Cart {
 
     // Method that adds products to the furnitures cart
     public static void addedToCart(int ID, int quantity) {
-        // Deduct quantity of the item based on the ID in the quantity available
-        for (int i = 0; i < FurnituresCart.furnituresCart.size(); i++) {
-            if (FurnituresCart.furnituresCart.get(i).getProductID() == ID) {
-                FurnituresCart.furnituresCart.get(i).setProductQty(FurnituresCart.furnituresCart.get(i).getProductQty() - quantity);
+        boolean found = false;
+
+        // Check if the product is already in the furnitures cart
+        for (FurnituresCart cartItem : furnituresCart) {
+            if (cartItem.getProductID() == ID) {
+                // Deduct quantity of the item based on the ID in the quantity available
+                for (Product product : Furnitures.furnitures) {
+                    if (product.getProductID() == ID) {
+                        product.setProductQty(product.getProductQty() - quantity);
+                        break;
+                    }
+                }
+                // Update the quantity in the cart
+                cartItem.setProductQty(cartItem.getProductQty() + quantity);
+                System.out.println("\nProduct (" + quantity + ") " + cartItem.getProductName() + " added to Furnitures Cart successfully.");
+                found = true;
+                break;
             }
-
-            // Check if the product is already in the cart
-            boolean productExistsInCart = false;
-
-            for (FurnituresCart cartItem : furnituresCart) {
-                if (cartItem.getProductID() == ID) {
-                    // Update the quantity in the cart
-                    cartItem.quantity += quantity;
-                    System.out.println("\nProduct (" + quantity + ") " + FurnituresCart.furnituresCart.get(i).getProductName() + " added to Furnitures Cart successfully.");
-                    productExistsInCart = true;
+        }
+        // If the product is not yet in the furnitures cart, add it
+        if (!found) {
+            for (Product product : Furnitures.furnitures) {
+                if (product.getProductID() == ID) {
+                    // Deduct quantity of the item based on the ID in the quantity available
+                    product.setProductQty(product.getProductQty() - quantity);
+                    
+                    // Add the product to the electronics cart
+                    FurnituresCart newCartItem = new FurnituresCart(ID, product.getProductName(), product.getProductPrice(), quantity);
+                    furnituresCart.add(newCartItem);
+                    System.out.println("\nProduct (" + quantity + ") " + product.getProductName() + " added to Furnitures Cart successfully.");
                     break;
                 }
             }
-            
-            if (!productExistsInCart) {
-                // Add the product to the toys cart
-                furnituresCart.add(new FurnituresCart(ID, FurnituresCart.furnituresCart.get(i).getProductName(), FurnituresCart.furnituresCart.get(i).getProductPrice(), quantity));
-                System.out.println("\nProduct (" + quantity + ") " + FurnituresCart.furnituresCart.get(i).getProductName() + " added to Furnitures Cart successfully.");
-            }
-            return;
         }
     }
 
@@ -447,7 +489,7 @@ class FurnituresCart implements Cart {
             // Display the products in the furnitures cart
             for (int i = 0; i < furnituresCart.size(); i++) {
                 // Display the product details with category
-                System.out.println("|| Product ID: " + furnituresCart.get(i).getCategory() + furnituresCart.get(i).getProductID() + " || Product Name: " + furnituresCart.get(i).getProductName() + " || Product Unit Price: Php" + furnituresCart.get(i).getProductPrice() + " || Quantity: " + furnituresCart.get(i).getProductQty() + " ||");
+                System.out.println("||  " + furnituresCart.get(i).getCategory() + furnituresCart.get(i).getProductID() + "  ||      " + furnituresCart.get(i).getProductName() + "      ||  " + furnituresCart.get(i).getProductQty() + "   ||  " + furnituresCart.get(i).getProductPrice() * furnituresCart.get(i).getProductQty() + " ||");
             } 
         }
     }
@@ -461,11 +503,14 @@ class FurnituresCart implements Cart {
         for (int i = 0; i < furnituresCart.size(); i++) {
             totalCost += furnituresCart.get(i).getProductPrice() * furnituresCart.get(i).getProductQty();
         }
-
         return totalCost;
     }
 
-    
+    // Create a method to empty the furnitures cart if the purchase is successful
+    public static void emptyCart() {
+        furnituresCart.clear();
+    }
+
     // implement interface methods
     @Override
     public int getProductID() {
