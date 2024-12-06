@@ -18,7 +18,7 @@ class AdminMenu {
                 System.out.println("---------------------------------------------");
                 System.out.println("1. Manage Products");
                 System.out.println("2. Sales");
-                System.out.println("3. View Reports");
+                System.out.println("3. View Inventory and Sales");
                 System.out.println("4. Logout");
                 System.out.println("=============================================");
                 System.out.print("Enter your choice: ");
@@ -39,7 +39,8 @@ class AdminMenu {
                         break;
                     case 3:
                         // View reports
-                        System.out.println("View Reports");
+                        ViewReports viewReports = new ViewReports();
+                        viewReports.displayMenu();
                         break;
                     case 4:
                         // Logout and return to Login menu

@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.util.List;
+import java.util.ArrayList;
 
 // Create Sales class where we select products to be sold (by their Category and ID), Entering Qty Sold and updating the inventory, and making a reciept of the sale.
 class Sales {
@@ -303,12 +305,30 @@ class FinalizeSale {
 
                 System.out.println("\nThank you for shopping with us!\n");
 
+                // Pass the data of the sold products to the soldProducts class before the cart is emptied
+                for (ElectronicsCart product : ElectronicsCart.electronicsCart) {
+                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory()));
+                }
+
+                for (ClothingsCart product : ClothingsCart.clothingsCart) {
+                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory()));
+                }   
+
+                for (ToysCart product : ToysCart.toysCart) {
+                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory()));
+                }
+
+                for (FurnituresCart product : FurnituresCart.furnituresCart) {
+                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory()));
+                }
+            }
+
                 // empty all carts
                 ElectronicsCart.emptyCart();
                 ClothingsCart.emptyCart();
                 ToysCart.emptyCart();
                 FurnituresCart.emptyCart();
-            }  
-        }
-    }
+        }  
+    }  
 }
+
