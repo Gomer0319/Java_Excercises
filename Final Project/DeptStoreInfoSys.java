@@ -33,7 +33,7 @@ public class DeptStoreInfoSys {
                             loginStatus = true;
 
                             // Go to admin menu
-                            AdminMenu adminMenu = new AdminMenu();
+                            AdminMenu adminMenu = new AdminMenu(LoginManager.getloggedUser());
                             adminMenu.displayMenu();
                         }
                         else if ("Employee".equals(userRole)) {
@@ -43,6 +43,8 @@ public class DeptStoreInfoSys {
                             loginStatus = true;
 
                             // Go to employee menu
+                            EmployeeMenu employeeMenu = new EmployeeMenu(LoginManager.getloggedUser());
+                            employeeMenu.displayMenu();
                         }
                         break;
                     case 2:

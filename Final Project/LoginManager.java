@@ -2,6 +2,13 @@ import java.util.*;
 
 //Create LoginManager class
 class LoginManager {
+    private static String loggedUser;
+
+    // Constructor
+    public LoginManager() {
+        loggedUser = null;
+    }
+
     public static String login() {
         // Create dummy admin and employee accounts
         Admin admin = new Admin("admin", "143");
@@ -20,9 +27,11 @@ class LoginManager {
 
             // Check if the input username and password is valid and if it is for admin or employee
             if (username.equals(admin.getUsername()) && password.equals(admin.getPassword())) {
-                return "Admin";
+                loggedUser = "Admin";
+                return loggedUser;
             } else if (username.equals(employee.getUsername()) && password.equals(employee.getPassword())) {
-                return "Employee";
+                loggedUser = "Employee";
+                return loggedUser;
             } else {
                 System.out.println("Invalid username or password.\n");
                 return null;
@@ -31,6 +40,11 @@ class LoginManager {
             System.out.println("Invalid input. Please try again.\n");
             return null;
         }
+    }
+
+    // getter
+    public static String getloggedUser() {
+        return loggedUser;
     }
 }
 

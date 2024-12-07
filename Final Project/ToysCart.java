@@ -62,13 +62,14 @@ class ToysCart implements Cart {
     public static void viewCart() {
         // Check if there are any products in the toys cart
         if (toysCart.size() == 0) {
-            System.out.println("\n -----");
+            // If there are none, leave the space with no print
+            return;
         }
         else {
             // Display the products in the toys cart
             for (int i = 0; i < toysCart.size(); i++) {
                 // Display the product details with category
-                System.out.println("||  " + toysCart.get(i).getCategory() + toysCart.get(i).getProductID() + "  ||      " + toysCart.get(i).getProductName() + "        ||  " + toysCart.get(i).getProductQty() + " ||  " + toysCart.get(i).getProductPrice() * toysCart.get(i).getProductQty() + " ||");
+                System.out.printf("|| %-20s || %-30s || %-10d || %-15f ||%n", toysCart.get(i).getCategory() + toysCart.get(i).getProductID(), toysCart.get(i).getProductName(),  toysCart.get(i).getProductQty(), toysCart.get(i).getProductPrice() * toysCart.get(i).getProductQty());
             } 
         }
     }

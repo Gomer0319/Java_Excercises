@@ -1,68 +1,62 @@
 import java.util.*;
 
 // Create Admin menu class
-class AdminMenu {
+class EmployeeMenu {
     private String loggedUser; // To store the logged user's name or role
 
     // Constructor to initialize loggedUser
-    public AdminMenu(String loggedUser) {
+    public EmployeeMenu(String loggedUser) {
         this.loggedUser = loggedUser;
     }
 
     // Default constructor
-    public AdminMenu() {
+    public EmployeeMenu() {
         this.loggedUser = null;
     }
 
     // Create a scanner object to read user input
-    Scanner adminInput = new Scanner(System.in);
+    Scanner employeeInput = new Scanner(System.in);
 
     // Create menu for admin side
     public void displayMenu() {
         // Create a boolean variable to check if the admin wants to keep admin menu until they choose to logout
-        boolean keepAdminMenu = true;
+        boolean keepEmployeeMenu = true;
 
         // Create a message to greet the user
         System.out.println("\nWelcome, " + loggedUser + "!\n");
 
-        while (keepAdminMenu) {
+        while (keepEmployeeMenu) {
             //try-catch block to handle InputMismatchException
             try {
                 System.out.println("\n=============================================");
-                System.out.println("Admin Menu");
+                System.out.println("Employee Menu");
                 System.out.println("---------------------------------------------");
-                System.out.println("1. Manage Products");
-                System.out.println("2. Sales");
-                System.out.println("3. View Inventory and Sales");
-                System.out.println("4. Logout");
+                System.out.println("1. Sales");
+                System.out.println("2. View Inventory and Sales");
+                System.out.println("3. Logout");
                 System.out.println("=============================================");
                 System.out.print("Enter your choice: ");
                 
-                int adminOption = adminInput.nextInt();
+                int employeeOption = employeeInput.nextInt();
 
                 // Check if the admin wants to manage products, process sales, view reports, or logout
-                switch (adminOption) {
+                switch (employeeOption) {
                     case 1:
-                        // Go to manage products menu
-                        ManageProducts manageProducts = new ManageProducts();
-                        manageProducts.displayMenu();
-                        break;
-                    case 2:
                         // Go to sales menu
                         Sales sales = new Sales();
                         sales.salesMenu();
                         break;
-                    case 3:
+                    case 2:
                         // View reports
                         ViewReports viewReports = new ViewReports();
                         viewReports.displayMenu();
                         break;
-                    case 4:
+                    case 3:
                         // Logout and return to Login menu
                         System.out.println("You are logged out.\n");
 
                         // Set login status to false
-                        keepAdminMenu = false;
+                        keepEmployeeMenu = false;
 
                         // Return to Login menu
                         DeptStoreInfoSys.main(null);
@@ -74,7 +68,7 @@ class AdminMenu {
             } 
             catch (InputMismatchException e) {
                 System.out.println("\nInvalid input, please enter a number from the menu.\n");
-                adminInput.next();
+                employeeInput.next();
             }
         }
     }
@@ -86,4 +80,3 @@ class AdminMenu {
 }
 
 //Note: Should have User Class abstracted and let the EmployeeMenu and AdminMenu inherit from it to avoid code duplication
-

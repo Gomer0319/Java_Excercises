@@ -62,13 +62,14 @@ class ClothingsCart implements Cart {
     public static void viewCart() {
         // Check if there are any products in the clothings cart
         if (clothingsCart.size() == 0) {
-            System.out.println("\n -----");
+            // If there are none, leave the space with no print
+            return;
         }
         else {
             // Display the products in the clothings cart
             for (int i = 0; i < clothingsCart.size(); i++) {
                 // Display the product details
-                System.out.println("||  " + clothingsCart.get(i).getCategory() + clothingsCart.get(i).getProductID() + "    ||      " + clothingsCart.get(i).getProductName() + "       ||  " + clothingsCart.get(i).getProductQty() + "    ||  " + clothingsCart.get(i).getProductPrice() * clothingsCart.get(i).getProductQty() + "   ||");
+                System.out.printf("|| %-20s || %-30s || %-10d || %-15f ||%n", clothingsCart.get(i).getCategory() + clothingsCart.get(i).getProductID(), clothingsCart.get(i).getProductName(),  clothingsCart.get(i).getProductQty(), clothingsCart.get(i).getProductPrice() * clothingsCart.get(i).getProductQty());
             } 
         }
     }

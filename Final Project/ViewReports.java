@@ -29,15 +29,26 @@ public class ViewReports {
                 switch (choice) {
                     case 1:
                         // View all products
+                        System.out.println("\nViewing all products on stock.");
+                        Electronics.viewProducts();
+                        Clothings.viewProducts();
+                        Toys.viewProducts();
+                        Furnitures.viewProducts();
                         break;
                     case 2:
                         // View products by category
+                        DisplayProducts displayProducts = new DisplayProducts();
+                        displayProducts.displayProduct();
                         break;
                     case 3:
                         // Search for a product
+                        SearchProduct searchProduct = new SearchProduct();
+                        searchProduct.searchProduct();
                         break;
                     case 4:
-                        // Go to sales history
+                        // Go to sold products display
+                        SoldProducts soldProducts = new SoldProducts();
+                        soldProducts.displaySoldProducts();
                         break;
                     case 5:
                         // Return to main menu

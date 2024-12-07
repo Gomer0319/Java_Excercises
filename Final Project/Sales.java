@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
-import java.util.List;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 // Create Sales class where we select products to be sold (by their Category and ID), Entering Qty Sold and updating the inventory, and making a reciept of the sale.
 class Sales {
@@ -42,7 +42,7 @@ class Sales {
                         break;
                     case 3:
                         // Go to finalize sale menu
-                        FinalizeSale finalizeSale = new FinalizeSale();
+                        FinalizeSale finalizeSale = new FinalizeSale(LoginManager.getloggedUser());
                         finalizeSale.finalizeSale();
                         break;
                     case 4:
@@ -237,7 +237,7 @@ class ViewCart {
 
         // Display all items in all carts
         System.out.println("\n=============================================================");
-        System.out.println("||          ID         ||     Product Name       ||  Qty ||     Total    ||");
+        System.out.printf("|| %-20s || %-30s || %-10s || %-15s ||%n", "ID", "Product Name", "Quantity", "Total");
         ElectronicsCart.viewCart();
         ClothingsCart.viewCart();
         ToysCart.viewCart();
@@ -266,6 +266,18 @@ class ViewCart {
 
 // Create FinalizeSaleclass to finalize sale, compute total cost to be paid, print a receipt, and update Sales (emptying carts and storing sales in Sales List for Reports)
 class FinalizeSale {
+    private String loggedUser;
+
+    // Constructor
+    public FinalizeSale(String loggedUser) {
+        this.loggedUser = loggedUser;
+    }
+
+    // Default constructor
+    public FinalizeSale() {
+        this.loggedUser = null;
+    }
+
     public void finalizeSale() {
         // Scanner object to read user input
         Scanner finalizeSaleInput = new Scanner(System.in);
@@ -291,11 +303,18 @@ class FinalizeSale {
 
             // Check if the admin wants to finalize the sale and print a receipt
             if (confirm.equals("y")) {
+                // Get current date and time
+                LocalDateTime currentDateTime = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String dateTimeString = currentDateTime.format(formatter);
+
                 // Print receipt
                 System.out.println("\n=============================================================");
                 System.out.println("                            Receipt                    ");
+                System.out.printf("Tendered by: %s%n", loggedUser);
+                System.out.printf("Date and Time: %s%n", dateTimeString);
                 System.out.println("-------------------------------------------------------------");
-                System.out.println("||        ID       ||   Product Name    ||  Qty ||   Total    ||");
+                System.out.printf("|| %-20s || %-30s || %-10s || %-15s ||%n", "ID", "Product Name", "Quantity", "Total");
                 ElectronicsCart.viewCart();
                 ClothingsCart.viewCart();
                 ToysCart.viewCart();
@@ -305,21 +324,21 @@ class FinalizeSale {
 
                 System.out.println("\nThank you for shopping with us!\n");
 
-                // Pass the data of the sold products to the soldProducts class before the cart is emptied
+                // Pass the data of the sold products to the soldProducts class before the cart is emptied, add the dateTimeString to the soldProduct class, then empty the cart
                 for (ElectronicsCart product : ElectronicsCart.electronicsCart) {
-                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory()));
+                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory(), dateTimeString));
                 }
 
                 for (ClothingsCart product : ClothingsCart.clothingsCart) {
-                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory()));
+                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory(), dateTimeString));
                 }   
 
                 for (ToysCart product : ToysCart.toysCart) {
-                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory()));
+                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory(), dateTimeString));
                 }
 
                 for (FurnituresCart product : FurnituresCart.furnituresCart) {
-                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory()));
+                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory(), dateTimeString));
                 }
             }
 
@@ -329,6 +348,11 @@ class FinalizeSale {
                 ToysCart.emptyCart();
                 FurnituresCart.emptyCart();
         }  
-    }  
+    }
+    
+    // Getter
+    public String getloggedUser() {
+        return loggedUser;
+    }
 }
 

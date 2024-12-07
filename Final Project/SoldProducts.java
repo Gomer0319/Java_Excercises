@@ -12,21 +12,21 @@ class SoldProducts {
     }
 
     // Create a method that displays the products sold
-    public static void displaySoldProducts() {
+    public void displaySoldProducts() {
         System.out.println("\n=============================================================");
         System.out.println("                            Sales                      ");
         System.out.println("-------------------------------------------------------------");
-        System.out.println("||        ID       ||   Product Name    ||  Qty ||   Total    ||");
+        System.out.printf("|| %-20s || %-20s || %-30s || %-10s || %-15s ||%n", "Date", "ID", "Product Name", "Quantity", "Total");
         System.out.println("=============================================================");
-        for (SoldProduct product : soldProductList) {
-            // Check if there are any products in the soldProductList
-            if (soldProductList.size() == 0) {
-                System.out.println("No products sold yet.");
+        // Check if there are any products sold in the SoldProduct list. If there are none, print a message that there are no sales yet, otherwise, print the products sold
+        if (soldProductList.size() == 0) {
+            System.out.println("There are no sales yet.");
+        } else {
+            for (SoldProduct product : soldProductList) {
+
+                System.out.printf("|| %-20s || %-20s || %-30s || %-10d || %-15f ||%n", product.getDateTime() ,product.getCategory() + product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice() * product.getProductQty());
             }
-            else {
-                System.out.println("|| " + product.getCategory() + product.getProductID() + " || " + product.getProductName() + " || " + product.getProductQty() + " || " + product.getProductPrice() * product.getProductQty() + " ||");
-            }
-            System.out.println("=============================================================");
         }
+        System.out.println("=============================================================");
     }
 }

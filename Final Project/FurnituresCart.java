@@ -62,13 +62,14 @@ class FurnituresCart implements Cart {
     public static void viewCart() {
         // Check if there are any products in the furnitures cart
         if (furnituresCart.size() == 0) {
-            System.out.println("\n -----");
+            // If there are none, leave the space with no print
+            return;
         }
         else {
             // Display the products in the furnitures cart
             for (int i = 0; i < furnituresCart.size(); i++) {
                 // Display the product details with category
-                System.out.println("||  " + furnituresCart.get(i).getCategory() + furnituresCart.get(i).getProductID() + "  ||      " + furnituresCart.get(i).getProductName() + "      ||  " + furnituresCart.get(i).getProductQty() + "   ||  " + furnituresCart.get(i).getProductPrice() * furnituresCart.get(i).getProductQty() + " ||");
+                System.out.printf("|| %-20s || %-30s || %-10d || %-15f ||%n", furnituresCart.get(i).getCategory() + furnituresCart.get(i).getProductID(), furnituresCart.get(i).getProductName(),  furnituresCart.get(i).getProductQty(), furnituresCart.get(i).getProductPrice() * furnituresCart.get(i).getProductQty());
             } 
         }
     }

@@ -62,13 +62,14 @@ class ElectronicsCart implements Cart {
     public static void viewCart() {
         // Check if there are any products in the electronics cart
         if (electronicsCart.size() == 0) {
-            System.out.println("\n -----");
+            // If there are none, leave the space with no print
+            return;
         }
         else {
             // Display the products in the electronics cart
             for (int i = 0; i < electronicsCart.size(); i++) {
                 // Display the product details with category
-                System.out.println("||  " + electronicsCart.get(i).getCategory() + electronicsCart.get(i).getProductID() + "    ||      " + electronicsCart.get(i).getProductName() + "     ||  " + electronicsCart.get(i).getProductQty() + "  ||  " + electronicsCart.get(i).getProductPrice() * electronicsCart.get(i).getProductQty() + "   ||");
+                System.out.printf("|| %-20s || %-30s || %-10d || %-15f ||%n", electronicsCart.get(i).getCategory() + electronicsCart.get(i).getProductID(), electronicsCart.get(i).getProductName(),  electronicsCart.get(i).getProductQty(), electronicsCart.get(i).getProductPrice() * electronicsCart.get(i).getProductQty());
             } 
         }
     }
