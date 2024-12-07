@@ -129,15 +129,15 @@ class Furnitures implements Product {
             System.out.println("No products found in Furnitures category.");
         }
         else {
-            System.out.println("\n=============================================================================");
+            System.out.println("\n==========================================================================================================================================================");
             System.out.println("Products in Furnitures category:");
             System.out.printf("|| %-20s || %-40s || %-30s || %-20s ||\n", "ID", "Product Name", "Price", "Quantity");
-            System.out.println("-------------------------------------------------------------------------");
+            System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------");
             // Loop through the toys list and display the products, one by one, one product per line in the console
             for (int i = 0; i < furnitures.size(); i++) {
                 Furnitures product = furnitures.get(i);
                 System.out.printf("|| %-20d || %-40s || %30.2f || %-20d ||\n", product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty());}
-                System.out.println("\n=============================================================================");
+                System.out.println("\n==========================================================================================================================================================");
         }
     }
 

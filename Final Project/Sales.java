@@ -242,13 +242,13 @@ class ViewCart {
         Scanner confirmInput = new Scanner(System.in);
 
         // Display all items in all carts
-        System.out.println("\n=================================================================================");
+        System.out.println("\n==========================================================================================================================================================");
         System.out.printf("|| %-20s || %-40s || %-20s || %-30s ||%n", "ID", "Product Name", "Quantity", "Total");
         ElectronicsCart.viewCart();
         ClothingsCart.viewCart();
         ToysCart.viewCart();
         FurnituresCart.viewCart();
-        System.out.println("=================================================================================");
+        System.out.println("==========================================================================================================================================================");
 
         // Ask admin if they want to finalize the sale
         System.out.println("Should we compute the total cost? (y/n)");
@@ -315,17 +315,17 @@ class FinalizeSale {
                 String dateTimeString = currentDateTime.format(formatter);
 
                 // Print receipt
-                System.out.println("\n=============================================================================");
-                System.out.println("                            Receipt                    ");
+                System.out.println("\n==========================================================================================================================================================");
+                System.out.printf("%40s %-10s", " ", "Receipt");
                 System.out.printf("Tendered by: %s%n", loggedUser);
                 System.out.printf("Date and Time: %s%n", dateTimeString);
-                System.out.println("-----------------------------------------------------------------------------");
+                System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------");
                 System.out.printf("|| %-20s || %-40s || %-20s || %-30s ||%n", "ID", "Product Name", "Quantity", "Total");
                 ElectronicsCart.viewCart();
                 ClothingsCart.viewCart();
                 ToysCart.viewCart();
                 FurnituresCart.viewCart();
-                System.out.println("============================================================================");
+                System.out.println("==========================================================================================================================================================");
                 System.out.printf("Grand Total: %40s >>> Php %30.2f \n", " ", (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal));
 
                 System.out.println("\nThank you for shopping with us!\n");
