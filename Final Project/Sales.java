@@ -22,7 +22,7 @@ class Sales {
                 System.out.println("1. Sale Cart");
                 System.out.println("2. View Cart");
                 System.out.println("3. Finalize Sale");
-                System.out.println("4. Return to Admin Menu");
+                System.out.println("4. Return to Main Menu");
                 System.out.println("=============================================");
                 System.out.print("Enter your choice: ");
 
@@ -46,9 +46,15 @@ class Sales {
                         finalizeSale.finalizeSale();
                         break;
                     case 4:
-                        // Go to admin menu
-                        AdminMenu adminMenu = new AdminMenu();
-                        adminMenu.displayMenu();
+                        // Check of logged user is admin or employee and go to appropriate menu
+                        if (LoginManager.getloggedUser().equals("Admin")) {
+                            AdminMenu adminMenu = new AdminMenu();
+                            adminMenu.displayMenu();
+                        }
+                        else if (LoginManager.getloggedUser().equals("Employee")) {
+                            EmployeeMenu employeeMenu = new EmployeeMenu();
+                            employeeMenu.displayMenu();
+                        }
                         break;
                     default:
                         System.out.println("\nInvalid option. Please try again.\n");
@@ -237,7 +243,7 @@ class ViewCart {
 
         // Display all items in all carts
         System.out.println("\n=============================================================");
-        System.out.printf("|| %-20s || %-30s || %-10s || %-15s ||%n", "ID", "Product Name", "Quantity", "Total");
+        System.out.printf("|| %-20s || %-40s || %-20s || %-30s ||%n", "ID", "Product Name", "Quantity", "Total");
         ElectronicsCart.viewCart();
         ClothingsCart.viewCart();
         ToysCart.viewCart();
@@ -295,7 +301,7 @@ class FinalizeSale {
             double toysTotal = ToysCart.calculateTotalCost();
             double furnituresTotal = FurnituresCart.calculateTotalCost();
 
-            System.out.println("\nGrand Total to be paid: Php" + (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal));
+            System.out.printf("\nGrand Total to be paid: %40s Php %20.2f \n",  (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal)); 
 
             // Ask admin if they want to finalize the sale
             System.out.println("Should we finalize the sale? (y/n)");
@@ -314,13 +320,13 @@ class FinalizeSale {
                 System.out.printf("Tendered by: %s%n", loggedUser);
                 System.out.printf("Date and Time: %s%n", dateTimeString);
                 System.out.println("-------------------------------------------------------------");
-                System.out.printf("|| %-20s || %-30s || %-10s || %-15s ||%n", "ID", "Product Name", "Quantity", "Total");
+                System.out.printf("|| %-20s || %-40s || %-20s || %-30s ||%n", "ID", "Product Name", "Quantity", "Total");
                 ElectronicsCart.viewCart();
                 ClothingsCart.viewCart();
                 ToysCart.viewCart();
                 FurnituresCart.viewCart();
                 System.out.println("=============================================================");
-                System.out.println("Grand Total:                           >>> Php" + (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal));
+                System.out.printf("Grand Total: %40s >>> Php %20.2f%n", + (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal));
 
                 System.out.println("\nThank you for shopping with us!\n");
 

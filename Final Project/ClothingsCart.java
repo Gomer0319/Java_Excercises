@@ -69,7 +69,7 @@ class ClothingsCart implements Cart {
             // Display the products in the clothings cart
             for (int i = 0; i < clothingsCart.size(); i++) {
                 // Display the product details
-                System.out.printf("|| %-20s || %-30s || %-10d || %-15f ||%n", clothingsCart.get(i).getCategory() + clothingsCart.get(i).getProductID(), clothingsCart.get(i).getProductName(),  clothingsCart.get(i).getProductQty(), clothingsCart.get(i).getProductPrice() * clothingsCart.get(i).getProductQty());
+                System.out.printf("|| %-20s || %-40s || %-20d || %30.2f ||%n", clothingsCart.get(i).getCategory() + clothingsCart.get(i).getProductID(), clothingsCart.get(i).getProductName(),  clothingsCart.get(i).getProductQty(), clothingsCart.get(i).getProductPrice() * clothingsCart.get(i).getProductQty());
             } 
         }
     }

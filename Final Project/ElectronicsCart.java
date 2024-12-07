@@ -69,7 +69,7 @@ class ElectronicsCart implements Cart {
             // Display the products in the electronics cart
             for (int i = 0; i < electronicsCart.size(); i++) {
                 // Display the product details with category
-                System.out.printf("|| %-20s || %-30s || %-10d || %-15f ||%n", electronicsCart.get(i).getCategory() + electronicsCart.get(i).getProductID(), electronicsCart.get(i).getProductName(),  electronicsCart.get(i).getProductQty(), electronicsCart.get(i).getProductPrice() * electronicsCart.get(i).getProductQty());
+                System.out.printf("|| %-20s || %-40s || %-20d || %30.2f ||%n", electronicsCart.get(i).getCategory() + electronicsCart.get(i).getProductID(), electronicsCart.get(i).getProductName(),  electronicsCart.get(i).getProductQty(), electronicsCart.get(i).getProductPrice() * electronicsCart.get(i).getProductQty());
             } 
         }
     }

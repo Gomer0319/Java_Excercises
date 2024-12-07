@@ -52,7 +52,17 @@ public class ViewReports {
                         break;
                     case 5:
                         // Return to main menu
-                        System.out.println("\nReturning to main menu.");
+                        System.out.println("\nReturning to Main Menu.");
+
+                        // Check of logged user is admin or employee and go to appropriate menu
+                        if (LoginManager.getloggedUser().equals("Admin")) {
+                            AdminMenu adminMenu = new AdminMenu();
+                            adminMenu.displayMenu();
+                        }
+                        else if (LoginManager.getloggedUser().equals("Employee")) {
+                            EmployeeMenu employeeMenu = new EmployeeMenu();
+                            employeeMenu.displayMenu();
+                        }
                         keepInventoryMenu = false;
                         break;
                     default:

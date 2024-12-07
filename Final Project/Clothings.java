@@ -131,11 +131,12 @@ class Clothings implements Product {
         else {
             System.out.println("=============================================");
             System.out.println("Products in Clothings category:");
+            System.out.printf("|| %-20s || %-40s || %-30s || %-20s ||\n", "ID", "Product Name", "Price", "Quantity");
             System.out.println("---------------------------------------------");
             // Loop through the clothings list and display the products, one by one, one product per line in the console
             for (int i = 0; i < clothings.size(); i++) {
                 Clothings product = clothings.get(i);
-                System.out.println("|| ID: " + product.getProductID() + " || Name: " + product.getProductName() + " || Price: Php " + product.getProductPrice() + " || Quantity: " + product.getProductQty() + " ||");
+                System.out.printf("|| %-20d || %-40s || %30.2f || %-20d ||\n", product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty());
             }
             System.out.println("=============================================");
         }

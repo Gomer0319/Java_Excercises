@@ -20,7 +20,7 @@ class ManageProducts {
                 System.out.println("2. Edit Product");
                 System.out.println("3. View Products");
                 System.out.println("4. Delete Product");
-                System.out.println("5. Return to Admin Menu");
+                System.out.println("5. Return to Main Menu");
                 System.out.println("=============================================");
                 System.out.print("Enter your choice: ");
 
@@ -77,7 +77,7 @@ class AddProduct {
             System.out.println("\n=============================================");
             System.out.println("Add Product");
             System.out.println("---------------------------------------------");
-            System.out.println("Select product category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures");
+            System.out.println("Select product category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures \n5. Return");
             System.out.print(">>> ");
             int productCategory = addProductInput.nextInt();
             addProductInput.nextLine(); // Consume the newline character
@@ -107,6 +107,12 @@ class AddProduct {
             else if (productCategory == 4) {
                 // Add product to furnitures array
                 Furnitures.addProduct(productID, productName, productPrice, productQty);
+            }
+            else if (productCategory == 5) {
+                // Return to display menu
+                System.out.println("\nReturning...\n");
+                ManageProducts manageProducts = new ManageProducts();
+                manageProducts.displayMenu();
             }
             else {
                 System.out.println("Invalid product category input.");
@@ -289,7 +295,8 @@ class SearchProduct {
                 // Check if the product category is valid
                 if (productCategory == 1) {
                     // Ask for the product ID input or product name
-                    System.out.print("\nHow would you like to search for the product?\n1. Product ID\n2. Product Name: ");
+                    System.out.println("\nHow would you like to search for the product?\n1. Product ID\n2. Product Name: ");
+                    System.out.print(">>> ");
                     int searchOption = searchProductInput.nextInt();
                     searchProductInput.nextLine(); // Consume the newline character
 
@@ -299,17 +306,17 @@ class SearchProduct {
                         int productID = searchProductInput.nextInt();
 
                         // Traverse the array and check if the product ID matches the user input
-                        for (int i = 0; i < Electronics.electronics.size(); i++) {
-                            if (Electronics.electronics.get(i).getProductID() == productID) {
+                        for (Electronics product : Electronics.electronics) {
+                            if (product.getProductID() == productID) {
                                 // Display the product details
                                 System.out.println("\nProduct Details: ");
-                                System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n",  "ID", "Product Name", "Quantity", "Price");
-                                System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n", Electronics.electronics.get(i).getProductID(), Electronics.electronics.get(i).getProductName(), Electronics.electronics.get(i).getProductQty(), Electronics.electronics.get(i).getProductPrice());
+                                System.out.printf("||  %-20s || %-40s || %-20s || %-30s ||%n",  "ID", "Product Name", "Quantity", "Price");
+                                System.out.printf("||  %-20s || %-40s || %-20s || %30.2f ||%n", product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice());
                                 found = true;
                                 break;
                             }
-                            else {
-                                // If the product ID is not found, print a message
+                            if (!found) {
+                            // If the product ID is not found, print a message
                                 System.out.println("Product with ID " + productID + " not found in Electronics category.");
                             }
                         }
@@ -320,17 +327,17 @@ class SearchProduct {
                         String productName = searchProductInput.nextLine();
 
                         // Traverse the array and check if the product name matches the user input
-                        for (int i = 0; i < Electronics.electronics.size(); i++) {
-                            if (Electronics.electronics.get(i).getProductName().equalsIgnoreCase(productName)) {
+                        for (Electronics product : Electronics.electronics) {
+                            if (product.getProductName().equalsIgnoreCase(productName)) {
                                 // Display the product details
                                 System.out.println("\nProduct Details: ");
-                                System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n",  "ID", "Product Name", "Quantity", "Price");
-                                System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n", Electronics.electronics.get(i).getProductID(), Electronics.electronics.get(i).getProductName(), Electronics.electronics.get(i).getProductQty(), Electronics.electronics.get(i).getProductPrice());
+                                System.out.printf("||  %-20s || %-40s || %-20s || %-30s ||%n",  "ID", "Product Name", "Quantity", "Price");
+                                System.out.printf("||  %-20s || %-40s || %-20s || %30.2f ||%n", product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice());
                                 found = true;
                                 break;
-                            }
-                            else {
-                                // If the product name is not found, print a message
+                            }           
+                            if (!found) {
+                            // If the product name is not found, print a message
                                 System.out.println("Product with name " + productName + " not found in Electronics category.");
                             }
                         }
@@ -338,7 +345,8 @@ class SearchProduct {
                 }
                 else if (productCategory == 2) {
                     // Ask for the product ID input or product name
-                    System.out.print("\nHow would you like to search for the product?\n1. Product ID\n2. Product Name: ");
+                    System.out.println("\nHow would you like to search for the product?\n1. Product ID\n2. Product Name: ");
+                    System.out.print(">>> ");
                     int searchOption = searchProductInput.nextInt();
                     searchProductInput.nextLine(); // Consume the newline character
 
@@ -348,16 +356,16 @@ class SearchProduct {
                         int productID = searchProductInput.nextInt();
 
                         // Traverse the array and check if the product ID matches the user input
-                        for (int i = 0; i < Clothings.clothings.size(); i++) {
-                            if (Clothings.clothings.get(i).getProductID() == productID) {
+                        for (Clothings product : Clothings.clothings) {
+                            if (product.getProductID() == productID) {
                                 // Display the product details
                                 System.out.println("\nProduct Details: ");
                                 System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n",  "ID", "Product Name", "Quantity", "Price");
-                                System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n",  Clothings.clothings.get(i).getProductID(), Clothings.clothings.get(i).getProductName(), Clothings.clothings.get(i).getProductQty(), Clothings.clothings.get(i).getProductPrice());
+                                System.out.printf("||  %-20s || %-30s || %-20s || %20.2f ||%n", product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice());
                                 found = true;
                                 break;
                             }
-                            else {
+                            if (!found) {
                                 // If the product ID is not found, print a message
                                 System.out.println("Product with ID " + productID + " not found in Clothings category.");
                             }
@@ -369,16 +377,16 @@ class SearchProduct {
                         String productName = searchProductInput.nextLine();
 
                         // Traverse the array and check if the product name matches the user input
-                        for (int i = 0; i < Clothings.clothings.size(); i++) {
-                            if (Clothings.clothings.get(i).getProductName().equalsIgnoreCase(productName)) {
+                        for (Clothings product : Clothings.clothings) {
+                            if (product.getProductName().equalsIgnoreCase(productName)) {
                                 // Display the product details
                                 System.out.println("\nProduct Details: ");
-                                System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n",  "ID", "Product Name", "Quantity", "Price");
-                                System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n",  Clothings.clothings.get(i).getProductID(), Clothings.clothings.get(i).getProductName(), Clothings.clothings.get(i).getProductQty(), Clothings.clothings.get(i).getProductPrice());
+                                System.out.printf("||  %-20s || %-40s || %-20s || %-30s ||%n",  "ID", "Product Name", "Quantity", "Price");
+                                System.out.printf("||  %-20s || %-40s || %-20s || %30.2f ||%n", product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice());
                                 found = true;
                                 break;
                             }
-                            else {
+                            if (!found) {
                                 // If the product name is not found, print a message
                                 System.out.println("Product with name " + productName + " not found in Clothings category.");
                             }
@@ -387,7 +395,8 @@ class SearchProduct {
                 }
                 else if (productCategory == 3) {
                     // Ask for the product ID input or product name
-                    System.out.print("\nHow would you like to search for the product?\n1. Product ID\n2. Product Name: ");
+                    System.out.println("\nHow would you like to search for the product?\n1. Product ID\n2. Product Name: ");
+                    System.out.print(">>> ");
                     int searchOption = searchProductInput.nextInt();
                     searchProductInput.nextLine(); // Consume the newline character
 
@@ -397,16 +406,16 @@ class SearchProduct {
                         int productID = searchProductInput.nextInt();
 
                         // Traverse the array and check if the product ID matches the user input
-                        for (int i = 0; i < Toys.toys.size(); i++) {
-                            if (Toys.toys.get(i).getProductID() == productID) {
+                        for (Toys product : Toys.toys) {
+                            if (product.getProductID() == productID) {
                                 // Display the product details
                                 System.out.println("\nProduct Details: ");
                                 System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n",  "ID", "Product Name", "Quantity", "Price");
-                                System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n",  Toys.toys.get(i).getProductID(), Toys.toys.get(i).getProductName(), Toys.toys.get(i).getProductQty(), Toys.toys.get(i).getProductPrice());
+                                System.out.printf("||  %-20s || %-30s || %-20s || %20.2f ||%n", product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice());
                                 found = true;
                                 break;
                             }
-                            else {
+                            if (!found) {
                                 // If the product ID is not found, print a message
                                 System.out.println("Product with ID " + productID + " not found in Toys category.");
                             }
@@ -418,16 +427,16 @@ class SearchProduct {
                         String productName = searchProductInput.nextLine();
 
                         // Traverse the array and check if the product name matches the user input
-                        for (int i = 0; i < Toys.toys.size(); i++) {
-                            if (Toys.toys.get(i).getProductName().equalsIgnoreCase(productName)) {
+                        for (Toys product : Toys.toys) {
+                            if (product.getProductName().equalsIgnoreCase(productName)) {
                                 // Display the product details
                                 System.out.println("\nProduct Details: ");
-                                System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n",  "ID", "Product Name", "Quantity", "Price");
-                                System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n",  Toys.toys.get(i).getProductID(), Toys.toys.get(i).getProductName(), Toys.toys.get(i).getProductQty(), Toys.toys.get(i).getProductPrice());
+                                System.out.printf("||  %-20s || %-40s || %-20s || %-30s ||%n",  "ID", "Product Name", "Quantity", "Price");
+                                System.out.printf("||  %-20s || %-40s || %-20s || %30.2f ||%n", product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice());
                                 found = true;
                                 break;
                             }
-                            else {
+                            if (!found) {
                                 // If the product name is not found, print a message
                                 System.out.println("Product with name " + productName + " not found in Toys category.");
                             }
@@ -436,7 +445,8 @@ class SearchProduct {
                 }
                 else if (productCategory == 4) {
                     // Ask for the product ID input or product name
-                    System.out.print("\nHow would you like to search for the product?\n1. Product ID\n2. Product Name: ");
+                    System.out.println("\nHow would you like to search for the product?\n1. Product ID\n2. Product Name: ");
+                    System.out.print(">>> ");
                     int searchOption = searchProductInput.nextInt();
                     searchProductInput.nextLine(); // Consume the newline character
 
@@ -446,16 +456,16 @@ class SearchProduct {
                         int productID = searchProductInput.nextInt();
 
                         // Traverse the array and check if the product ID matches the user input
-                        for (int i = 0; i < Electronics.electronics.size(); i++) {
-                            if (Electronics.electronics.get(i).getProductID() == productID) {
+                        for (Furnitures product : Furnitures.furnitures) {
+                            if (product.getProductID() == productID) {
                                 // Display the product details
                                 System.out.println("\nProduct Details: ");
-                                System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n",  "ID", "Product Name", "Quantity", "Price");
-                                System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n", Furnitures.furnitures.get(i).getProductID(), Furnitures.furnitures.get(i).getProductName(), Furnitures.furnitures.get(i).getProductQty(), Furnitures.furnitures.get(i).getProductPrice());
+                                System.out.printf("||  %-20s || %-40s || %-20s || %-30s ||%n",  "ID", "Product Name", "Quantity", "Price");
+                                System.out.printf("||  %-20s || %-40s || %-20s || %30.2f ||%n", product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice());
                                 found = true;
                                 break;
                             }
-                            else {
+                            if (!found) {
                                 // If the product ID is not found, print a message
                                 System.out.println("Product with ID " + productID + " not found in Furnitures category.");
                             }
@@ -467,39 +477,40 @@ class SearchProduct {
                         String productName = searchProductInput.nextLine();
 
                         // Traverse the array and check if the product name matches the user input
-                        for (int i = 0; i < Electronics.electronics.size(); i++) {
-                            if (Electronics.electronics.get(i).getProductName().equalsIgnoreCase(productName)) {
+                        for (Furnitures product : Furnitures.furnitures) {
+                            if (product.getProductName().equalsIgnoreCase(productName)) {
                                 // Display the product details
                                 System.out.println("\nProduct Details: ");
                                 System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n",  "ID", "Product Name", "Quantity", "Price");
-                                System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n", Furnitures.furnitures.get(i).getProductID(), Furnitures.furnitures.get(i).getProductName(), Furnitures.furnitures.get(i).getProductQty(), Furnitures.furnitures.get(i).getProductPrice());
+                                System.out.printf("||  %-20s || %-30s || %-20s || %20.2f ||%n", product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice());
                                 found = true;
                                 break;
                             }
-                            else {
+                            if (!found) {
                                 // If the product name is not found, print a message
                                 System.out.println("Product with name " + productName + " not found in Furnitures category.");
+                                break;
+                            }
                         }
                     }
                 }
                 else if (productCategory == 5) {
                     // Return to ViewReports display menu
+                    System.out.println("\nReturning to View Reports menu...");
+                    keepSearching = false;
                     ViewReports viewReports = new ViewReports();
                     viewReports.displayMenu();
-                    keepSearching = false;
                     break;
+                }
+                else {
+                    // If the product category is not found, print a message
+                    System.out.println("Invalid product category. Please try again.");
                 }
             }
         }
-
-        if (!found) {
-            // If the product is not found, print a message
-            System.out.println("Product not found.");
-        }   
-    }
         catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter a valid number from the list.");
-            searchProductInput.next();
+            searchProductInput.next(); // Consume the invalid input
         }
     }
 }

@@ -16,7 +16,7 @@ class SoldProducts {
         System.out.println("\n=============================================================");
         System.out.println("                            Sales                      ");
         System.out.println("-------------------------------------------------------------");
-        System.out.printf("|| %-20s || %-20s || %-30s || %-10s || %-15s ||%n", "Date", "ID", "Product Name", "Quantity", "Total");
+        System.out.printf("|| %-30s || %-20s || %-40s || %-20s || %-30s ||%n", "Date", "ID", "Product Name", "Quantity", "Total");
         System.out.println("=============================================================");
         // Check if there are any products sold in the SoldProduct list. If there are none, print a message that there are no sales yet, otherwise, print the products sold
         if (soldProductList.size() == 0) {
@@ -24,7 +24,7 @@ class SoldProducts {
         } else {
             for (SoldProduct product : soldProductList) {
 
-                System.out.printf("|| %-20s || %-20s || %-30s || %-10d || %-15f ||%n", product.getDateTime() ,product.getCategory() + product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice() * product.getProductQty());
+                System.out.printf("|| %-30s || %-20s || %-40s || %-20d || %30.2f ||%n", product.getDateTime() ,product.getCategory() + product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice() * product.getProductQty());
             }
         }
         System.out.println("=============================================================");
