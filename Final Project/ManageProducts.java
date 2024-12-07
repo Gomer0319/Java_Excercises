@@ -360,8 +360,8 @@ class SearchProduct {
                             if (product.getProductID() == productID) {
                                 // Display the product details
                                 System.out.println("\nProduct Details: ");
-                                System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n",  "ID", "Product Name", "Quantity", "Price");
-                                System.out.printf("||  %-20s || %-30s || %-20s || %20.2f ||%n", product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice());
+                                System.out.printf("||  %-20s || %-40s || %-20s || %-30s ||%n",  "ID", "Product Name", "Quantity", "Price");
+                                System.out.printf("||  %-20s || %-40s || %-20s || %30.2f ||%n", product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice());
                                 found = true;
                                 break;
                             }
@@ -410,8 +410,8 @@ class SearchProduct {
                             if (product.getProductID() == productID) {
                                 // Display the product details
                                 System.out.println("\nProduct Details: ");
-                                System.out.printf("||  %-20s || %-30s || %-10s || %-15s ||%n",  "ID", "Product Name", "Quantity", "Price");
-                                System.out.printf("||  %-20s || %-30s || %-20s || %20.2f ||%n", product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice());
+                                System.out.printf("||  %-20s || %-40s || %-20s || %-30s ||%n",  "ID", "Product Name", "Quantity", "Price");
+                                System.out.printf("||  %-20s || %-40s || %-20s || %30.2f ||%n", product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice());
                                 found = true;
                                 break;
                             }

@@ -148,16 +148,16 @@ class Electronics implements Product {
             System.out.println("No products found in Electronics category.");
         }
         else {
-            System.out.println("\n=============================================");
+            System.out.println("\n=============================================================================");
             System.out.println("Products in Electronics category:");
             System.out.printf("|| %-20s || %-40s || %-30s || %-20s ||\n", "ID", "Product Name", "Price", "Quantity");
-            System.out.println("---------------------------------------------");
+            System.out.println("-----------------------------------------------------------------");
             // Loop through the electronics list and display the products, one by one, one product per line in the console
             for (int i = 0; i < electronics.size(); i++) {
                 Electronics product = electronics.get(i);
                 System.out.printf("|| %-20d || %-40s || %30.2f || %-20d ||\n", product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty());
             }
-            System.out.println("=============================================");
+            System.out.println("================================================================");
         }
     }
 
