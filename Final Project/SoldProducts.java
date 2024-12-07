@@ -14,19 +14,19 @@ class SoldProducts {
     // Create a method that displays the products sold
     public void displaySoldProducts() {
         System.out.println("\n==========================================================================================================================================================");
-        System.out.println("                            Sales                      ");
+        System.out.printf(" %75s ", "Sales History\n");
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------");
-        System.out.printf("|| %-30s || %-20s || %-40s || %-20s || %-30s ||%n", "Date", "ID", "Product Name", "Quantity", "Total");
-        System.out.println("==========================================================================================================================================================\"");
+        System.out.printf("|| %-20s || %-20s || %-40s || %-20s || %-30s ||%n", "Date", "ID", "Product Name", "Quantity", "Total");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------");
         // Check if there are any products sold in the SoldProduct list. If there are none, print a message that there are no sales yet, otherwise, print the products sold
         if (soldProductList.size() == 0) {
             System.out.println("There are no sales yet.");
         } else {
             for (SoldProduct product : soldProductList) {
 
-                System.out.printf("|| %-30s || %-20s || %-40s || %-20d || %30.2f ||%n", product.getDateTime() ,product.getCategory() + product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice() * product.getProductQty());
+                System.out.printf("|| %-20s || %-20s || %-40s || %-20d || %30.2f ||%n", product.getDateTime() ,product.getCategory() + product.getProductID(), product.getProductName(), product.getProductQty(), product.getProductPrice() * product.getProductQty());
             }
         }
-        System.out.println("==========================================================================================================================================================\"");
+        System.out.println("==========================================================================================================================================================\n");
     }
 }

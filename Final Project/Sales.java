@@ -244,6 +244,7 @@ class ViewCart {
         // Display all items in all carts
         System.out.println("\n==========================================================================================================================================================");
         System.out.printf("|| %-20s || %-40s || %-20s || %-30s ||%n", "ID", "Product Name", "Quantity", "Total");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------");
         ElectronicsCart.viewCart();
         ClothingsCart.viewCart();
         ToysCart.viewCart();
@@ -316,17 +317,18 @@ class FinalizeSale {
 
                 // Print receipt
                 System.out.println("\n==========================================================================================================================================================");
-                System.out.printf("%40s %-10s", " ", "Receipt");
+                System.out.printf("%70s %-10s \n", " ", "Receipt");
                 System.out.printf("Tendered by: %s%n", loggedUser);
                 System.out.printf("Date and Time: %s%n", dateTimeString);
                 System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------");
                 System.out.printf("|| %-20s || %-40s || %-20s || %-30s ||%n", "ID", "Product Name", "Quantity", "Total");
+                System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------");
                 ElectronicsCart.viewCart();
                 ClothingsCart.viewCart();
                 ToysCart.viewCart();
                 FurnituresCart.viewCart();
                 System.out.println("==========================================================================================================================================================");
-                System.out.printf("Grand Total: %40s >>> Php %30.2f \n", " ", (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal));
+                System.out.printf("Grand Total: %75s >>> Php %30.2f \n", " ", (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal));
 
                 System.out.println("\nThank you for shopping with us!\n");
 
