@@ -5,6 +5,14 @@ import java.time.format.DateTimeFormatter;
 
 // Create Sales class where we select products to be sold (by their Category and ID), Entering Qty Sold and updating the inventory, and making a reciept of the sale.
 class Sales {
+    private String loggedUser;
+    private int customerID;
+
+    public Sales(String loggedUser, int customerID){
+        this.loggedUser = LoginManager.getloggedUser();
+        this.customerID = customerID;
+    }
+
     // Create a scanner object to read user input
     Scanner salesInput = new Scanner(System.in);
 
@@ -42,7 +50,7 @@ class Sales {
                         break;
                     case 3:
                         // Go to finalize sale menu
-                        FinalizeSale finalizeSale = new FinalizeSale(LoginManager.getloggedUser());
+                        FinalizeSale finalizeSale = new FinalizeSale(loggedUser, 0);
                         finalizeSale.finalizeSale();
                         break;
                     case 4:
@@ -50,10 +58,14 @@ class Sales {
                         if (LoginManager.getloggedUser().equals("Admin")) {
                             AdminMenu adminMenu = new AdminMenu();
                             adminMenu.displayMenu();
+                            keepSalesMenu = false;
+                            break;
                         }
                         else if (LoginManager.getloggedUser().equals("Employee")) {
                             EmployeeMenu employeeMenu = new EmployeeMenu();
                             employeeMenu.displayMenu();
+                            keepSalesMenu = false;
+                            break;
                         }
                         break;
                     default:
@@ -66,6 +78,16 @@ class Sales {
                 salesInput.next();
             }
         }
+    }
+
+    // getter for logged user
+    public String getLoggedUser() {
+        return loggedUser;
+    }
+
+    // getter for customer ID
+    public int getCustomerID() {
+        return customerID;
     }
 }
 
@@ -85,7 +107,9 @@ class NewSale {
                 System.out.println("\n=============================================");
                 System.out.println("Sales Cart");
                 System.out.println("---------------------------------------------");
-                System.out.println("Select a Category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures\n5. Return");
+
+                // Take input for category
+                System.out.println("Select a Category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures\n5. Proceed to View Cart");
                 System.out.print(">>> ");
                 int categoryChoice = newSaleInput.nextInt();
 
@@ -216,11 +240,9 @@ class NewSale {
                         }
                         break;
                     case 5:
-                        // Go to sales menu
-                        System.out.println("Returning to Sales Menu.");
-                        keepNewSaleMenu = false;
-                        Sales sales = new Sales();
-                        sales.salesMenu();
+                        // Go to view cart menu
+                        ViewCart viewCart = new ViewCart();
+                        viewCart.displayCart();
                         break;
                     default:
                         System.out.println("\nInvalid option. Please try again.\n");
@@ -237,6 +259,19 @@ class NewSale {
 
 // Create ViewCart class to view contents of all cart (like a receipt)
 class ViewCart {
+    private String loggedUser;
+    private int customerID;
+
+    public ViewCart(String loggedUser, int customerID) {
+        this.loggedUser = LoginManager.getloggedUser();
+        this.customerID = customerID;
+    }
+
+    public ViewCart() {
+        this.loggedUser = null;
+        this.customerID = 0;
+    }
+
     public void displayCart() {
         // Scanner object to read user input
         Scanner confirmInput = new Scanner(System.in);
@@ -257,43 +292,122 @@ class ViewCart {
 
         // Check if the admin wants to finalize the sale
         if (confirm.equals("y")) {
-            // Go to finalize sale menu
-            System.out.println("\nFinalizing Sale...");
-            FinalizeSale finalizeSale = new FinalizeSale();
-            finalizeSale.finalizeSale();
+            // Ask the user if they want to associate the sale to a registered customer or not.
+            System.out.println("Do you want to associate the sale to a registered customer? (y/n)");
+            System.out.print(">>> ");
+            String customerChoice = confirmInput.next();
+
+            if (customerChoice.equals("y")) {
+                // Ask the user to enter the customer ID
+                System.out.print("Enter the customer ID: ");
+                int customerID = confirmInput.nextInt();
+
+                // Check if the customer ID is available in the customer list
+                for (Customer customer : Customer.customers) {
+                    if (customer.getID() == customerID) {
+                        // Display a message that the sale has been associated with the customer
+                        System.out.println("\nSale has been associated with customer " + customer.getName());
+
+                        // Go to finalize sale menu
+                        System.out.println("\nFinalizing Sale...");
+                        FinalizeSale finalizeSale = new FinalizeSale(loggedUser,customerID);
+                        finalizeSale.finalizeSale();
+                        break;
+                    }
+                    else {
+                        System.out.println("Customer ID not found.");
+                        continue;
+                    }
+                }
+            }
+            else if (customerChoice.equals("n")) {
+                // Proceed with the new sale
+                System.out.println("\nSale has not been associated with a customer.");
+
+                // Go to finalize sale menu
+                System.out.println("\nFinalizing Sale...");
+                FinalizeSale finalizeSale = new FinalizeSale();
+                finalizeSale.finalizeSale();
+                return;
+            }
         }
-        else {
-            // Go to New Sale menu
-            System.out.println("\nReturning to Cart.");
-            NewSale newSale = new NewSale();
-            newSale.addToCart();
+        else if (confirm.equals("n")) {
+            // Ask if we return in the addtocart menu or we empty the cart
+            System.out.println("Do you want to return to the Add to Cart Menu? (y/n)");
+            System.out.print(">>> ");
+            String returnChoice = confirmInput.next();
+
+            if (returnChoice.equals("y")) {
+                // GO back to addtocart menu
+                System.out.println("\nReturning to Add to Cart Menu...");
+                NewSale newSale = new NewSale();
+                newSale.addToCart();
+                return;
+            }
+            else if (returnChoice.equals("n")) {
+                //return the quantity of the products back to the inventory
+                System.out.println("\nCanceling Sale...");
+                Electronics.returnProduct();
+                Clothings.returnProduct();
+                Toys.returnProduct();
+                Furnitures.returnProduct();
+
+                // Empty the cart
+                ElectronicsCart.electronicsCart.clear();
+                ClothingsCart.clothingsCart.clear();
+                ToysCart.toysCart.clear();
+                FurnituresCart.furnituresCart.clear();
+                System.out.println("\nCart has been cleared.");
+
+                // Go back to Sales menu
+                Sales sales = new Sales(loggedUser, 0);
+                sales.salesMenu();
+                return;
+            }
+            else {
+                System.out.println("\nInvalid option. Please try again.");
+            }
         }
+    }
+
+    // getter for loggedUser
+    public String getLoggedUser() {
+        return loggedUser;
+    }
+
+    // getter for customerID
+    public int getCustomerID() {
+        return customerID;
     }
 }
 
 // Create FinalizeSaleclass to finalize sale, compute total cost to be paid, print a receipt, and update Sales (emptying carts and storing sales in Sales List for Reports)
 class FinalizeSale {
     private String loggedUser;
+    private int customerID;
 
     // Constructor
-    public FinalizeSale(String loggedUser) {
-        this.loggedUser = loggedUser;
+    public FinalizeSale(String loggedUser, int customerID) {
+        this.customerID = customerID;
+        this.loggedUser = LoginManager.getloggedUser();
     }
 
     // Default constructor
     public FinalizeSale() {
         this.loggedUser = null;
+        this.customerID = 0;
     }
+
 
     public void finalizeSale() {
         // Scanner object to read user input
         Scanner finalizeSaleInput = new Scanner(System.in);
 
         // Check if there are any items in the cart
-        if (ElectronicsCart.electronicsCart.size() == 0 && ClothingsCart.clothingsCart.size() == 0) {
+        if (ElectronicsCart.electronicsCart.size() == 0 && ClothingsCart.clothingsCart.size() == 0 && ToysCart.toysCart.size() == 0 && FurnituresCart.furnituresCart.size() == 0) {
             // Go to sales menu
             System.out.println("There are no items in the cart. Returning to Sales Menu.");
-            Sales sales = new Sales();
+            Sales sales = new Sales(loggedUser, customerID);
             sales.salesMenu();
         }
         else {
@@ -319,6 +433,7 @@ class FinalizeSale {
                 System.out.println("\n==========================================================================================================================================================");
                 System.out.printf("%70s %-10s \n", " ", "Receipt");
                 System.out.printf("Tendered by: %s%n", loggedUser);
+                System.out.printf("Customer ID: %d%n", customerID);
                 System.out.printf("Date and Time: %s%n", dateTimeString);
                 System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------");
                 System.out.printf("|| %-20s || %-40s || %-20s || %-30s ||%n", "ID", "Product Name", "Quantity", "Total");
@@ -330,7 +445,24 @@ class FinalizeSale {
                 System.out.println("==========================================================================================================================================================");
                 System.out.printf("Grand Total: %75s >>> Php %30.2f \n", " ", (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal));
 
-                System.out.println("\nThank you for shopping with us!\n");
+                System.out.println("\nThank you for shopping with us!\n\n\n");
+
+                // Update the points of the customer with the corresponding ID. For every 1000 php spent, there is 1 point (example, if spent is 6500, there are 6.5 points). It is accumulative.
+                // Check if the customer exists in the database
+                boolean customerExists = false;
+                for (int i = 0; i < Customer.customers.size(); i++) {
+                    if (Customer.customers.get(i).getID() == customerID) {
+                        customerExists = true;
+                        // Update the points of the customer
+                        Customer.updatePoints((electronicsTotal + clothingsTotal + toysTotal + furnituresTotal) / 1000);
+                        break;
+                    }
+                }
+
+                if (!customerExists) {
+                    // If the customer does not exist, create an error message
+                    System.out.println("Customer with ID " + customerID + " does not exist in the database.");
+                }
 
                 // Pass the data of the sold products to the soldProducts class before the cart is emptied, add the dateTimeString to the soldProduct class, then empty the cart
                 for (ElectronicsCart product : ElectronicsCart.electronicsCart) {
@@ -348,19 +480,68 @@ class FinalizeSale {
                 for (FurnituresCart product : FurnituresCart.furnituresCart) {
                     SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory(), dateTimeString));
                 }
-            }
 
                 // empty all carts
                 ElectronicsCart.emptyCart();
                 ClothingsCart.emptyCart();
                 ToysCart.emptyCart();
                 FurnituresCart.emptyCart();
+
+                // Go to sales menu
+                System.out.println("\nReturning to Sales Menu...");
+                Sales sales = new Sales(LoginManager.getloggedUser(), 0);
+                sales.salesMenu();
+
+            } else if (confirm.equals("n")) {
+                // Ask if we return in the addtocart menu or we empty the cart
+                System.out.println("Do you want to return to the Add to Cart Menu? (y/n)");
+                System.out.print(">>> ");
+                String returnChoice = finalizeSaleInput.next();
+
+                if (returnChoice.equals("y")) {
+                    // GO back to addtocart menu
+                    System.out.println("\nReturning to Add to Cart Menu...");
+                    NewSale newSale = new NewSale();
+                    newSale.addToCart();
+                    return;
+                }
+                else if (returnChoice.equals("n")) {
+                    //return the quantity of the products back to the inventory
+                    System.out.println("\nCanceling the sale. Returning the quantity of the products back to the inventory.");
+                    Electronics.returnProduct();
+                    Clothings.returnProduct();
+                    Toys.returnProduct();
+                    Furnitures.returnProduct();
+                    
+                    // Empty the cart
+                    ElectronicsCart.electronicsCart.clear();
+                    ClothingsCart.clothingsCart.clear();
+                    ToysCart.toysCart.clear();
+                    FurnituresCart.furnituresCart.clear();
+                    System.out.println("\nCart has been cleared.");
+
+                    // Go back to Sales menu
+                    Sales sales = new Sales(LoginManager.getloggedUser(), 0);
+                    sales.salesMenu();
+                    return;
+                }
+                else {
+                    System.out.println("Invalid choice. Returning to Add to Cart Menu...");
+                    NewSale newSale = new NewSale();
+                    newSale.addToCart();
+                    return;
+                }
+            }
         }  
     }
     
     // Getter
     public String getloggedUser() {
         return loggedUser;
+    }
+
+    public int getCustomerID() {
+        return customerID;
     }
 }
 

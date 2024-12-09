@@ -1,0 +1,447 @@
+// Create a Customer class wherein we can add customer information and store, view and delete customer information. (Customer will include ID, name, email, and phone number; will also include date of registration).
+// Customer will be rewarded 1 points for every Php 10000 spent/purchase. This points will be used for discounts in the future (WIP).
+import java.util.*;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+
+
+public class Customer {
+    private int ID;
+    private String name;
+    private String email;
+    private String phoneNumber;
+    private String dateOfRegistration;
+    private double points;
+
+    // Make an List to store customer information
+    static List<Customer> customers = new ArrayList<>();
+
+    public Customer(int ID, String name, String email, String phoneNumber, String dateOfRegistration, double points) {
+        this.ID = ID;
+        this.name = name;    
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.dateOfRegistration = dateOfRegistration;
+        this.points = points;
+    }
+
+    public Customer(double points) {
+        this.points = points;
+    }
+    
+    //default constructor
+    public Customer() {
+        this.ID = 0;
+        this.name = "";
+        this.email = "";
+        this.phoneNumber = "";
+        this.dateOfRegistration = "";
+        this.points = 0;
+    }
+
+    // Create a Customer Menu for adding, updating, viewing, searching, and deleting customer information
+    public void customerMenu() {
+        // Scanner object to read user input
+        Scanner customerMenuInput = new Scanner(System.in);
+
+        // Create a boolean variable to check if the admin wants to keep admin menu until they choose to logout
+        boolean keepCustomerMenu = true;
+
+        // Create a message to greet the user
+        while (keepCustomerMenu) {
+            try { 
+                System.out.println("\n=============================================");
+                System.out.println("Customer Menu");
+                System.out.println("---------------------------------------------");
+                System.out.println("1. Add Customer");
+                System.out.println("2. Update Customer Information");
+                System.out.println("3. View Customer Information");
+                System.out.println("4. Search Customer Information");
+                System.out.println("5. Delete Customer Information");
+                System.out.println("6. Return to Main Menu");
+                System.out.println("=============================================");
+                System.out.print("Enter your choice: ");
+                int customerOption = customerMenuInput.nextInt();
+                customerMenuInput.nextLine();
+
+                // Check if the admin wants to manage products, process sales, view reports, or logout
+                switch (customerOption) {
+                    case 1:
+                        // Go to add customer menu method
+                        addCustomer();
+                        break;
+                    case 2:
+                        // Go to update customer menu method
+                        updateCustomerInfo();
+                        break;
+                    case 3:
+                        // Go to view customer menu method
+                        displayCustomerInfo();
+                        break;
+                    case 4:
+                        // Go to search customer menu method
+                        searchCustomerInfo();
+                        break;
+                    case 5:
+                        // Go to delete customer menu method
+                        deleteCustomerInfo();
+                        break;
+                    case 6:
+                        // Go to main menu
+                        keepCustomerMenu = false;
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please try again.");
+                customerMenuInput.next();
+            }
+        }
+    }
+
+    // Make a method to add customer information in the system
+    public void addCustomer() {
+        // Scanner object to read user input
+        Scanner customerInfoInput = new Scanner(System.in);
+
+        boolean keepRegistering = true;
+
+        while (keepRegistering) {
+            try {
+                // Add customer information to the list
+                System.out.println("\n============================================="); 
+                System.out.println("Add Customer: ");
+                System.out.println("---------------------------------------------");
+                System.out.print("Enter customer ID: "); //This will probably be auto-generated by the system in future versions
+                ID = customerInfoInput.nextInt();
+                customerInfoInput.nextLine();
+                System.out.print("Enter customer name: ");
+                name = customerInfoInput.nextLine();
+                System.out.print("Enter customer email: ");
+                email = customerInfoInput.nextLine();
+
+                // Validate email
+                if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
+                    System.out.println("Invalid email. Please provide a valid email address.");
+                    continue;
+                }
+
+                System.out.print("Enter customer phone number: ");
+                String phoneNumber = customerInfoInput.nextLine(); // Handle as String
+
+                // Validate phone number
+                if (!phoneNumber.matches("\\d{11}")) {
+                    System.out.println("Invalid phone number. Please provide exactly 11 digits.");
+                    continue; // Retry
+                }
+                System.out.println("=============================================");
+
+                // Add customer information to the list with date of registration
+                // Generate date of registration
+                LocalDateTime currentDateTime = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                dateOfRegistration = currentDateTime.format(formatter);
+
+                // Add customer information to the list
+                boolean isDuplicate = false;
+
+                for (Customer customer : customers) {
+                    if (customer.getID() == ID || customer.getName().equalsIgnoreCase(name)) {
+                        isDuplicate = true;
+                        break;
+                    }
+                }
+
+                if (isDuplicate) {
+                    System.out.println("Duplicate ID or Name found. Please try again.");
+                } else {
+                    customers.add(new Customer(ID, name, email, phoneNumber, dateOfRegistration, points));
+                    System.out.println("\nCustomer " + name + " added successfully! Are you want to add another customer? (y/n).");
+                    String response = customerInfoInput.next().trim().toLowerCase();
+
+                    if (response.equals("n")) {
+                        keepRegistering = false;
+                        break;
+                    } else if (response.equals("y")) {
+                        keepRegistering = true;
+                        continue;
+                    } else {
+                        System.out.println("Invalid input. Please enter 'y' or 'n'.");
+                        keepRegistering = true;
+                        break;
+                    }
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please try again.");
+                customerInfoInput.next();
+            }
+        }
+    }
+
+    // Make a method to update customer information in the system from the list
+    public void updateCustomerInfo() {
+        // Scanner object to read user input
+        Scanner updateInfoInput = new Scanner(System.in);
+
+        boolean keepUpdating = true;
+
+        while (keepUpdating) {
+            try {
+                // Update customer information
+                System.out.println("\nUpdate Customer Information");
+                System.out.println("--------------------------");
+                System.out.print("Enter customer ID: ");
+                int ID = updateInfoInput.nextInt();
+                updateInfoInput.nextLine();
+
+                // Search if ID exists in the list with a user
+                for (Customer customer : customers) {
+                    if (customer.getID() == ID) {
+                        // Show customer information
+                        System.out.println("\nCustomer Information");
+                        System.out.printf("|| %-10d %-30s %-30s %-30s %-10.2f %-20s ||\n", customer.ID, customer.name, customer.email, customer.phoneNumber, customer.points, customer.dateOfRegistration);
+
+                        // Ask the customer if they want to update a specific information
+                        System.out.println("\nWhich information do you want to update? \n1. Name\n2. Email\n3. Phone Number\n4. Points");
+                        System.out.print("Enter your choice: ");
+                        int choice = updateInfoInput.nextInt();
+                        updateInfoInput.nextLine();
+
+                        // Update customer information
+                        switch (choice) {
+                            case 1:
+                                System.out.print("Enter new name: ");
+                                customer.name = updateInfoInput.nextLine();
+                                break;
+                            case 2:
+                                System.out.print("Enter new email: ");
+                                customer.email = updateInfoInput.nextLine();
+                                break;
+                            case 3:
+                                System.out.print("Enter new phone number: ");
+                                customer.phoneNumber = updateInfoInput.nextLine();
+                                break;
+                            case 4:
+                                System.out.print("Enter new points: ");
+                                customer.points = updateInfoInput.nextDouble();
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please try again.");
+                                break;
+                        }
+
+                        // Display updated customer information
+                        System.out.println("\nUpdated Customer Information");
+                        System.out.printf("|| %-10d %-30s %-30s %-30s %-10.2f %-20s \n", customer.ID, customer.name, customer.email, customer.phoneNumber, customer.points, customer.dateOfRegistration);
+                        break;
+                    }
+                }
+
+                // Ask the customer if they want to update another customer
+                System.out.println("\nDo you want to update another customer? (y/n)");
+                String response = updateInfoInput.next().trim().toLowerCase();
+
+                if (response.equals("n")) {
+                    keepUpdating = false;
+                    break;
+                } else if (response.equals("y")) {
+                    keepUpdating = true;
+                    continue;
+                } else {
+                    System.out.println("Invalid input. Please enter 'y' or 'n'.");
+                    keepUpdating = true;
+                    break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please try again.");
+                updateInfoInput.next();
+            }
+        }       
+    }
+
+    // Make a method to delete customer information in the system from the list
+    public void deleteCustomerInfo() {
+        // Scanner object to read user input
+        Scanner deleteInfoInput = new Scanner(System.in);
+
+        boolean keepDeleting = true;
+
+        while (keepDeleting) {
+            try {
+                // Delete customer information
+                System.out.println("\nDelete Customer Information");
+                System.out.print("Enter customer ID: ");
+                int ID = deleteInfoInput.nextInt();
+                deleteInfoInput.nextLine();
+
+                // Search if ID exists in the list with a user
+                for (Customer customer : customers) {
+                    if (customer.getID() == ID) {
+                        // Show customer information
+                        System.out.println("\nCustomer Information");
+                        System.out.printf("|| %-10d %-30s %-30s %-30s %-10.2f %-20s ||\n", customer.ID, customer.name, customer.email, customer.phoneNumber, customer.points, customer.dateOfRegistration);
+
+                        // Confirm the customer if they want to delete the customer
+                        System.out.println("\nAre you sure you want to delete this customer? (y/n)");
+                        String response = deleteInfoInput.next().trim().toLowerCase();
+
+                        if (response.equals("y")) {
+                            // Delete customer information
+                            customers.remove(customer);
+                            System.out.println("\nCustomer information for" + customer.name + " has been deleted.");
+                            break;
+                        } else if (response.equals("n")) {
+                            // Return to Customer Menu
+                            System.out.println("\nReturning to Customer Menu.");
+                            keepDeleting = false;
+                            break;
+                        } else {
+                            System.out.println("Invalid input. Please enter 'y' or 'n'.");
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please try again.");
+                deleteInfoInput.next();
+            }
+        }
+    }
+
+    // Make a method to search customer information in the system from the list either by ID or name(match)
+    public void searchCustomerInfo() {
+        // Scanner object to read user input
+        Scanner searchInfoInput = new Scanner(System.in);
+
+        boolean keepSearching = true;
+
+        while (keepSearching) {
+            try {
+                // Search customer information
+                System.out.println("\nSearch Customer Information");
+                System.out.println("How do you want to search? \n1. By ID \n2. By Name");
+                System.out.print("Enter your choice: ");
+                int choice = searchInfoInput.nextInt();
+                searchInfoInput.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        System.out.print("Enter customer ID: ");
+                        int ID = searchInfoInput.nextInt();
+                        searchInfoInput.nextLine();
+
+                        // Search if ID exists in the list with a user
+                        for (Customer customer : customers) {
+                            if (customer.getID() == ID) {
+                                // Show customer information
+                                System.out.println("\nCustomer Information");
+                                System.out.printf("|| %-10d %-30s %-30s %-30s %-10.2f %-20s ||\n", customer.ID, customer.name, customer.email, customer.phoneNumber, customer.points, customer.dateOfRegistration);
+                                break;
+                            }
+                            else {
+                                System.out.println("\nCustomer not found.");
+                                break;
+                            }
+                        }
+                        break;
+                    case 2:
+                        System.out.print("Enter customer name: ");
+                        String name = searchInfoInput.nextLine();
+
+                        // Search if name exists in the list with a user or even part of the name
+                        for (Customer customer : customers) {
+                            if (customer.getName().equalsIgnoreCase(name)) {
+                                // Show customer information
+                                System.out.println("\nCustomer Information");
+                                System.out.printf("|| %-10d %-30s %-30s %-30s %-10.2f %-20s ||\n", customer.ID, customer.name, customer.email, customer.phoneNumber, customer.points, customer.dateOfRegistration);
+                                break;
+                            }
+                            else {
+                                System.out.println("\nCustomer not found.");
+                                break;
+                            }
+                        }
+                        break;
+                    default:
+                        System.out.println("Invalid input. Please enter 1 or 2.");
+                        break;
+                }
+
+                // Ask if the user wants to search again
+                System.out.println("\nDo you want to search again? (y/n)");
+                String response = searchInfoInput.next().trim().toLowerCase();
+
+                if (response.equals("y")) {
+                    keepSearching = true;
+                    continue;
+                } else if (response.equals("n")) {
+                    System.out.println("\nReturning to Customer Menu.");
+                    keepSearching = false;
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please enter 'y' or 'n'.");
+                    break;
+                }
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please try again.");
+                searchInfoInput.next();
+            }
+        }             
+    }
+
+    // Make a method to display customer information in the system from the list
+    public void displayCustomerInfo() {
+        // Display customer information
+        System.out.println("\n===============================================================================================================================================");
+        System.out.printf(" %75s", "CUSTOMER INFORMATION\n");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("|| %-5s || %-30s || %-30s || %-20s || %-10s || %-20s ||\n", "ID", "Name", "Email", "Phone Number", "Points", "Date of Registration");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------");
+        for (Customer customer : customers) {
+            System.out.printf("|| %-5d || %-30s || %-30s || %-20s || %-10.2f || %-20s ||\n", customer.ID, customer.name, customer.email, customer.phoneNumber, customer.points, customer.dateOfRegistration);
+        }
+        System.out.println("\n===============================================================================================================================================");
+    }
+
+    // Create a method to update the customer points
+    public static void updatePoints(double points) {
+        // Update the customer points
+        Customer.customers.get(Customer.customers.size() - 1).points += points;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {    
+        return phoneNumber;
+    }
+
+    public String getDateOfRegistration() {
+        return dateOfRegistration;
+    }
+
+    public double getPoints() {
+        return points;
+    }
+
+    public void setPoints(double points) {
+        this.points = points;
+    }
+}
+
+
+
+

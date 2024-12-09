@@ -120,6 +120,33 @@ class Clothings implements Product {
         System.out.println("Product with ID " + ID + " not found in Clothings category.");
     }
 
+    // Method to return product if the purchase is cancelled
+    public static void returnProduct() {
+        // Check if there are items in the electronics cart
+        if (ClothingsCart.clothingsCart.isEmpty()) {
+            System.out.println("No items in the Clothings cart to return.");
+            return;
+        }
+    
+        // Iterate through each item in the cart
+        for (ClothingsCart cartItem : ClothingsCart.clothingsCart) {
+            boolean productFound = false;
+            for (Clothings product : clothings) {
+                // Match the product ID
+                if (product.getProductID() == cartItem.getProductID()) {
+                    // Return the quantity from the cart to the inventory
+                    product.setProductQty(product.getProductQty() + cartItem.getProductQty());
+                    productFound = true;
+                    break;
+                }
+            }
+            if (!productFound) {
+                System.out.println("Product with ID " + cartItem.getProductID() + " not found in inventory. Unable to return.");
+            }
+        }
+        System.out.println("Clothings cart items have been returned to inventory.");
+    }
+
 
 
     // Method to view or display products from viewProducts class for clothings category

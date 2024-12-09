@@ -23,6 +23,7 @@ class EmployeeMenu {
         boolean keepEmployeeMenu = true;
 
         // Create a message to greet the user
+        String loggedUser = LoginManager.getloggedUser();
         System.out.println("\nWelcome, " + loggedUser + "!\n");
 
         while (keepEmployeeMenu) {
@@ -33,7 +34,8 @@ class EmployeeMenu {
                 System.out.println("---------------------------------------------");
                 System.out.println("1. Sales");
                 System.out.println("2. View Inventory and Sales");
-                System.out.println("3. Logout");
+                System.out.println("3. Customer Menu");
+                System.out.println("4. Logout");
                 System.out.println("=============================================");
                 System.out.print("Enter your choice: ");
                 
@@ -43,7 +45,7 @@ class EmployeeMenu {
                 switch (employeeOption) {
                     case 1:
                         // Go to sales menu
-                        Sales sales = new Sales();
+                        Sales sales = new Sales(loggedUser, 0);
                         sales.salesMenu();
                         break;
                     case 2:
@@ -52,6 +54,11 @@ class EmployeeMenu {
                         viewReports.displayMenu();
                         break;
                     case 3:
+                        // Go to customer menu
+                        Customer customer = new Customer();
+                        customer.customerMenu();
+                        break;
+                    case 4:
                         // Logout and return to Login menu
                         System.out.println("You are logged out.\n");
 

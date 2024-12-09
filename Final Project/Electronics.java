@@ -139,6 +139,32 @@ class Electronics implements Product {
         System.out.println("Product with ID " + ID + " not found in Electronics category.");
     }
 
+    // Method to return product if the purchase is cancelled
+    public static void returnProduct() {
+        // Check if there are items in the electronics cart
+        if (ElectronicsCart.electronicsCart.isEmpty()) {
+            System.out.println("No items in the Electronics cart to return.");
+            return;
+        }
+    
+        // Iterate through each item in the cart
+        for (ElectronicsCart cartItem : ElectronicsCart.electronicsCart) {
+            boolean productFound = false;
+            for (Electronics product : electronics) {
+                // Match the product ID
+                if (product.getProductID() == cartItem.getProductID()) {
+                    // Return the quantity from the cart to the inventory
+                    product.setProductQty(product.getProductQty() + cartItem.getProductQty());
+                    productFound = true;
+                    break;
+                }
+            }
+            if (!productFound) {
+                System.out.println("Product with ID " + cartItem.getProductID() + " not found in inventory. Unable to return.");
+            }
+        }
+        System.out.println("Electronics cart items have been returned to inventory.");
+    }
 
 
     // Method to view or display products from viewProducts class for electronics category

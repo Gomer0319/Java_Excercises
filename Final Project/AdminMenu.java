@@ -6,7 +6,7 @@ class AdminMenu {
 
     // Constructor to initialize loggedUser
     public AdminMenu(String loggedUser) {
-        this.loggedUser = loggedUser;
+        this.loggedUser = LoginManager.getloggedUser();
     }
 
     // Default constructor
@@ -23,6 +23,7 @@ class AdminMenu {
         boolean keepAdminMenu = true;
 
         // Create a message to greet the user
+        String loggedUser = LoginManager.getloggedUser();
         System.out.println("\nWelcome, " + loggedUser + "!\n");
 
         while (keepAdminMenu) {
@@ -34,7 +35,8 @@ class AdminMenu {
                 System.out.println("1. Manage Products");
                 System.out.println("2. Sales");
                 System.out.println("3. View Inventory and Sales");
-                System.out.println("4. Logout");
+                System.out.println("4. Customer Menu");
+                System.out.println("5. Logout");
                 System.out.println("=============================================");
                 System.out.print("Enter your choice: ");
                 
@@ -49,7 +51,7 @@ class AdminMenu {
                         break;
                     case 2:
                         // Go to sales menu
-                        Sales sales = new Sales();
+                        Sales sales = new Sales(loggedUser, 0);
                         sales.salesMenu();
                         break;
                     case 3:
@@ -58,6 +60,11 @@ class AdminMenu {
                         viewReports.displayMenu();
                         break;
                     case 4:
+                        // Go to customer menu
+                        Customer customer = new Customer();
+                        customer.customerMenu();
+                        break;
+                    case 5:
                         // Logout and return to Login menu
                         System.out.println("You are logged out.\n");
 

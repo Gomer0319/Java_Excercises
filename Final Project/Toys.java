@@ -120,6 +120,33 @@ class Toys implements Product {
         System.out.println("Product with ID " + ID + " not found in Toys category.");
     }
 
+    // Method to return product if the purchase is cancelled
+    public static void returnProduct() {
+        // Check if there are items in the electronics cart
+        if (ToysCart.toysCart.isEmpty()) {
+            System.out.println("No items in the toys cart to return.");
+            return;
+        }
+    
+        // Iterate through each item in the cart
+        for (ToysCart cartItem : ToysCart.toysCart) {
+            boolean productFound = false;
+            for (Toys product : toys) {
+                // Match the product ID
+                if (product.getProductID() == cartItem.getProductID()) {
+                    // Return the quantity from the cart to the inventory
+                    product.setProductQty(product.getProductQty() + cartItem.getProductQty());
+                    productFound = true;
+                    break;
+                }
+            }
+            if (!productFound) {
+                System.out.println("Product with ID " + cartItem.getProductID() + " not found in inventory. Unable to return.");
+            }
+        }
+        System.out.println("Toys cart items have been returned to inventory.");
+    }
+
 
 
     // Method to view or display products from viewProducts class for toys category

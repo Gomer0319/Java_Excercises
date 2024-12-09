@@ -120,6 +120,33 @@ class Furnitures implements Product {
         System.out.println("Product with ID " + ID + " not found in Furnitures category.");
     }
 
+    // Method to return product if the purchase is cancelled
+    public static void returnProduct() {
+        // Check if there are items in the electronics cart
+        if (FurnituresCart.furnituresCart.isEmpty()) {
+            System.out.println("No items in the Furnitures cart to return.");
+            return;
+        }
+    
+        // Iterate through each item in the cart
+        for (FurnituresCart cartItem : FurnituresCart.furnituresCart) {
+            boolean productFound = false;
+            for (Furnitures product : furnitures) {
+                // Match the product ID
+                if (product.getProductID() == cartItem.getProductID()) {
+                    // Return the quantity from the cart to the inventory
+                    product.setProductQty(product.getProductQty() + cartItem.getProductQty());
+                    productFound = true;
+                    break;
+                }
+            }
+            if (!productFound) {
+                System.out.println("Product with ID " + cartItem.getProductID() + " not found in inventory. Unable to return.");
+            }
+        }
+        System.out.println("Furnitures cart items have been returned to inventory.");
+    }
+
 
 
     // Method to view or display products from viewProducts class for Furnitures category
