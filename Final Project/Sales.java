@@ -454,7 +454,8 @@ class FinalizeSale {
                     if (Customer.customers.get(i).getID() == customerID) {
                         customerExists = true;
                         // Update the points of the customer
-                        Customer.updatePoints((electronicsTotal + clothingsTotal + toysTotal + furnituresTotal) / 1000);
+                        double computedPoints = (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal) / 1000;
+                        Customer.updatePoints(customerID, computedPoints);
                         break;
                     }
                 }

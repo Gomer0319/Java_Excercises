@@ -408,9 +408,16 @@ public class Customer {
     }
 
     // Create a method to update the customer points
-    public static void updatePoints(double points) {
-        // Update the customer points
-        Customer.customers.get(Customer.customers.size() - 1).points += points;
+    public static void updatePoints(int ID, double points) {
+        // Check if the ID exists in the list
+        for (Customer customer : customers) {
+            // if the ID exists, update the points on the corresponding customer
+            if (customer.getID() == ID) {
+                // update the points of the customer
+                customer.setPoints(customer.getPoints() + points);
+                break;
+            }
+        }
     }
 
     public int getID() {
