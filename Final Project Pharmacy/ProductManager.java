@@ -9,10 +9,11 @@ public class ProductManager {
             System.out.println("\n--------Product Menu--------");
             System.out.println(" 1. Add Product");
             System.out.println(" 2. Add Inventory");
-            System.out.println(" 3. Update Product");
-            System.out.println(" 4. Delete Product");
-            System.out.println(" 5. Display Products"); //will be search products later on development
-            System.out.println(" 6. Back to Main Menu");
+            System.out.println(" 3. Offset Inventory");
+            System.out.println(" 4. Update Product");
+            System.out.println(" 5. Delete Product");
+            System.out.println(" 6. Search Products"); //will be search products later on development
+            System.out.println(" 7. Back to Main Menu");
             System.out.println("--------------------------");
 
             // Get user input
@@ -33,18 +34,22 @@ public class ProductManager {
                     productController.addToInventory();
                     break;
                 case 3:
-                    // Create a ProductController object and call its updateProduct method
-                    // productController.updateProduct();
+                    // Create a ProductController object and call its offsetInventory method
+                    productController.offsetInventoryTransaction();
                     break;
                 case 4:
-                    // Create a ProductController object and call its deleteProduct method
-                    // productController.deleteProduct();
+                    // Create a ProductController object and call its updateProduct method
+                    productController.updateProduct();
                     break;
                 case 5:
-                    // Create a ProductController object and call its displayInventory method
-                    productController.displayInventory(); //will be search products later on development();
+                    // Create a ProductController object and call its deleteProduct method
+                    productController.deleteProduct();
                     break;
                 case 6:
+                    // Create a ProductController object and call its searchProduct method
+                    productController.searchProduct(); 
+                    break;
+                case 7:
                     // Return to the main menu
                     keepProductMenu = false;
                     break;
