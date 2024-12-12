@@ -18,6 +18,9 @@ public class LoginManager {
                 System.out.println("\nUsername or password cannot be empty. Please try again.\n");
                 continue;
             }
+
+            // Clear the console
+            Utility.clearScreen();
     
             //Check if the username and password are correct. If the match is for an admin, Go to the Admin page. If the match is for an employee, Go to the Employee page. Else, print an error message.
             for (Users user : UsersManager.getUsersList()) {

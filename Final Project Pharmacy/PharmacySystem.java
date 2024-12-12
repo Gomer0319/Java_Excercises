@@ -23,6 +23,9 @@ public class PharmacySystem {
                 int choice = Utility.getInt(">>> ");
                 Utility.userInput.nextLine();
 
+                // Clear the console
+                Utility.clearScreen();
+
                 // Create a switch statement to handle user input
                 switch (choice) {
                     case 1:

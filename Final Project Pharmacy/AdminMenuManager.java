@@ -20,6 +20,9 @@ public class AdminMenuManager {
             int choice = Utility.getInt(">>> ");
             Utility.userInput.nextLine(); // Consume the newline character
 
+            // Clear the console
+            Utility.clearScreen();
+
             // Create a switch statement to handle user input
             switch (choice) {
 
@@ -50,6 +53,7 @@ public class AdminMenuManager {
                 case 5:
                     //Ask user if they really want to logout and if they do, call the logout method.
                     if (Utility.getString("Are you sure you want to logout? (y/n) ").equalsIgnoreCase("y")) {
+                        System.out.println("Logging out...");
                         Utility.logout();
                         keepAdminMenu = false;
                     }

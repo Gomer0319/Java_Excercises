@@ -1,9 +1,19 @@
 import java.util.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 //Create a utility class called Validations, loops, scanners and other repetitive tasks for reusability
 public class Utility {
     // Shared scanner instance
     public static final Scanner userInput = new Scanner(System.in);
+
+    // Formatter for date
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    // Formatter for time
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
+    // Formatter for date and time
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     // Session Manager variables
     private static String loggedInUsername;
@@ -60,6 +70,31 @@ public class Utility {
         loggedInRole = role;
     }
 
+    // Method to clear the console
+    public static void clearScreen() {
+        try {
+            // For Windows
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } 
+            // For macOS and Linux
+            else {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (Exception e) {
+            System.out.println("Error clearing console: " + e.getMessage());
+        }
+    }
+
+    // On logout, reset session manager variables
+    public static void logout() {
+        loggedInUsername = null;
+        loggedInRole = null;
+
+        System.out.println("\nLogged out.\n");
+    }
+
     public static String getLoggedInUsername() {
         return loggedInUsername;
     }
@@ -81,11 +116,18 @@ public class Utility {
         loggedInRole = role;
     }
 
-    // On logout, reset session manager variables
-    public static void logout() {
-        loggedInUsername = null;
-        loggedInRole = null;
-
-        System.out.println("\n" + loggedInUsername + " Logged out.\n");
+    public static String getCurrentDate() {
+        return LocalDate.now().format(DATE_FORMATTER);
     }
+
+    // Method to get the current time
+    public static String getCurrentTime() {
+        return LocalDateTime.now().format(TIME_FORMATTER);
+    }
+
+    // Method to get the current date and time
+    public static String getCurrentDateTime() {
+        return LocalDateTime.now().format(DATE_TIME_FORMATTER);
+    }
+
 }
