@@ -95,6 +95,13 @@ public class ProductController {
                     return; // Exit the method
                 }
 
+                // Prompt expiry date
+                String expiryDate = Utility.getString("Expiry Date (yyyy-MM-dd): ").trim();
+                    if (!Utility.isValidDate(expiryDate)) {
+                        System.out.println("Invalid expiry date. No items added to inventory.");
+                        return;
+                    }
+
                 // Generate an ID for the inventory transaction, with a character concatenated to the product ID (example: RT + the generated ID (RT0001))
                 String inventoryTransactionId = "RT" + IdGenerator.generateID("Inventory Transaction");
 
@@ -105,7 +112,8 @@ public class ProductController {
                     product.getProductName(), 
                     product.getProductCategory(), 
                     product.getProductPrice(), 
-                    quantityToAdd, 
+                    quantityToAdd,
+                    expiryDate,
                     product.getProductPrescription(), 
                     product.getProductManufacturer(), 
                     Utility.getCurrentDateTime());
@@ -182,12 +190,13 @@ public class ProductController {
     
                 // Print the transaction details
                 System.out.println("\nTransaction Matched:");
-                System.out.printf(" %-15s %-10s %-30s %-10.2f %-10.2f %-20s\n",
+                System.out.printf(" %-15s %-10s %-30s %-10.2f %-10.2f %-20s %-20s\n",
                     transaction.getInventoryTransactionId(),
                     transaction.getProductId(),
                     transaction.getProductName(),
                     transaction.getProductPrice(),
                     transaction.getProductQuantity(),
+                    transaction.getproductExpiry(),
                     transaction.getProductDateAdded());
     
                 // Ask the user for the offset quantity
@@ -216,6 +225,7 @@ public class ProductController {
                     transaction.getProductCategory(),
                     transaction.getProductPrice(),
                     offsetQuantity,
+                    transaction.getproductExpiry(),
                     transaction.getProductPrescription(),
                     transaction.getProductManufacturer(),
                     Utility.getCurrentDateTime()
@@ -303,11 +313,10 @@ public class ProductController {
 
     public void searchProduct() {// Display inventory
         // Have a message to display the inventory
-        System.out.printf("\n %95s", "--------Search Inventory---------------- \n");
+        System.out.printf("\n ---------------Search Inventory---------------- \n");
 
         //Find item by ID. If the product is not found, the system should throw an exception.
-        System.out.println("Enter product ID: ");
-        String productId = Utility.getString("Product ID: ").trim();
+        String productId = Utility.getString("Enter Product ID: ").trim();
 
         // Validate input
         if (productId.isEmpty() || productId.equals("0")) {
@@ -322,48 +331,55 @@ public class ProductController {
             if (product.getProductId().equals(productId)) {
                 productFound = true;
 
-                // Print the product details of match from the inventoryList
-                System.out.println("\nProduct Matched:");
-                System.out.println("||---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------||");
-                System.out.printf("|| %-15s || %-10s || %-15s || %-30s || %-10s || %-10s || %-15s || %-30s || %-20s ||\n", "InvtyTransID", "ID", "Category", "Name", "Price", "Qty", "Prescription", "Manufacturer", "Date Added");
-                System.out.println("||---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------||");
-
-                // Get product data from the <Product> List from Product.java and display it
-                for (Product transaction : Product.inventoryList) {
-                    if (transaction.getProductId().equals(productId)) {
-                        System.out.printf("|| %-15s || %-10s || %-15s || %-30s || %-10.2f || %-10.2f || %-15s || %-30s || %-20s ||\n", 
-                            transaction.getInventoryTransactionId(),
-                            transaction.getProductId(),
-                            transaction.getProductCategory(),   
-                            transaction.getProductName(), 
-                            transaction.getProductPrice(),
-                            transaction.getProductQuantity(), 
-                            transaction.getProductPrescription(),   
-                            transaction.getProductManufacturer(),
-                            transaction.getProductDateAdded());
-                    }
-                }
-                System.out.println("||---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------||\n");
-
-                //Ask the user if they want to search again
-                System.out.println("Do you want to search again (y/n)? ");
-
-                // Validate input
-                while (!Utility.userInput.hasNext("y") && !Utility.userInput.hasNext("n")) {
-                    System.out.println("Invalid input. Please enter 'y' or 'n'.");
-                    Utility.userInput.next();
-                }
-
-                if (Utility.userInput.hasNext("y")) {
-                    searchProduct();
-                }
-                else if (Utility.userInput.hasNext("n")) {
-                    System.out.println("Returning to product menu.");
+                // Check if there are any inventory transactions for the product
+                if (Product.inventoryList.isEmpty()) {
+                    System.out.println("Inventory is empty. No inventory transactions yet.");
                     return;
+                }
+                else {
+                    // Print the product details of match from the inventoryList
+                    System.out.println("\nProduct Matched:");
+                    System.out.println("||------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------||");
+                    System.out.printf("|| %-15s || %-10s || %-15s || %-30s || %-10s || %-10s || %-10s || %-15s || %-30s || %-20s ||\n", "InvtyTransID", "ID", "Category", "Name", "Price", "Qty", "Expiry", "Prescription", "Manufacturer", "Date Added");
+                    System.out.println("||------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------||");
+
+                    // Get product data from the <Product> List from Product.java and display it
+                    for (Product transaction : Product.inventoryList) {
+                        if (transaction.getProductId().equals(productId)) {
+                            System.out.printf("|| %-15s || %-10s || %-15s || %-30s || %-10.2f || %-10.2f || %-10s || %-15s || %-30s || %-20s ||\n", 
+                                transaction.getInventoryTransactionId(),
+                                transaction.getProductId(),
+                                transaction.getProductCategory(),   
+                                transaction.getProductName(), 
+                                transaction.getProductPrice(),
+                                transaction.getProductQuantity(),
+                                transaction.getproductExpiry(), 
+                                transaction.getProductPrescription(),   
+                                transaction.getProductManufacturer(),
+                                transaction.getProductDateAdded());
+                        }
+                    }
+                    System.out.println("||------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------||\n");
+
+                    //Ask the user if they want to search again
+                    String userInput = Utility.getString("Do you want to search again (y/n)? ");
+
+                    // Validate input
+                    while (!userInput.equalsIgnoreCase("y") && !userInput.equalsIgnoreCase("n")) {
+                        System.out.println("Invalid input. Please enter 'y' or 'n'.");
+                        Utility.userInput.next();
+                    }
+
+                    if (userInput.equalsIgnoreCase("y")) {
+                        searchProduct();
+                    }
+                    else if (userInput.equalsIgnoreCase("n")) {
+                        System.out.println("Returning to product menu.");
+                        return;
+                    }
                 }
             }
         }
-
         if (!productFound) {
             System.out.println("Product ID not found. Returning to product menu.");
         }

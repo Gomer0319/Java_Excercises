@@ -51,6 +51,7 @@ public class ProductManager {
                     break;
                 case 7:
                     // Return to the main menu
+                    System.out.println("\nReturning to main menu...\n");
                     keepProductMenu = false;
                     break;
                 default:

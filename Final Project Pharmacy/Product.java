@@ -8,6 +8,7 @@ public class Product {
     private String productCategory;
     private double productPrice;
     private double productQuantity;
+    private String productExpiry;
     private String productPrescription;
     private String productManufacturer;
     private String productDateAdded;
@@ -16,24 +17,33 @@ public class Product {
     public static List<Product> productList = new ArrayList<>();
     public static List<Product> inventoryList = new ArrayList<>();
 
+    // Add dummy data to the Product List
+    static {
+        productList.add(new Product(IdGenerator.generateID("Product"), "Amlodipine Besylate 5mg", "Hypertension", 5.5, "n", "Viatris Specialty Llc", Utility.getCurrentDateTime()));
+        productList.add(new Product(IdGenerator.generateID("Product"), "Seretide 250mcg", "Corticosteroids", 750.00, "y", "GSK plc", Utility.getCurrentDateTime()));
+        productList.add(new Product(IdGenerator.generateID("Product"), "Rogin-E", "Supplement", 28.75, "n", "Bayer Philippines inc.", Utility.getCurrentDateTime()));
+    }
+
     // Constructor
     public Product(String productId, String productName, String productCategory, double productPrice, String productPrescription, String productManufacturer, String productDateAdded) {
         this.productId = productId;
         this.productName = productName;
         this.productCategory = productCategory;
         this.productPrice = productPrice;
+        
         this.productPrescription = productPrescription;
         this.productManufacturer = productManufacturer;
         this.productDateAdded = productDateAdded;
     }
 
-    public Product(String inventoryTransactionId, String productId, String productName, String productCategory, double productPrice, double productQuantity, String productPrescription, String productManufacturer, String productDateAdded) {
+    public Product(String inventoryTransactionId, String productId, String productName, String productCategory, double productPrice, double productQuantity, String productExpiry, String productPrescription, String productManufacturer, String productDateAdded) {
         this.inventoryTransactionId = inventoryTransactionId;
         this.productId = productId;
         this.productName = productName;
         this.productCategory = productCategory;
         this.productPrice = productPrice;
         this.productQuantity = productQuantity;
+        this.productExpiry = productExpiry;
         this.productPrescription = productPrescription;
         this.productManufacturer = productManufacturer;
         this.productDateAdded = productDateAdded;
@@ -57,9 +67,9 @@ public class Product {
         System.out.println("Product " + productName + " added successfully.");
     }
 
-    public static void addToInventory(String inventoryTransactionId, String productId, String productName, String productCategory, double productPrice, double productQuantity, String productPrescription, String productManufacturer, String productDateAdded) {
+    public static void addToInventory(String inventoryTransactionId, String productId, String productName, String productCategory, double productPrice, double productQuantity, String productExpiry, String productPrescription, String productManufacturer, String productDateAdded) {
         // Create a new Product object and add it to the list
-        Product newProduct = new Product(inventoryTransactionId, productId, productName, productCategory, productPrice, productQuantity, productPrescription, productManufacturer, productDateAdded);
+        Product newProduct = new Product(inventoryTransactionId, productId, productName, productCategory, productPrice, productQuantity, productExpiry, productPrescription, productManufacturer, productDateAdded);
         inventoryList.add(newProduct);
 
         // Print success message
@@ -71,7 +81,7 @@ public class Product {
         for (Product product : productList) {
             if (product.getProductId().equals(productId)) {
                 // Ask if what value to update
-                System.out.println("\nWhat value do you want to update? \n1. Product Name \n2. Product Category \n3. Product Price \n4. Product Prescription \n5. Product Manufacturer \n6. Return to Product Menu");
+                System.out.println("\nWhat value do you want to update? \n1. Product Name \n2. Product Category \n3. Product Price \n4. Product Prescription \n5. Product Manufacturer \n6. Expiry Date \n7. Return to Product Menu");
 
                 // Get user input
                 int choice = Utility.getInt("Enter your choice: ");
@@ -114,6 +124,20 @@ public class Product {
                         System.out.println("\nProduct manufacturer updated successfully.");
                         break;
                     case 6:
+                        // Go to an specific transaction using the transaction ID
+                        System.out.println("\nEnter Inventory Transaction ID: ");
+                        String inventoryTransactionId = Utility.getString("Inventory Transaction ID: ");
+                        for (Product transaction : Product.inventoryList) {
+                            if (transaction.getInventoryTransactionId().equals(inventoryTransactionId)) {
+                                // Update product expiry date
+                                System.out.println("\nEnter new product expiry date: ");
+                                String productExpiry = Utility.getString("Product Expiry Date: ");
+                                product.setProductExpiry(productExpiry);
+                                System.out.println("\nProduct expiry date updated successfully.");
+                            }
+                        }
+                        break;
+                    case 7:
                         // Return to product menu
                         System.out.println("\nReturning to product menu.");
                         break;
@@ -149,6 +173,10 @@ public class Product {
 
     public double getProductQuantity() {
         return productQuantity;
+    }
+
+    public String getproductExpiry() {
+        return productExpiry;
     }
 
     public String getProductPrescription() {
@@ -190,5 +218,9 @@ public class Product {
 
     public void setProductManufacturer(String productManufacturer) {
         this.productManufacturer = productManufacturer;
+    }
+
+    public void setProductExpiry(String productExpiry) {
+        this.productExpiry = productExpiry;
     }
 }

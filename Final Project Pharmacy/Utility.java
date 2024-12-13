@@ -2,14 +2,15 @@ import java.util.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 //Create a utility class called Validations, loops, scanners and other repetitive tasks for reusability
 public class Utility {
     // Shared scanner instance
     public static final Scanner userInput = new Scanner(System.in);
 
-    // Formatter for date
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    // // Formatter for date
+    // private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     // Formatter for time
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
     // Formatter for date and time
@@ -70,6 +71,23 @@ public class Utility {
         loggedInRole = role;
     }
 
+    // Method to check if a date is valid
+    public static boolean isValidDate(String date) {
+        try {
+            LocalDate.parse(date);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    // Method to check if a date is expired
+    public static boolean isDateExpired(String expiryDate, String currentDate) {
+        LocalDate expiry = LocalDate.parse(expiryDate);
+        LocalDate current = LocalDate.parse(currentDate);
+        return expiry.isBefore(current);
+    }
+
     // Method to clear the console
     public static void clearScreen() {
         try {
@@ -117,7 +135,7 @@ public class Utility {
     }
 
     public static String getCurrentDate() {
-        return LocalDate.now().format(DATE_FORMATTER);
+        return LocalDate.now().toString();
     }
 
     // Method to get the current time
@@ -128,6 +146,5 @@ public class Utility {
     // Method to get the current date and time
     public static String getCurrentDateTime() {
         return LocalDateTime.now().format(DATE_TIME_FORMATTER);
-    }
-
+    } 
 }
