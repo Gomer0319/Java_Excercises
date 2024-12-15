@@ -9,36 +9,44 @@ public class Product {
     private double productPrice;
     private double productQuantity;
     private String productExpiry;
+    private String productInvoice;
     private String productPrescription;
     private String productManufacturer;
     private String productDateAdded;
 
-    // Create a Product List to store the products and a List for the actual Inventory
+    // Create a Product List to store the products and a List for the actual
+    // Inventory
     public static List<Product> productList = new ArrayList<>();
     public static List<Product> inventoryList = new ArrayList<>();
 
     // Add dummy data to the Product List
     static {
-        productList.add(new Product(IdGenerator.generateID("Product"), "Amlodipine Besylate 5mg", "Hypertension", 5.5, "n", "Viatris Specialty Llc", Utility.getCurrentDateTime()));
-        productList.add(new Product(IdGenerator.generateID("Product"), "Seretide 250mcg", "Corticosteroids", 750.00, "y", "GSK plc", Utility.getCurrentDateTime()));
-        productList.add(new Product(IdGenerator.generateID("Product"), "Rogin-E", "Supplement", 28.75, "n", "Bayer Philippines inc.", Utility.getCurrentDateTime()));
+        productList.add(new Product(IdGenerator.generateID("Product"), "Amlodipine Besylate 5mg", "Hypertension", 5.5,
+                "n", "Viatris Specialty Llc", Utility.getCurrentDateTime()));
+        productList.add(new Product(IdGenerator.generateID("Product"), "Seretide 250mcg", "Corticosteroids", 750.00,
+                "y", "GSK plc", Utility.getCurrentDateTime()));
+        productList.add(new Product(IdGenerator.generateID("Product"), "Rogin-E", "Supplement", 28.75, "n",
+                "Bayer Philippines inc.", Utility.getCurrentDateTime()));
     }
 
     // Constructor
-    public Product(String productId, String productName, String productCategory, double productPrice, String productPrescription, String productManufacturer, String productDateAdded) {
+    public Product(String productId, String productName, String productCategory, double productPrice,
+            String productPrescription, String productManufacturer, String productDateAdded) {
         this.productId = productId;
         this.productName = productName;
         this.productCategory = productCategory;
         this.productPrice = productPrice;
-        
         this.productPrescription = productPrescription;
         this.productManufacturer = productManufacturer;
         this.productDateAdded = productDateAdded;
     }
 
-    public Product(String inventoryTransactionId, String productId, String productName, String productCategory, double productPrice, double productQuantity, String productExpiry, String productPrescription, String productManufacturer, String productDateAdded) {
+    public Product(String inventoryTransactionId, String productId, String productInvoice, String productName,
+            String productCategory, double productPrice, double productQuantity, String productExpiry,
+            String productPrescription, String productManufacturer, String productDateAdded) {
         this.inventoryTransactionId = inventoryTransactionId;
         this.productId = productId;
+        this.productInvoice = productInvoice;
         this.productName = productName;
         this.productCategory = productCategory;
         this.productPrice = productPrice;
@@ -49,8 +57,10 @@ public class Product {
         this.productDateAdded = productDateAdded;
     }
 
-    // Create a method to add the product added from the ProductController.addProduct method
-    public static void addProduct(String productId, String productName, String productCategory, double productPrice, String productPrescription, String productManufacturer, String productDateAdded) {
+    // Create a method to add the product added from the
+    // ProductController.addProduct method
+    public static void addProduct(String productId, String productName, String productCategory, double productPrice,
+            String productPrescription, String productManufacturer, String productDateAdded) {
         // Check if ID already exists
         for (Product product : productList) {
             if (product.getProductId().equals(productId)) {
@@ -60,16 +70,22 @@ public class Product {
         }
 
         // Create a new Product object and add it to the list
-        Product newProduct = new Product(productId, productName, productCategory, productPrice, productPrescription, productManufacturer, productDateAdded);
+        Product newProduct = new Product(productId, productName, productCategory, productPrice, productPrescription,
+                productManufacturer, productDateAdded);
         productList.add(newProduct);
 
         // Print success message
         System.out.println("Product " + productName + " added successfully.");
     }
 
-    public static void addToInventory(String inventoryTransactionId, String productId, String productName, String productCategory, double productPrice, double productQuantity, String productExpiry, String productPrescription, String productManufacturer, String productDateAdded) {
+    public static void addToInventory(String inventoryTransactionId, String productId, String productInvoice,
+            String productName,
+            String productCategory, double productPrice, double productQuantity, String productExpiry,
+            String productPrescription, String productManufacturer, String productDateAdded) {
         // Create a new Product object and add it to the list
-        Product newProduct = new Product(inventoryTransactionId, productId, productName, productCategory, productPrice, productQuantity, productExpiry, productPrescription, productManufacturer, productDateAdded);
+        Product newProduct = new Product(inventoryTransactionId, productId, productInvoice, productName,
+                productCategory, productPrice,
+                productQuantity, productExpiry, productPrescription, productManufacturer, productDateAdded);
         inventoryList.add(newProduct);
 
         // Print success message
@@ -81,7 +97,8 @@ public class Product {
         for (Product product : productList) {
             if (product.getProductId().equals(productId)) {
                 // Ask if what value to update
-                System.out.println("\nWhat value do you want to update? \n1. Product Name \n2. Product Category \n3. Product Price \n4. Product Prescription \n5. Product Manufacturer \n6. Expiry Date \n7. Return to Product Menu");
+                System.out.println(
+                        "\nWhat value do you want to update? \n1. Product Name \n2. Product Category \n3. Product Price \n4. Product Prescription \n5. Product Manufacturer \n6. Expiry Date \n7. Return to Product Menu");
 
                 // Get user input
                 int choice = Utility.getInt("Enter your choice: ");
@@ -183,12 +200,16 @@ public class Product {
         return productPrescription;
     }
 
-    public String getProductManufacturer() {    
+    public String getProductManufacturer() {
         return productManufacturer;
     }
 
     public String getProductDateAdded() {
         return productDateAdded;
+    }
+
+    public String getProductInvoice() {
+        return productInvoice;
     }
 
     // Setters
