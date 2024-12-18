@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 
 // Create a customer class where we can add a customer name, birthday, contact number, be able to update it, search for a customer, and delete a customer
@@ -39,7 +41,7 @@ public class Customer {
     // Create dummy customers
     static {
         customerList
-                .add(new Customer("CUS" + IdGenerator.generateID("Customer"), "Placido Barara", "1945-02-29",
+                .add(new Customer("CUS" + IdGenerator.generateID("Customer"), "Placido Barara", "1945-02-28",
                         "0944-444-4444", Utility.getCurrentDateTime()));
         customerList.add(
                 new Customer("CUS" + IdGenerator.generateID("Customer"), "Maximina Pautista", "1956-06-01",
@@ -181,27 +183,41 @@ public class Customer {
         }
     }
 
+    // Create a method to calculate age
+    public int calculateAge() {
+        LocalDate birthdate = LocalDate.parse(this.birthday);
+        LocalDate currentdate = LocalDate.now();
+        return Period.between(birthdate, currentdate).getYears();
+    }
+
+    // Create a method to check if a customer is a senior citizen
+    public boolean isSeniorCitizen() {
+        return calculateAge() >= 60;
+    }
+
     // Create a method to view all customers
     public static void viewCustomerList() {
         System.out.println("--------View All Customers--------");
         System.out.println(
-                "------------------------------------------------------------------------------------------------");
-        System.out.printf("|| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s ||\n", "Customer ID", "Customer Name",
+                "---------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("|| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s ||\n", "Customer ID",
+                "Customer Name",
                 "Birthday",
-                "Contact Number", "Reg Date", "Points");
+                "Contact Number", "Reg Date", "Points", "isSenior");
         System.out.println(
-                "------------------------------------------------------------------------------------------------");
+                "---------------------------------------------------------------------------------------------------------------------------------------------------------");
         for (Customer customer : customerList) {
-            System.out.printf("|| %-20s | %-20s | %-20s | %-20s | %-20s | %-20d ||\n",
+            System.out.printf("|| %-20s | %-20s | %-20s | %-20s | %-20s | %-20d | %-20s ||\n",
                     customer.getCustomerID(),
                     customer.getCustomerName(),
                     customer.getBirthday(),
                     customer.getContactNumber(),
                     customer.getRegistrationDate(),
-                    customer.getCustomerPoints());
+                    customer.getCustomerPoints(),
+                    (customer.isSeniorCitizen() ? "Yes" : "No"));
         }
         System.out.println(
-                "------------------------------------------------------------------------------------------------");
+                "---------------------------------------------------------------------------------------------------------------------------------------------------------");
     }
 
     public String getCustomerID() {
