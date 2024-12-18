@@ -143,7 +143,7 @@ public class ReportController {
 
         // Create a method named inventoryReport where we get the overall qty received
         // of an item, and the overall sales of the item, to get the actual qty on hand
-        public static void inventoryReport() {
+        public void inventoryReport() {
                 Product.productTotalQuantity();
                 SalesController.productTotalSold();
 

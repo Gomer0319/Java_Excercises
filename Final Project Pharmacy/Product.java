@@ -208,6 +208,8 @@ public class Product {
     }
 
     public double calculateActualQuantityOnHand() {
+        Product.productTotalQuantity();
+        SalesController.productTotalSold();
         return this.productTotalQuantity - this.salesTotalQty;
     }
 

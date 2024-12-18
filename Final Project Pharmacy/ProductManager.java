@@ -13,7 +13,7 @@ public class ProductManager {
             System.out.println(" 3. Offset Inventory");
             System.out.println(" 4. Update Product");
             System.out.println(" 5. Delete Product");
-            System.out.println(" 6. Search Products"); // will be search products later on development
+            System.out.println(" 6. Search Products(Inv)"); // will be search products later on development
             System.out.println(" 7. Back to Main Menu");
             System.out.println("--------------------------");
 

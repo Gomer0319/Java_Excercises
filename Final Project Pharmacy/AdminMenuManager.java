@@ -51,19 +51,19 @@ public class AdminMenuManager {
                     break;
 
                 case 5:
-                    //Ask user if they really want to logout and if they do, call the logout method.
+                    // Ask user if they really want to logout and if they do, call the logout
+                    // method.
                     if (Utility.getString("Are you sure you want to logout? (y/n) ").equalsIgnoreCase("y")) {
                         System.out.println("Logging out...");
                         Utility.logout();
                         keepAdminMenu = false;
-                    }
-                    else {
+                    } else {
                         System.out.println("Logout cancelled.");
                         break;
                     }
                     break;
                 default:
-                
+
                     // Print an error message for invalid input
                     System.out.println("Invalid choice. Please try again.");
                     break;
