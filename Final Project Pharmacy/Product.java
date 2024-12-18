@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Product {
     private String inventoryTransactionId;
@@ -13,6 +12,9 @@ public class Product {
     private String productPrescription;
     private String productManufacturer;
     private String productDateAdded;
+    private double productTotalQuantity;
+    private double salesTotalQty;
+    private double actualQuantityOnHand;
 
     // Create a Product List to store the products and a List for the actual
     // Inventory
@@ -36,6 +38,21 @@ public class Product {
         this.productName = productName;
         this.productCategory = productCategory;
         this.productPrice = productPrice;
+        this.productPrescription = productPrescription;
+        this.productManufacturer = productManufacturer;
+        this.productDateAdded = productDateAdded;
+    }
+
+    public Product(String productId, String productName, String productCategory, double productPrice,
+            double productTotalQuantity, double salesTotalQty, double actualQuantityOnHand,
+            String productPrescription, String productManufacturer, String productDateAdded) {
+        this.productId = productId;
+        this.productName = productName;
+        this.productCategory = productCategory;
+        this.productPrice = productPrice;
+        this.productTotalQuantity = productTotalQuantity;
+        this.salesTotalQty = salesTotalQty;
+        this.actualQuantityOnHand = actualQuantityOnHand;
         this.productPrescription = productPrescription;
         this.productManufacturer = productManufacturer;
         this.productDateAdded = productDateAdded;
@@ -167,6 +184,31 @@ public class Product {
         }
     }
 
+    // Method to calculate the total quantity of each product received
+    public static void productTotalQuantity() {
+        // Create a map to group the products by ID, name, and category
+        Map<String, Double> productTotals = new HashMap<>();
+
+        for (Product product : inventoryList) {
+            // Use a combination of productID, name, and category as key
+            String productId = product.getProductId();
+
+            // Add quantity to the existing total or initialize if not found
+            productTotals.put(productId, productTotals.getOrDefault(productId, 0.0) + product.getProductQuantity());
+        }
+
+        // Update productList with the total quantity received
+        for (Product product : productList) {
+            if (productTotals.containsKey(product.getProductId())) {
+                product.setProductTotalQuantity(productTotals.get(product.getProductId()));
+            }
+        }
+    }
+
+    public double calculateActualQuantityOnHand() {
+        return this.productTotalQuantity - this.salesTotalQty;
+    }
+
     // Getters
     public String getInventoryTransactionId() {
         return inventoryTransactionId;
@@ -212,6 +254,18 @@ public class Product {
         return productInvoice;
     }
 
+    public double getProductTotalQuantity() {
+        return productTotalQuantity;
+    }
+
+    public double getSalesTotalQty() {
+        return salesTotalQty;
+    }
+
+    public double getActualQuantityOnHand() {
+        return actualQuantityOnHand;
+    }
+
     // Setters
     public void setProductId(String productId) {
         this.productId = productId;
@@ -243,5 +297,17 @@ public class Product {
 
     public void setProductExpiry(String productExpiry) {
         this.productExpiry = productExpiry;
+    }
+
+    public void setProductTotalQuantity(double productTotalQuantity) {
+        this.productTotalQuantity = productTotalQuantity;
+    }
+
+    public void setSalesTotalQty(double salesTotalQty) {
+        this.salesTotalQty = salesTotalQty;
+    }
+
+    public void setActualQuantityOnHand(double actualQuantityOnHand) {
+        this.actualQuantityOnHand = actualQuantityOnHand;
     }
 }

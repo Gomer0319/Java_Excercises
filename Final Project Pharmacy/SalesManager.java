@@ -2,14 +2,13 @@ public class SalesManager {
     public void salesMenu() {
         boolean keepSalesMenu = true;
 
-        // Create a SalesController object
         SalesController salesController = new SalesController();
 
         while (keepSalesMenu) {
             System.out.println("\n--------Sales Menu--------");
             System.out.println("1. Sell Product");
             System.out.println("2. Void item");
-            System.out.println("3. Finalize Sale");
+            System.out.println("3. Check Out");
             System.out.println("4. Return to Main Menu");
             System.out.println("--------------------------");
 
@@ -32,7 +31,7 @@ public class SalesManager {
                     break;
                 case 3:
                     // Create a SalesController object and call its finalizeSale method
-                    salesController.finalizeSale();
+                    salesController.checkOut();
                     break;
                 case 4:
                     // Return to the main menu

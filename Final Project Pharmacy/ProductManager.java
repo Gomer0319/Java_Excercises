@@ -1,18 +1,19 @@
 public class ProductManager {
-    
+
     public void productMenu() {
         boolean keepProductMenu = true;
         ProductController productController = new ProductController();
 
-        while(keepProductMenu) {
-            // Create a product menu that allows the user to add a product, update a product, or delete a product, and search for a product
+        while (keepProductMenu) {
+            // Create a product menu that allows the user to add a product, update a
+            // product, or delete a product, and search for a product
             System.out.println("\n--------Product Menu--------");
             System.out.println(" 1. Add Product");
-            System.out.println(" 2. Add Inventory");
+            System.out.println(" 2. Receiving");
             System.out.println(" 3. Offset Inventory");
             System.out.println(" 4. Update Product");
             System.out.println(" 5. Delete Product");
-            System.out.println(" 6. Search Products"); //will be search products later on development
+            System.out.println(" 6. Search Products"); // will be search products later on development
             System.out.println(" 7. Back to Main Menu");
             System.out.println("--------------------------");
 
@@ -47,7 +48,7 @@ public class ProductManager {
                     break;
                 case 6:
                     // Create a ProductController object and call its searchProduct method
-                    productController.searchProduct(); 
+                    productController.searchProduct();
                     break;
                 case 7:
                     // Return to the main menu

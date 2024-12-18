@@ -7,10 +7,11 @@ public class ReportManager {
         while (keepReportMenu) {
             System.out.println("\n--------Report Menu--------");
             System.out.println("1. Sales Report");
-            System.out.println("2. Inventory Report");
+            System.out.println("2. Receiving Report");
             System.out.println("3. View Product List");
             System.out.println("4. View Supplier List");
-            System.out.println("5. Back to Main Menu");
+            System.out.println("5. View Inventory Report");
+            System.out.println("6. Back to Main Menu");
             System.out.println("--------------------------");
 
             // Get user input
@@ -28,7 +29,7 @@ public class ReportManager {
                     break;
                 case 2:
                     // Create a ReportController object and call its inventoryReport method
-                    reportController.inventoryReport();
+                    reportController.receivingReport();
                     break;
                 case 3:
                     // Create a ReportController object and call its productList method
@@ -39,6 +40,10 @@ public class ReportManager {
                     reportController.supplierList();
                     break;
                 case 5:
+                    // Create a ReportController object and call its inventoryReport method
+                    reportController.inventoryReport();
+                    break;
+                case 6:
                     // Return to the main menu
                     System.out.println("Returning to Main Menu...");
                     keepReportMenu = false;
