@@ -15,6 +15,7 @@ public class Product {
     private double productTotalQuantity;
     private double salesTotalQty;
     private double actualQuantityOnHand;
+    private double minimumStockLevel;
 
     // Create a Product List to store the products and a List for the actual
     // Inventory
@@ -24,16 +25,16 @@ public class Product {
     // Add dummy data to the Product List
     static {
         productList.add(new Product(IdGenerator.generateID("Product"), "Amlodipine Besylate 5mg", "Hypertension", 5.5,
-                "n", "Viatris Specialty Llc", Utility.getCurrentDateTime()));
+                "n", "Viatris Specialty Llc", Utility.getCurrentDateTime(), 1000));
         productList.add(new Product(IdGenerator.generateID("Product"), "Seretide 250mcg", "Corticosteroids", 750.00,
-                "y", "GSK plc", Utility.getCurrentDateTime()));
+                "y", "GSK plc", Utility.getCurrentDateTime(), 5));
         productList.add(new Product(IdGenerator.generateID("Product"), "Rogin-E", "Supplement", 28.75, "n",
-                "Bayer Philippines inc.", Utility.getCurrentDateTime()));
+                "Bayer Philippines inc.", Utility.getCurrentDateTime(), 100));
     }
 
     // Constructor
     public Product(String productId, String productName, String productCategory, double productPrice,
-            String productPrescription, String productManufacturer, String productDateAdded) {
+            String productPrescription, String productManufacturer, String productDateAdded, double minimumStockLevel) {
         this.productId = productId;
         this.productName = productName;
         this.productCategory = productCategory;
@@ -41,6 +42,7 @@ public class Product {
         this.productPrescription = productPrescription;
         this.productManufacturer = productManufacturer;
         this.productDateAdded = productDateAdded;
+        this.minimumStockLevel = minimumStockLevel;
     }
 
     public Product(String productId, String productName, String productCategory, double productPrice,
@@ -77,7 +79,7 @@ public class Product {
     // Create a method to add the product added from the
     // ProductController.addProduct method
     public static void addProduct(String productId, String productName, String productCategory, double productPrice,
-            String productPrescription, String productManufacturer, String productDateAdded) {
+            String productPrescription, String productManufacturer, String productDateAdded, double minimumStockLevel) {
         // Check if ID already exists
         for (Product product : productList) {
             if (product.getProductId().equals(productId)) {
@@ -88,7 +90,7 @@ public class Product {
 
         // Create a new Product object and add it to the list
         Product newProduct = new Product(productId, productName, productCategory, productPrice, productPrescription,
-                productManufacturer, productDateAdded);
+                productManufacturer, productDateAdded, minimumStockLevel);
         productList.add(newProduct);
 
         // Print success message
@@ -266,6 +268,10 @@ public class Product {
         return actualQuantityOnHand;
     }
 
+    public double getMinimumStockLevel() {
+        return minimumStockLevel;
+    }
+
     // Setters
     public void setProductId(String productId) {
         this.productId = productId;
@@ -309,5 +315,9 @@ public class Product {
 
     public void setActualQuantityOnHand(double actualQuantityOnHand) {
         this.actualQuantityOnHand = actualQuantityOnHand;
+    }
+
+    public void setMinimumStockLevel(double minimumStockLevel) {
+        this.minimumStockLevel = minimumStockLevel;
     }
 }

@@ -32,9 +32,17 @@ public class ProductController {
 
             String productManufacturer = Utility.getString("Manufacturer: ");
 
+            double minimumStockLevel = Utility.getDouble("Set Minimum Stock Level: ");
+
+            // Validate minimum stock level
+            if (minimumStockLevel <= 0) {
+                throw new IllegalArgumentException("Minimum stock level must be greater than zero.");
+            }
+            Utility.userInput.nextLine();
+
             // Create a Product object
             Product.addProduct(IdGenerator.generateID("Product"), productName, productCategory, productPrice,
-                    productPrescription, productManufacturer, Utility.getCurrentDateTime());
+                    productPrescription, productManufacturer, Utility.getCurrentDateTime(), minimumStockLevel);
 
             // Ask the user if they want to add another product
             String addAnother = Utility.getString("\nAdd another product (y/n): ");

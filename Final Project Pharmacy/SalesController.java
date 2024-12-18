@@ -54,6 +54,12 @@ public class SalesController {
         // Get product details from the user
         String productID = Utility.getString("Enter product ID: ");
 
+        // Validate input, if no input or 0 is entered, we return to sell menu
+        if (productID.isEmpty() || productID.equals("0")) {
+            System.out.println("Invalid input. Please enter a valid product ID and/or quantity.");
+            return;
+        }
+
         // Display item to sell
         for (Product product : Product.productList) {
             if (product.getProductId().equals(productID)) {
@@ -121,6 +127,8 @@ public class SalesController {
             String proceedToCheckout = Utility.getString("Proceed to checkout? (y/n): ");
             if (proceedToCheckout.equalsIgnoreCase("y")) {
                 checkOut(); // Call the checkout method
+
+                Utility.clearScreen();
             }
 
             else if (proceedToCheckout.equalsIgnoreCase("n")) {
@@ -216,7 +224,7 @@ public class SalesController {
 
         System.out.println(
                 "||--------------------------------------------------------------------------------------------------------------------------------------------||");
-        System.out.printf("|| %-15s | %-15s | %-30s | %-15s | %-15s | %-10s | %-20s |\n",
+        System.out.printf("|| %-15s | %-15s | %-30s | %-15s | %-15s | %-10s | %-20s ||\n",
                 "OrderID", "ProductID",
                 "ProductName", "Category",
                 "Total Price", "Quantity", "OrderDate");
@@ -225,7 +233,7 @@ public class SalesController {
         // Display the total sales
         double totalSales = 0.0;
         for (SalesController sale : salesList) {
-            System.out.printf("|| %-15s | %-15s | %-30s | %-15s | %-15.2f | %-10s | %-20s |\n",
+            System.out.printf("|| %-15s | %-15s | %-30s | %-15s | %-15.2f | %-10s | %-20s ||\n",
                     sale.getOrderID(),
                     sale.getProductID(),
                     sale.getProductName(),
@@ -247,13 +255,17 @@ public class SalesController {
         if (checkout.equalsIgnoreCase("y")) {
             // Generate a receipt
             System.out.println("\n--------Receipt--------");
+            // Display the logged in user's name
+            System.out.println("Tendered by: " + Utility.getLoggedInUsername());
+            // Display transaction date and time
+            System.out.println("Date and Time: " + Utility.getCurrentDateTime());
             System.out.println(
-                    "||--------------------------------------------------------------------------------------------------------------------------------------------||");
+                    "||---------------------------------------------------------------------------------------------------------------------------||");
 
             System.out.printf("|| %-15s | %-15s | %-30s | %-15s | %-10s | %-20s |\n", "OrderID", "ProductID",
                     "ProductName", "Total Price", "Quantity", "OrderDate");
             System.out.println(
-                    "||--------------------------------------------------------------------------------------------------------------------------------------------||");
+                    "||---------------------------------------------------------------------------------------------------------------------------||");
 
             for (SalesController sale : salesList) {
                 System.out.printf("|| %-15s | %-15s | %-30s | %-15.2f | %-10s | %-20s |\n",
@@ -266,7 +278,7 @@ public class SalesController {
             }
 
             System.out.println(
-                    "||--------------------------------------------------------------------------------------------------------------------------------------------||");
+                    "||---------------------------------------------------------------------------------------------------------------------------||");
 
             System.out.printf("Grand Total: Php %.2f\n", totalSales);
 

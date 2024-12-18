@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class ReportController {
@@ -145,27 +147,75 @@ public class ReportController {
                 Product.productTotalQuantity();
                 SalesController.productTotalSold();
 
+                // Alert for expiring items
+                System.out.println("\nChecking for expiring items...");
+                boolean expiringItemsFound = false;
+
+                // Define the range for "expiring soon" (e.g., within 30 days)
+                final int EXPIRY_ALERT_DAYS = 30;
+                LocalDate currentDate = LocalDate.now();
+
+                System.out.println(
+                                "||------------------------------------------------------------------------------------------------------------------------------------------------------------------||");
+                System.out.printf("|| %-15s || %-30s || %-15s || %-15s || %-10s || %-15s || %-10s || %-22s ||\n",
+                                "InvtyTransID", "Name", "Category", "RcvInvoice", "Qty", "Expiry Date", "Days Left",
+                                "Manufacturer");
+                System.out.println(
+                                "||------------------------------------------------------------------------------------------------------------------------------------------------------------------||");
+                for (Product transaction : Product.inventoryList) {
+                        LocalDate expiryDate = LocalDate.parse(transaction.getproductExpiry());
+                        long daysUntilExpiry = ChronoUnit.DAYS.between(currentDate, expiryDate);
+
+                        if (daysUntilExpiry > 0 && daysUntilExpiry <= EXPIRY_ALERT_DAYS) {
+                                expiringItemsFound = true;
+                                System.out.printf(
+                                                "|| %-15s || %-30s || %-15s || %-15s || %-10.2f || %-15s || %-10d || %-22s ||\n",
+                                                transaction.getInventoryTransactionId(),
+                                                transaction.getProductName(),
+                                                transaction.getProductCategory(),
+                                                transaction.getProductInvoice(),
+                                                transaction.getProductQuantity(),
+                                                transaction.getproductExpiry(),
+                                                daysUntilExpiry,
+                                                transaction.getProductManufacturer());
+                        }
+                }
+
+                if (!expiringItemsFound) {
+                        System.out.printf("\n %70s \n",
+                                        "No items are expiring within the next " + EXPIRY_ALERT_DAYS + " days.");
+                }
+
+                System.out.println(
+                                "||------------------------------------------------------------------------------------------------------------------------------------------------------------------||");
+
+                // Display the actual inventory
                 System.out.println("\nActual Inventory");
                 System.out.println(
-                                "||--------------------------------------------------------------------------------------------------------------------------------||");
-                System.out.printf("|| %-10s || %-30s || %-15s || %-10s || %-10s || %-10s ||\n", "ID", "Name",
+                                "||--------------------------------------------------------------------------------------------------------------------------------------------||");
+                System.out.printf("|| %-10s || %-30s || %-15s || %-10s || %-10s || %-15s || %-10s || %-10s ||\n", "ID",
+                                "Name",
                                 "Category", "Received",
-                                "Sold", "Qty On Hand");
+                                "Sold", "Qty On Hand", "mSL", "Status");
                 System.out.println(
-                                "||--------------------------------------------------------------------------------------------------------------------------------||");
+                                "||--------------------------------------------------------------------------------------------------------------------------------------------||");
 
                 for (Product product : Product.productList) {
                         double actualQty = product.calculateActualQuantityOnHand();
+                        String status = (actualQty <= product.getMinimumStockLevel()) ? "Restock" : "OK";
 
-                        System.out.printf("|| %-10s || %-30s || %-15s || %-10s || %-10s || %-10s ||\n",
+                        System.out.printf(
+                                        "|| %-10s || %-30s || %-15s || %-10s || %-10s || %-15s || %-10s || %-10s ||\n",
                                         product.getProductId(),
                                         product.getProductName(),
                                         product.getProductCategory(),
                                         product.getProductTotalQuantity(),
                                         product.getSalesTotalQty(),
-                                        actualQty);
+                                        actualQty,
+                                        product.getMinimumStockLevel(),
+                                        status);
                 }
                 System.out.println(
-                                "||--------------------------------------------------------------------------------------------------------------------------------||");
+                                "||--------------------------------------------------------------------------------------------------------------------------------------------||");
         }
 }
