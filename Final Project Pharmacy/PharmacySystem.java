@@ -1,14 +1,5 @@
+
 //Create Main class PharmacySystem (contains main method that starts the program that includes all other classes)
-//Create a class called Pharmacy (contains name, address, phone number)
-//Create a class called Product (contains name, price, quantity)
-//Create a class called Customer (contains name, address, phone number)
-//Create a class called Order (contains Product and Customer)
-//Create a class called OrderManager (contains a list of Order)
-//Create a class called OrderController (contains a list of OrderManager)
-//Create a class called ProductManager (contains a list of Product)
-//Create a class called ProductController (contains a list of ProductManager)
-//Create a class called CustomerManager (contains a list of Customer)
-//Create a class called CustomerController (contains a list of CustomerManager)
 import java.util.*;
 
 public class PharmacySystem {
