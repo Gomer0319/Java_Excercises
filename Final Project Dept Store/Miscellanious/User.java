@@ -1,5 +1,7 @@
+package Miscellanious;
+
 // Create user class
-class User {
+public class User {
     private String username;
     private String password;
 
@@ -25,19 +27,5 @@ class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-}
-
-// Create Admin class that inherits from User
-class Admin extends User {
-    public Admin(String username, String password) {
-        super(username, password);
-    }
-}
-
-// Create employee class that inherits from User
-class Employee extends User {
-    public Employee(String username, String password) {
-        super(username, password);
     }
 }

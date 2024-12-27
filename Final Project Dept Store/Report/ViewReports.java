@@ -1,10 +1,17 @@
-import java.util.*;
+package Report;
 
+import java.util.*;
+import LoginManager;
+import AdminMenu;
+import EmployeeMenu;
+import Controllers.*;
+import Products.*;
+import Sales.*;
 
 // Create an Inventory class that stores all products and their information and history of sales.
 public class ViewReports {
     public void displayMenu() {
-        //Scanner for user input
+        // Scanner for user input
         Scanner reportsInput = new Scanner(System.in);
 
         boolean keepInventoryMenu = true;
@@ -58,8 +65,7 @@ public class ViewReports {
                         if (LoginManager.getloggedUser().equals("Admin")) {
                             AdminMenu adminMenu = new AdminMenu();
                             adminMenu.displayMenu();
-                        }
-                        else if (LoginManager.getloggedUser().equals("Employee")) {
+                        } else if (LoginManager.getloggedUser().equals("Employee")) {
                             EmployeeMenu employeeMenu = new EmployeeMenu();
                             employeeMenu.displayMenu();
                         }
@@ -73,5 +79,5 @@ public class ViewReports {
                 reportsInput.next();
             }
         }
-    }  
+    }
 }

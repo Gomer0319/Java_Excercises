@@ -1,3 +1,4 @@
+
 import java.util.*;
 
 // Create a main class DeptStoreInfoSys
@@ -35,8 +36,7 @@ public class DeptStoreInfoSys {
                             // Go to admin menu
                             AdminMenu adminMenu = new AdminMenu(LoginManager.getloggedUser());
                             adminMenu.displayMenu();
-                        }
-                        else if ("Employee".equals(userRole)) {
+                        } else if ("Employee".equals(userRole)) {
                             System.out.println("You are logged in as an employee.\n");
 
                             // Set login status to true
@@ -65,7 +65,3 @@ public class DeptStoreInfoSys {
         }
     }
 }
-
-
-
-

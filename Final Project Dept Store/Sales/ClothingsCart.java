@@ -1,7 +1,11 @@
+package Sales;
+
 import java.util.*;
 
+import Products.*;
+
 // Create an Clothings class that implements the Cart interface
-class ClothingsCart implements Cart {
+public class ClothingsCart implements Cart {
     private int ID;
     private int quantity;
     private String name;
@@ -10,7 +14,7 @@ class ClothingsCart implements Cart {
     private double totalCost;
 
     // Set a dynamic list to store clothing products
-    static List<ClothingsCart> clothingsCart = new ArrayList<>();
+    public static List<ClothingsCart> clothingsCart = new ArrayList<>();
 
     // Constructor
     public ClothingsCart(int ID, String name, double price, int quantity) {
@@ -36,7 +40,8 @@ class ClothingsCart implements Cart {
                 }
                 // Update the quantity in the cart
                 cartItem.setProductQty(cartItem.getProductQty() + quantity);
-                System.out.println("\nProduct (" + quantity + ") " + cartItem.getProductName() + " added to Clothings Cart successfully.");
+                System.out.println("\nProduct (" + quantity + ") " + cartItem.getProductName()
+                        + " added to Clothings Cart successfully.");
                 found = true;
                 break;
             }
@@ -47,11 +52,13 @@ class ClothingsCart implements Cart {
                 if (product.getProductID() == ID) {
                     // Deduct quantity of the item based on the ID in the quantity available
                     product.setProductQty(product.getProductQty() - quantity);
-                    
+
                     // Add the product to the electronics cart
-                    ClothingsCart newCartItem = new ClothingsCart(ID, product.getProductName(), product.getProductPrice(), quantity);
+                    ClothingsCart newCartItem = new ClothingsCart(ID, product.getProductName(),
+                            product.getProductPrice(), quantity);
                     clothingsCart.add(newCartItem);
-                    System.out.println("\nProduct (" + quantity + ") " + product.getProductName() + " added to Clothings Cart successfully.");
+                    System.out.println("\nProduct (" + quantity + ") " + product.getProductName()
+                            + " added to Clothings Cart successfully.");
                     break;
                 }
             }
@@ -64,13 +71,15 @@ class ClothingsCart implements Cart {
         if (clothingsCart.size() == 0) {
             // If there are none, leave the space with no print
             return;
-        }
-        else {
+        } else {
             // Display the products in the clothings cart
             for (int i = 0; i < clothingsCart.size(); i++) {
                 // Display the product details
-                System.out.printf("|| %-20s || %-40s || %-20d || %30.2f ||%n", clothingsCart.get(i).getCategory() + clothingsCart.get(i).getProductID(), clothingsCart.get(i).getProductName(),  clothingsCart.get(i).getProductQty(), clothingsCart.get(i).getProductPrice() * clothingsCart.get(i).getProductQty());
-            } 
+                System.out.printf("|| %-20s || %-40s || %-20d || %30.2f ||%n",
+                        clothingsCart.get(i).getCategory() + clothingsCart.get(i).getProductID(),
+                        clothingsCart.get(i).getProductName(), clothingsCart.get(i).getProductQty(),
+                        clothingsCart.get(i).getProductPrice() * clothingsCart.get(i).getProductQty());
+            }
         }
     }
 
@@ -90,13 +99,13 @@ class ClothingsCart implements Cart {
     public static void emptyCart() {
         clothingsCart.clear();
     }
-    
+
     // implement interface methods
     @Override
     public int getProductID() {
         return ID;
     }
-    
+
     @Override
     public int getProductQty() {
         return quantity;

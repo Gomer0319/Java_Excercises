@@ -1,7 +1,8 @@
 import java.util.*;
+import Miscellanious.*;
 
 //Create LoginManager class
-class LoginManager {
+public class LoginManager {
     private static String loggedUser;
 
     // Constructor
@@ -25,7 +26,8 @@ class LoginManager {
             System.out.print("Enter password: ");
             String password = loginInput.nextLine();
 
-            // Check if the input username and password is valid and if it is for admin or employee
+            // Check if the input username and password is valid and if it is for admin or
+            // employee
             if (username.equals(admin.getUsername()) && password.equals(admin.getPassword())) {
                 loggedUser = "Admin";
                 return loggedUser;
@@ -47,5 +49,3 @@ class LoginManager {
         return loggedUser;
     }
 }
-
-

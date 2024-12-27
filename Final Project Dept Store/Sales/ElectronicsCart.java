@@ -1,7 +1,11 @@
+package Sales;
+
 import java.util.*;
 
+import Products.*;
+
 // Create an Electronics class that implements the Cart interface
-class ElectronicsCart implements Cart {
+public class ElectronicsCart implements Cart {
     private int ID;
     private int quantity;
     private String name;
@@ -10,7 +14,7 @@ class ElectronicsCart implements Cart {
     private double totalCost = 0.0;
 
     // Set a dynamic list to store electronics products
-    static List<ElectronicsCart> electronicsCart = new ArrayList<>();
+    public static List<ElectronicsCart> electronicsCart = new ArrayList<>();
 
     // Constructor
     public ElectronicsCart(int ID, String name, double price, int quantity) {
@@ -36,7 +40,8 @@ class ElectronicsCart implements Cart {
                 }
                 // Update the quantity in the cart
                 cartItem.setProductQty(cartItem.getProductQty() + quantity);
-                System.out.println("\nProduct (" + quantity + ") " + cartItem.getProductName() + " added to Electronics Cart successfully.");
+                System.out.println("\nProduct (" + quantity + ") " + cartItem.getProductName()
+                        + " added to Electronics Cart successfully.");
                 found = true;
                 break;
             }
@@ -47,11 +52,13 @@ class ElectronicsCart implements Cart {
                 if (product.getProductID() == ID) {
                     // Deduct quantity of the item based on the ID in the quantity available
                     product.setProductQty(product.getProductQty() - quantity);
-                    
+
                     // Add the product to the electronics cart
-                    ElectronicsCart newCartItem = new ElectronicsCart(ID, product.getProductName(), product.getProductPrice(), quantity);
+                    ElectronicsCart newCartItem = new ElectronicsCart(ID, product.getProductName(),
+                            product.getProductPrice(), quantity);
                     electronicsCart.add(newCartItem);
-                    System.out.println("\nProduct (" + quantity + ") " + product.getProductName() + " added to Electronics Cart successfully.");
+                    System.out.println("\nProduct (" + quantity + ") " + product.getProductName()
+                            + " added to Electronics Cart successfully.");
                     break;
                 }
             }
@@ -64,13 +71,15 @@ class ElectronicsCart implements Cart {
         if (electronicsCart.size() == 0) {
             // If there are none, leave the space with no print
             return;
-        }
-        else {
+        } else {
             // Display the products in the electronics cart
             for (int i = 0; i < electronicsCart.size(); i++) {
                 // Display the product details with category
-                System.out.printf("|| %-20s || %-40s || %-20d || %30.2f ||%n", electronicsCart.get(i).getCategory() + electronicsCart.get(i).getProductID(), electronicsCart.get(i).getProductName(),  electronicsCart.get(i).getProductQty(), electronicsCart.get(i).getProductPrice() * electronicsCart.get(i).getProductQty());
-            } 
+                System.out.printf("|| %-20s || %-40s || %-20d || %30.2f ||%n",
+                        electronicsCart.get(i).getCategory() + electronicsCart.get(i).getProductID(),
+                        electronicsCart.get(i).getProductName(), electronicsCart.get(i).getProductQty(),
+                        electronicsCart.get(i).getProductPrice() * electronicsCart.get(i).getProductQty());
+            }
         }
     }
 
@@ -96,7 +105,7 @@ class ElectronicsCart implements Cart {
     public int getProductID() {
         return ID;
     }
-    
+
     @Override
     public int getProductQty() {
         return quantity;

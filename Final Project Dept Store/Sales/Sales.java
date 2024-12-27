@@ -1,14 +1,22 @@
+package Sales;
+
+import LoginManager;
+import AdminMenu;
+import EmployeeMenu;
 import java.util.Scanner;
+import Miscellanious.*;
+import Products.*;
+
 import java.util.InputMismatchException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 // Create Sales class where we select products to be sold (by their Category and ID), Entering Qty Sold and updating the inventory, and making a reciept of the sale.
-class Sales {
+public class Sales {
     private String loggedUser;
     private int customerID;
 
-    public Sales(String loggedUser, int customerID){
+    public Sales(String loggedUser, int customerID) {
         this.loggedUser = LoginManager.getloggedUser();
         this.customerID = customerID;
     }
@@ -18,11 +26,12 @@ class Sales {
 
     // Create menu for sales
     public void salesMenu() {
-        // Create a boolean variable to check if the admin wants to keep sales menu until they choose to return to admin menu
+        // Create a boolean variable to check if the admin wants to keep sales menu
+        // until they choose to return to admin menu
         boolean keepSalesMenu = true;
 
         while (keepSalesMenu) {
-            //try-catch block to handle InputMismatchException
+            // try-catch block to handle InputMismatchException
             try {
                 System.out.println("\n=============================================");
                 System.out.println("Sales Menu");
@@ -36,7 +45,8 @@ class Sales {
 
                 int salesOption = salesInput.nextInt();
 
-                // Check if the admin wants to make a new sale, view cart finalize sale, or return to admin menu
+                // Check if the admin wants to make a new sale, view cart finalize sale, or
+                // return to admin menu
                 switch (salesOption) {
                     case 1:
                         // Go to sales cart menu
@@ -46,7 +56,7 @@ class Sales {
                     case 2:
                         // Go to view cart menu
                         ViewCart viewCart = new ViewCart();
-                        viewCart.displayCart();   
+                        viewCart.displayCart();
                         break;
                     case 3:
                         // Go to finalize sale menu
@@ -60,8 +70,7 @@ class Sales {
                             adminMenu.displayMenu();
                             keepSalesMenu = false;
                             break;
-                        }
-                        else if (LoginManager.getloggedUser().equals("Employee")) {
+                        } else if (LoginManager.getloggedUser().equals("Employee")) {
                             EmployeeMenu employeeMenu = new EmployeeMenu();
                             employeeMenu.displayMenu();
                             keepSalesMenu = false;
@@ -72,8 +81,7 @@ class Sales {
                         System.out.println("\nInvalid option. Please try again.\n");
                         break;
                 }
-            }
-            catch (InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("\nInvalid input, please enter a number from the menu.\n");
                 salesInput.next();
             }
@@ -98,18 +106,20 @@ class NewSale {
 
     // Create sales (adding to cart) functions/methods
     public void addToCart() {
-        // Create a boolean variable to check if the admin wants to keep new sale menu until they choose to return to sales menu
+        // Create a boolean variable to check if the admin wants to keep new sale menu
+        // until they choose to return to sales menu
         boolean keepNewSaleMenu = true;
 
         while (keepNewSaleMenu) {
-            //try-catch block to handle InputMismatchException
+            // try-catch block to handle InputMismatchException
             try {
                 System.out.println("\n=============================================");
                 System.out.println("Sales Cart");
                 System.out.println("---------------------------------------------");
 
                 // Take input for category
-                System.out.println("Select a Category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures\n5. Proceed to View Cart");
+                System.out.println(
+                        "Select a Category: \n1. Electronics\n2. Clothings\n3. Toys\n4. Furnitures\n5. Proceed to View Cart");
                 System.out.print(">>> ");
                 int categoryChoice = newSaleInput.nextInt();
 
@@ -124,7 +134,7 @@ class NewSale {
 
                         // Check if the product ID is available in the electronics list
                         for (int i = 0; i < Electronics.electronics.size(); i++) {
-                            //Check if product ID matches
+                            // Check if product ID matches
                             if (Electronics.electronics.get(i).getProductID() == productID) {
                                 productExists = true;
                                 // Take input for quantity sold
@@ -135,12 +145,11 @@ class NewSale {
                                 if (quantitySold <= Electronics.electronics.get(i).getProductQty()) {
                                     // get the values of product ID, and quantity sold, and store it in the cart
                                     ElectronicsCart.addedToCart(productID, quantitySold);
-                                }
-                                else {
+                                } else {
                                     System.out.println("The quantity sold is greater than the product quantity.");
                                 }
                                 break;
-                            }   
+                            }
                         }
 
                         if (!productExists) {
@@ -155,7 +164,7 @@ class NewSale {
 
                         // Check if the product ID is available in the electronics list
                         for (int i = 0; i < Clothings.clothings.size(); i++) {
-                            //Check if product ID matches
+                            // Check if product ID matches
                             if (Clothings.clothings.get(i).getProductID() == productID) {
                                 productExists = true;
                                 // Take input for quantity sold
@@ -166,12 +175,11 @@ class NewSale {
                                 if (quantitySold <= Clothings.clothings.get(i).getProductQty()) {
                                     // get the values of product ID, and quantity sold, and store it in the cart
                                     ClothingsCart.addedToCart(productID, quantitySold);
-                                }
-                                else {
+                                } else {
                                     System.out.println("The quantity sold is greater than the product quantity.");
                                 }
                                 break;
-                            }   
+                            }
                         }
 
                         if (!productExists) {
@@ -186,7 +194,7 @@ class NewSale {
 
                         // Check if the product ID is available in the electronics list
                         for (int i = 0; i < Toys.toys.size(); i++) {
-                            //Check if product ID matches
+                            // Check if product ID matches
                             if (Toys.toys.get(i).getProductID() == productID) {
                                 productExists = true;
                                 // Take input for quantity sold
@@ -197,12 +205,11 @@ class NewSale {
                                 if (quantitySold <= Toys.toys.get(i).getProductQty()) {
                                     // get the values of product ID, and quantity sold, and store it in the cart
                                     ToysCart.addedToCart(productID, quantitySold);
-                                }
-                                else {
+                                } else {
                                     System.out.println("The quantity sold is greater than the product quantity.");
                                 }
                                 break;
-                            }   
+                            }
                         }
 
                         if (!productExists) {
@@ -217,7 +224,7 @@ class NewSale {
 
                         // Check if the product ID is available in the furnitures list
                         for (int i = 0; i < Furnitures.furnitures.size(); i++) {
-                            //Check if product ID matches
+                            // Check if product ID matches
                             if (Furnitures.furnitures.get(i).getProductID() == productID) {
                                 productExists = true;
                                 // Take input for quantity sold
@@ -228,12 +235,11 @@ class NewSale {
                                 if (quantitySold <= Furnitures.furnitures.get(i).getProductQty()) {
                                     // get the values of product ID, and quantity sold, and store it in the cart
                                     FurnituresCart.addedToCart(productID, quantitySold);
-                                }
-                                else {
+                                } else {
                                     System.out.println("The quantity sold is greater than the product quantity.");
                                 }
-                                break; 
-                            }   
+                                break;
+                            }
                         }
                         if (!productExists) {
                             System.out.println("Product ID not found.");
@@ -248,8 +254,7 @@ class NewSale {
                         System.out.println("\nInvalid option. Please try again.\n");
                         break;
                 }
-            }
-            catch (InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("\nInvalid input, please enter a number from the menu.\n");
                 newSaleInput.next();
             }
@@ -277,14 +282,17 @@ class ViewCart {
         Scanner confirmInput = new Scanner(System.in);
 
         // Display all items in all carts
-        System.out.println("\n==========================================================================================================================================================");
+        System.out.println(
+                "\n==========================================================================================================================================================");
         System.out.printf("|| %-20s || %-40s || %-20s || %-30s ||%n", "ID", "Product Name", "Quantity", "Total");
-        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println(
+                "----------------------------------------------------------------------------------------------------------------------------------------------------------");
         ElectronicsCart.viewCart();
         ClothingsCart.viewCart();
         ToysCart.viewCart();
         FurnituresCart.viewCart();
-        System.out.println("==========================================================================================================================================================");
+        System.out.println(
+                "==========================================================================================================================================================");
 
         // Ask admin if they want to finalize the sale
         System.out.println("Should we compute the total cost? (y/n)");
@@ -292,7 +300,8 @@ class ViewCart {
 
         // Check if the admin wants to finalize the sale
         if (confirm.equals("y")) {
-            // Ask the user if they want to associate the sale to a registered customer or not.
+            // Ask the user if they want to associate the sale to a registered customer or
+            // not.
             System.out.println("Do you want to associate the sale to a registered customer? (y/n)");
             System.out.print(">>> ");
             String customerChoice = confirmInput.next();
@@ -310,17 +319,15 @@ class ViewCart {
 
                         // Go to finalize sale menu
                         System.out.println("\nFinalizing Sale...");
-                        FinalizeSale finalizeSale = new FinalizeSale(loggedUser,customerID);
+                        FinalizeSale finalizeSale = new FinalizeSale(loggedUser, customerID);
                         finalizeSale.finalizeSale();
                         break;
-                    }
-                    else {
+                    } else {
                         System.out.println("Customer ID not found.");
                         continue;
                     }
                 }
-            }
-            else if (customerChoice.equals("n")) {
+            } else if (customerChoice.equals("n")) {
                 // Proceed with the new sale
                 System.out.println("\nSale has not been associated with a customer.");
 
@@ -330,8 +337,7 @@ class ViewCart {
                 finalizeSale.finalizeSale();
                 return;
             }
-        }
-        else if (confirm.equals("n")) {
+        } else if (confirm.equals("n")) {
             // Ask if we return in the addtocart menu or we empty the cart
             System.out.println("Do you want to return to the Add to Cart Menu? (y/n)");
             System.out.print(">>> ");
@@ -343,9 +349,8 @@ class ViewCart {
                 NewSale newSale = new NewSale();
                 newSale.addToCart();
                 return;
-            }
-            else if (returnChoice.equals("n")) {
-                //return the quantity of the products back to the inventory
+            } else if (returnChoice.equals("n")) {
+                // return the quantity of the products back to the inventory
                 System.out.println("\nCanceling Sale...");
                 Electronics.returnProduct();
                 Clothings.returnProduct();
@@ -363,8 +368,7 @@ class ViewCart {
                 Sales sales = new Sales(loggedUser, 0);
                 sales.salesMenu();
                 return;
-            }
-            else {
+            } else {
                 System.out.println("\nInvalid option. Please try again.");
             }
         }
@@ -381,7 +385,9 @@ class ViewCart {
     }
 }
 
-// Create FinalizeSaleclass to finalize sale, compute total cost to be paid, print a receipt, and update Sales (emptying carts and storing sales in Sales List for Reports)
+// Create FinalizeSaleclass to finalize sale, compute total cost to be paid,
+// print a receipt, and update Sales (emptying carts and storing sales in Sales
+// List for Reports)
 class FinalizeSale {
     private String loggedUser;
     private int customerID;
@@ -398,25 +404,25 @@ class FinalizeSale {
         this.customerID = 0;
     }
 
-
     public void finalizeSale() {
         // Scanner object to read user input
         Scanner finalizeSaleInput = new Scanner(System.in);
 
         // Check if there are any items in the cart
-        if (ElectronicsCart.electronicsCart.size() == 0 && ClothingsCart.clothingsCart.size() == 0 && ToysCart.toysCart.size() == 0 && FurnituresCart.furnituresCart.size() == 0) {
+        if (ElectronicsCart.electronicsCart.size() == 0 && ClothingsCart.clothingsCart.size() == 0
+                && ToysCart.toysCart.size() == 0 && FurnituresCart.furnituresCart.size() == 0) {
             // Go to sales menu
             System.out.println("There are no items in the cart. Returning to Sales Menu.");
             Sales sales = new Sales(loggedUser, customerID);
             sales.salesMenu();
-        }
-        else {
+        } else {
             double electronicsTotal = ElectronicsCart.calculateTotalCost();
             double clothingsTotal = ClothingsCart.calculateTotalCost();
             double toysTotal = ToysCart.calculateTotalCost();
             double furnituresTotal = FurnituresCart.calculateTotalCost();
 
-            System.out.printf("\nGrand Total to be paid: %40s Php %30.2f \n", " " ,(electronicsTotal + clothingsTotal + toysTotal + furnituresTotal)); 
+            System.out.printf("\nGrand Total to be paid: %40s Php %30.2f \n", " ",
+                    (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal));
 
             // Ask admin if they want to finalize the sale
             System.out.println("Should we finalize the sale? (y/n)");
@@ -430,31 +436,40 @@ class FinalizeSale {
                 String dateTimeString = currentDateTime.format(formatter);
 
                 // Print receipt
-                System.out.println("\n==========================================================================================================================================================");
+                System.out.println(
+                        "\n==========================================================================================================================================================");
                 System.out.printf("%70s %-10s \n", " ", "Receipt");
                 System.out.printf("Tendered by: %s%n", loggedUser);
                 System.out.printf("Customer ID: %d%n", customerID);
                 System.out.printf("Date and Time: %s%n", dateTimeString);
-                System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------");
-                System.out.printf("|| %-20s || %-40s || %-20s || %-30s ||%n", "ID", "Product Name", "Quantity", "Total");
-                System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.println(
+                        "----------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.printf("|| %-20s || %-40s || %-20s || %-30s ||%n", "ID", "Product Name", "Quantity",
+                        "Total");
+                System.out.println(
+                        "----------------------------------------------------------------------------------------------------------------------------------------------------------");
                 ElectronicsCart.viewCart();
                 ClothingsCart.viewCart();
                 ToysCart.viewCart();
                 FurnituresCart.viewCart();
-                System.out.println("==========================================================================================================================================================");
-                System.out.printf("Grand Total: %75s >>> Php %30.2f \n", " ", (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal));
+                System.out.println(
+                        "==========================================================================================================================================================");
+                System.out.printf("Grand Total: %75s >>> Php %30.2f \n", " ",
+                        (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal));
 
                 System.out.println("\nThank you for shopping with us!\n\n\n");
 
-                // Update the points of the customer with the corresponding ID. For every 1000 php spent, there is 1 point (example, if spent is 6500, there are 6.5 points). It is accumulative.
+                // Update the points of the customer with the corresponding ID. For every 1000
+                // php spent, there is 1 point (example, if spent is 6500, there are 6.5
+                // points). It is accumulative.
                 // Check if the customer exists in the database
                 boolean customerExists = false;
                 for (int i = 0; i < Customer.customers.size(); i++) {
                     if (Customer.customers.get(i).getID() == customerID) {
                         customerExists = true;
                         // Update the points of the customer
-                        double computedPoints = (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal) / 1000;
+                        double computedPoints = (electronicsTotal + clothingsTotal + toysTotal + furnituresTotal)
+                                / 1000;
                         Customer.updatePoints(customerID, computedPoints);
                         break;
                     }
@@ -465,21 +480,27 @@ class FinalizeSale {
                     System.out.println("Customer with ID " + customerID + " does not exist in the database.");
                 }
 
-                // Pass the data of the sold products to the soldProducts class before the cart is emptied, add the dateTimeString to the soldProduct class, then empty the cart
+                // Pass the data of the sold products to the soldProducts class before the cart
+                // is emptied, add the dateTimeString to the soldProduct class, then empty the
+                // cart
                 for (ElectronicsCart product : ElectronicsCart.electronicsCart) {
-                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory(), dateTimeString));
+                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(),
+                            product.getProductPrice(), product.getProductQty(), product.getCategory(), dateTimeString));
                 }
 
                 for (ClothingsCart product : ClothingsCart.clothingsCart) {
-                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory(), dateTimeString));
-                }   
+                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(),
+                            product.getProductPrice(), product.getProductQty(), product.getCategory(), dateTimeString));
+                }
 
                 for (ToysCart product : ToysCart.toysCart) {
-                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory(), dateTimeString));
+                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(),
+                            product.getProductPrice(), product.getProductQty(), product.getCategory(), dateTimeString));
                 }
 
                 for (FurnituresCart product : FurnituresCart.furnituresCart) {
-                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(), product.getProductPrice(), product.getProductQty(), product.getCategory(), dateTimeString));
+                    SoldProducts.addSoldProducts(new SoldProduct(product.getProductID(), product.getProductName(),
+                            product.getProductPrice(), product.getProductQty(), product.getCategory(), dateTimeString));
                 }
 
                 // empty all carts
@@ -505,15 +526,15 @@ class FinalizeSale {
                     NewSale newSale = new NewSale();
                     newSale.addToCart();
                     return;
-                }
-                else if (returnChoice.equals("n")) {
-                    //return the quantity of the products back to the inventory
-                    System.out.println("\nCanceling the sale. Returning the quantity of the products back to the inventory.");
+                } else if (returnChoice.equals("n")) {
+                    // return the quantity of the products back to the inventory
+                    System.out.println(
+                            "\nCanceling the sale. Returning the quantity of the products back to the inventory.");
                     Electronics.returnProduct();
                     Clothings.returnProduct();
                     Toys.returnProduct();
                     Furnitures.returnProduct();
-                    
+
                     // Empty the cart
                     ElectronicsCart.electronicsCart.clear();
                     ClothingsCart.clothingsCart.clear();
@@ -525,17 +546,16 @@ class FinalizeSale {
                     Sales sales = new Sales(LoginManager.getloggedUser(), 0);
                     sales.salesMenu();
                     return;
-                }
-                else {
+                } else {
                     System.out.println("Invalid choice. Returning to Add to Cart Menu...");
                     NewSale newSale = new NewSale();
                     newSale.addToCart();
                     return;
                 }
             }
-        }  
+        }
     }
-    
+
     // Getter
     public String getloggedUser() {
         return loggedUser;
@@ -545,4 +565,3 @@ class FinalizeSale {
         return customerID;
     }
 }
-

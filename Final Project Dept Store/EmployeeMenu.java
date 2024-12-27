@@ -1,4 +1,9 @@
+
 import java.util.*;
+
+import Miscellanious.*;
+import Report.ViewReports;
+import Sales.*;
 
 // Create Admin menu class
 class EmployeeMenu {
@@ -19,7 +24,8 @@ class EmployeeMenu {
 
     // Create menu for admin side
     public void displayMenu() {
-        // Create a boolean variable to check if the admin wants to keep admin menu until they choose to logout
+        // Create a boolean variable to check if the admin wants to keep admin menu
+        // until they choose to logout
         boolean keepEmployeeMenu = true;
 
         // Create a message to greet the user
@@ -27,7 +33,7 @@ class EmployeeMenu {
         System.out.println("\nWelcome, " + loggedUser + "!\n");
 
         while (keepEmployeeMenu) {
-            //try-catch block to handle InputMismatchException
+            // try-catch block to handle InputMismatchException
             try {
                 System.out.println("\n=============================================");
                 System.out.println("Employee Menu");
@@ -38,10 +44,11 @@ class EmployeeMenu {
                 System.out.println("4. Logout");
                 System.out.println("=============================================");
                 System.out.print("Enter your choice: ");
-                
+
                 int employeeOption = employeeInput.nextInt();
 
-                // Check if the admin wants to manage products, process sales, view reports, or logout
+                // Check if the admin wants to manage products, process sales, view reports, or
+                // logout
                 switch (employeeOption) {
                     case 1:
                         // Go to sales menu
@@ -72,8 +79,7 @@ class EmployeeMenu {
                         System.out.println("\nInvalid option. Please try again.\n");
                         break;
                 }
-            } 
-            catch (InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("\nInvalid input, please enter a number from the menu.\n");
                 employeeInput.next();
             }
@@ -86,4 +92,5 @@ class EmployeeMenu {
     }
 }
 
-//Note: Should have User Class abstracted and let the EmployeeMenu and AdminMenu inherit from it to avoid code duplication
+// Note: Should have User Class abstracted and let the EmployeeMenu and
+// AdminMenu inherit from it to avoid code duplication

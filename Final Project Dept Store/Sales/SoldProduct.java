@@ -1,10 +1,12 @@
-class SoldProduct {
+package Sales;
+
+public class SoldProduct {
     private int ID;
     private String name;
     private double price;
     private int quantity;
     private String category;
-    private String dateTime; 
+    private String dateTime;
 
     // Constructor
     public SoldProduct(int ID, String name, double price, int quantity, String category, String dateTime) {
@@ -16,7 +18,7 @@ class SoldProduct {
         this.dateTime = dateTime;
     }
 
-    //getters
+    // getters
     public int getProductID() {
         return ID;
     }
@@ -41,8 +43,8 @@ class SoldProduct {
         return dateTime;
     }
 
-    //setters
-    public void setDateTime (String dateTime) {
+    // setters
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 }
