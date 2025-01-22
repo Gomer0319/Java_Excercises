@@ -1,9 +1,8 @@
 package Sales;
 
-import LoginManager;
-import AdminMenu;
-import EmployeeMenu;
 import java.util.Scanner;
+import Main.*;
+import Main.LoginManager;
 import Miscellanious.*;
 import Products.*;
 

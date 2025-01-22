@@ -1,9 +1,7 @@
 package Report;
 
 import java.util.*;
-import LoginManager;
-import AdminMenu;
-import EmployeeMenu;
+import Main.*;
 import Controllers.*;
 import Products.*;
 import Sales.*;

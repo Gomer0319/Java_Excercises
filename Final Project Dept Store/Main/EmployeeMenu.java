@@ -1,3 +1,4 @@
+package Main;
 
 import java.util.*;
 
@@ -6,7 +7,7 @@ import Report.ViewReports;
 import Sales.*;
 
 // Create Admin menu class
-class EmployeeMenu {
+public class EmployeeMenu {
     private String loggedUser; // To store the logged user's name or role
 
     // Constructor to initialize loggedUser
